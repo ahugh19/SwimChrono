@@ -1,0 +1,21 @@
+{
+  "token": {
+    "colorTextBase": "#dedede",
+    "colorPrimary": "#2babea",
+    "colorInfo": "#2babea"
+  },
+  "components": {
+    "Slider": {
+      "handleSize": 6,
+      "handleSizeHover": 8,
+      "handleLineWidth": 1,
+      "handleLineWidthHover": 2
+    },
+    "Form": {
+      "itemMarginBottom": 10
+    },
+    "Collapse": {
+      "headerPadding": "12px 0"
+    }
+  }
+}

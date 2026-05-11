@@ -1,0 +1,11 @@
+This project includes open-source software licensed under MIT, ISC, BSD-2-Clause, BSD-3-Clause, Apache-2.0, Python-2.0, and CC-BY-4.0.
+
+Key Third-Party Libraries Requiring Attribution:
+- TypeScript (Apache-2.0 License)
+- Some dependencies under BSD-2-Clause and BSD-3-Clause
+- The "caniuse" data in "caniuse-lite" is provided under a CC-BY-4.0 license.  
+  - Source: [caniuse.com](https://caniuse.com/)  
+
+Each component is subject to its respective license. Full license details can be found in the dependency repositories.
+
+This software is provided "as is," without warranties or conditions of any kind.

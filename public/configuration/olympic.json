@@ -1,0 +1,1130 @@
+[
+  {
+    "uuid": "bf8d0c96-cc8f-470e-ae3e-d797d16ba7cc",
+    "name": "elapsed time",
+    "visibility": true,
+    "intervalList": null,
+    "triggerCompList": null,
+    "embeddedVis": {
+      "visName": "elapsedTimeCorner",
+      "visIcon": "generalCorner.png",
+      "dataName": "elapsedTime",
+      "composeType": "global",
+      "positionX": 600,
+      "positionXAndWidthRatio": 0.83102493,
+      "positionY": 355,
+      "positionYAndHeightRatio": 0.89987326,
+      "positionR": 0,
+      "positionS": 100,
+      "positionSRatio": 0.13850416,
+      "positionMove": false,
+      "editableElementList": [
+        {
+          "id": "text-1",
+          "type": "text",
+          "visible": true,
+          "fontFillColor": "#0E3034",
+          "fontSize": 10
+        },
+        {
+          "id": "background-shape-1",
+          "type": "shape",
+          "visible": true,
+          "shapeFillColor": "#CFEEF2",
+          "shapeStrokeColor": "#c9c9c9",
+          "shapeStrokeWidth": 0
+        }
+      ]
+    },
+    "isSelected": false
+  },
+  {
+    "uuid": "ddd4d5c7-1cf0-4533-85ec-c65649fcfabc",
+    "name": "race name",
+    "visibility": true,
+    "intervalList": null,
+    "triggerCompList": null,
+    "embeddedVis": {
+      "visName": "raceNameCorner",
+      "visIcon": "generalCorner.png",
+      "dataName": "raceName",
+      "composeType": "global",
+      "positionX": 593,
+      "positionXAndWidthRatio": 0.82132964,
+      "positionY": 370,
+      "positionYAndHeightRatio": 0.93789607,
+      "positionR": 0,
+      "positionS": 100,
+      "positionSRatio": 0.13850416,
+      "positionMove": false,
+      "editableElementList": [
+        {
+          "id": "text-1",
+          "type": "text",
+          "visible": true,
+          "fontSize": 10,
+          "fontFillColor": "#ffffff"
+        },
+        {
+          "id": "background-shape-1",
+          "type": "shape",
+          "visible": true,
+          "shapeFillColor": "#1B505D",
+          "shapeStrokeColor": "#c9c9c9",
+          "shapeStrokeWidth": 0
+        }
+      ]
+    },
+    "isSelected": false
+  },
+  {
+    "uuid": "b4d29f76-88fb-4862-a2ee-c5fb2f5dd3ad",
+    "name": "Olympic ring",
+    "visibility": true,
+    "intervalList": null,
+    "triggerCompList": null,
+    "embeddedVis": {
+      "visName": "VisCustomizedIconGlobal",
+      "visIcon": "generalIconCustomized.png",
+      "dataName": "elapsedTime",
+      "composeType": "global",
+      "positionX": 650,
+      "positionXAndWidthRatio": 0.90027701,
+      "positionY": 355,
+      "positionYAndHeightRatio": 0.89987326,
+      "positionR": 0,
+      "positionS": 100,
+      "positionSRatio": 0.13850416,
+      "positionMove": false,
+      "editableElementList": [],
+      "customizedIcon": {
+        "svgContent": "<svg width=\"40\" height=\"16\" viewBox=\"0 0 40 16\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<rect width=\"40\" height=\"16\" fill=\"#0A1222\"/>\n<path d=\"M11.4288 9.85759C13.3225 9.85759 14.8576 8.32247 14.8576 6.4288C14.8576 4.53512 13.3225 3 11.4288 3C9.53512 3 8 4.53512 8 6.4288C8 8.32247 9.53512 9.85759 11.4288 9.85759Z\" stroke=\"white\" stroke-width=\"0.661392\"/>\n<path d=\"M19.5743 9.85759C21.468 9.85759 23.0031 8.32247 23.0031 6.4288C23.0031 4.53512 21.468 3 19.5743 3C17.6806 3 16.1455 4.53512 16.1455 6.4288C16.1455 8.32247 17.6806 9.85759 19.5743 9.85759Z\" stroke=\"white\" stroke-width=\"0.661392\"/>\n<path d=\"M27.7198 9.85759C29.6135 9.85759 31.1486 8.32247 31.1486 6.4288C31.1486 4.53512 29.6135 3 27.7198 3C25.8261 3 24.291 4.53512 24.291 6.4288C24.291 8.32247 25.8261 9.85759 27.7198 9.85759Z\" stroke=\"white\" stroke-width=\"0.661392\"/>\n<path d=\"M15.5011 13.3386C17.3947 13.3386 18.9299 11.8034 18.9299 9.90975C18.9299 8.01608 17.3947 6.48096 15.5011 6.48096C13.6074 6.48096 12.0723 8.01608 12.0723 9.90975C12.0723 11.8034 13.6074 13.3386 15.5011 13.3386Z\" stroke=\"white\" stroke-width=\"0.661392\"/>\n<path d=\"M23.6475 13.3386C25.5412 13.3386 27.0763 11.8034 27.0763 9.90975C27.0763 8.01608 25.5412 6.48096 23.6475 6.48096C21.7539 6.48096 20.2188 8.01608 20.2188 9.90975C20.2188 11.8034 21.7539 13.3386 23.6475 13.3386Z\" stroke=\"white\" stroke-width=\"0.661392\"/>\n</svg>\n",
+        "size": 1,
+        "visible": true
+      }
+    },
+    "isSelected": false
+  },
+  {
+    "uuid": "14b2a539-fcce-4dac-bc50-1d3dd6305fb8",
+    "name": "Difference to WR Split",
+    "visibility": true,
+    "intervalList": [
+      {
+        "triggerConfig": {
+          "name": "trigger of turn",
+          "triggerType": "start+duration",
+          "subjectEnd": "duration",
+          "compareEnd": "equal to (=)",
+          "priority": 1,
+          "subjectStart": "event",
+          "compareStart": "equal to (=)",
+          "valueStart": "turn",
+          "valueEnd": 5
+        },
+        "startFrame": 3579,
+        "endFrame": 3829,
+        "relativeStartMoment": 71.58,
+        "relativeEndMoment": 76.58,
+        "duration": 5,
+        "isMerged": false,
+        "mergedTriggers": []
+      }
+    ],
+    "triggerCompList": [
+      {
+        "name": "trigger of turn",
+        "triggerType": "start+duration",
+        "subjectEnd": "duration",
+        "compareEnd": "equal to (=)",
+        "priority": 1,
+        "subjectStart": "event",
+        "compareStart": "equal to (=)",
+        "valueStart": "turn",
+        "valueEnd": 5
+      }
+    ],
+    "embeddedVis": {
+      "visName": "worldRecordSplitDiffCorner",
+      "visIcon": "generalCorner.png",
+      "dataName": "differenceRecordAndLeader",
+      "composeType": "global",
+      "positionX": 130,
+      "positionXAndWidthRatio": 0.1800554,
+      "positionY": 370,
+      "positionYAndHeightRatio": 0.93789607,
+      "positionR": 0,
+      "positionS": 100,
+      "positionSRatio": 0.13850416,
+      "positionMove": false,
+      "editableElementList": [
+        {
+          "id": "text-1-spit-diff-value",
+          "type": "text",
+          "visible": true,
+          "fontSize": 10,
+          "fontFillColor": "#ffffff"
+        },
+        {
+          "id": "background-shape-smaller",
+          "type": "shape",
+          "visible": true,
+          "shapeFillColor": "#0E5636",
+          "shapeStrokeColor": "#c9c9c9",
+          "shapeStrokeWidth": 0
+        },
+        {
+          "id": "background-shape-bigger",
+          "type": "shape",
+          "visible": true,
+          "shapeFillColor": "#962028",
+          "shapeStrokeColor": "#c9c9c9",
+          "shapeStrokeWidth": 0
+        }
+      ]
+    },
+    "isSelected": false
+  },
+  {
+    "uuid": "0bd1bd85-1f3b-4510-a757-caf0a6685acf",
+    "name": "End ranking ",
+    "visibility": true,
+    "intervalList": [
+      {
+        "triggerConfig": {
+          "name": "trigger of swim distance",
+          "triggerType": "start+duration",
+          "priority": 1,
+          "subjectStart": "distanceSwam",
+          "compareStart": "equal to (=)",
+          "valueStart": 95,
+          "subjectEnd": "duration",
+          "compareEnd": "equal to (=)",
+          "valueEnd": 2.5
+        },
+        "startFrame": 4800,
+        "endFrame": 4925,
+        "relativeStartMoment": 96,
+        "relativeEndMoment": 98.5,
+        "duration": 2.5,
+        "isMerged": false,
+        "mergedTriggers": []
+      }
+    ],
+    "triggerCompList": [
+      {
+        "name": "trigger of swim distance",
+        "triggerType": "start+duration",
+        "priority": 1,
+        "subjectStart": "distanceSwam",
+        "compareStart": "equal to (=)",
+        "valueStart": 95,
+        "subjectEnd": "duration",
+        "compareEnd": "equal to (=)",
+        "valueEnd": 2.5
+      }
+    ],
+    "embeddedVis": {
+      "visName": "rankingFlagLane",
+      "visIcon": "generalIconLane.png",
+      "dataName": "ranking",
+      "composeType": "individual",
+      "positionX": 450,
+      "positionXAndWidthRatio": 0.6232687,
+      "positionY": 10,
+      "positionYAndHeightRatio": 0.02534854,
+      "positionR": 0,
+      "positionS": 100,
+      "positionSRatio": 0.13850416,
+      "positionMove": false,
+      "editableElementList": [
+        {
+          "id": "text-ranking",
+          "type": "text",
+          "visible": true,
+          "fontSize": 28,
+          "fontFillColor": "#1D4662"
+        },
+        {
+          "id": "text-name",
+          "type": "text",
+          "visible": true,
+          "fontSize": 20,
+          "fontFillColor": "#1D4662"
+        },
+        {
+          "id": "icon-flag",
+          "type": "icon",
+          "visible": true,
+          "iconSize": 40
+        },
+        {
+          "id": "shape-bg-ranking",
+          "type": "shape",
+          "visible": true,
+          "shapeFillColor": "#D2A272",
+          "shapeStrokeColor": "#1D4662",
+          "shapeStrokeWidth": 0.5
+        },
+        {
+          "id": "shape-bg-name",
+          "type": "shape",
+          "visible": true,
+          "shapeFillColor": "#EDEDED",
+          "shapeFillOpacity": 0.7,
+          "shapeStrokeColor": "#1D4662",
+          "shapeStrokeWidth": 0.5
+        }
+      ]
+    },
+    "isSelected": false
+  },
+  {
+    "uuid": "f66bf484-d8ac-4040-93c3-3d1d31935165",
+    "name": "Lap distance",
+    "visibility": true,
+    "intervalList": [
+      {
+        "triggerConfig": {
+          "name": "during turn",
+          "triggerType": "start+end",
+          "subjectEnd": "distanceSwam",
+          "compareEnd": "equal to (=)",
+          "priority": 1,
+          "subjectStart": "distanceSwam",
+          "compareStart": "equal to (=)",
+          "valueStart": 40,
+          "valueEnd": 60
+        },
+        "startFrame": 3286,
+        "endFrame": 3829,
+        "relativeStartMoment": 65.72,
+        "relativeEndMoment": 76.58,
+        "duration": 10.86,
+        "isMerged": true,
+        "mergedTriggers": [
+          {
+            "name": "during turn",
+            "triggerType": "start+end",
+            "subjectEnd": "distanceSwam",
+            "compareEnd": "equal to (=)",
+            "priority": 1,
+            "subjectStart": "distanceSwam",
+            "compareStart": "equal to (=)",
+            "valueStart": 40,
+            "valueEnd": 60
+          },
+          {
+            "name": "trigger of turn",
+            "triggerType": "start+duration",
+            "subjectEnd": "duration",
+            "compareEnd": "equal to (=)",
+            "priority": 1,
+            "subjectStart": "event",
+            "compareStart": "equal to (=)",
+            "valueStart": "turn",
+            "valueEnd": 5
+          }
+        ]
+      }
+    ],
+    "triggerCompList": [
+      {
+        "name": "during turn",
+        "triggerType": "start+end",
+        "subjectEnd": "distanceSwam",
+        "compareEnd": "equal to (=)",
+        "priority": 1,
+        "subjectStart": "distanceSwam",
+        "compareStart": "equal to (=)",
+        "valueStart": 40,
+        "valueEnd": 60
+      },
+      {
+        "name": "trigger of turn",
+        "triggerType": "start+duration",
+        "subjectEnd": "duration",
+        "compareEnd": "equal to (=)",
+        "priority": 1,
+        "subjectStart": "event",
+        "compareStart": "equal to (=)",
+        "valueStart": "turn",
+        "valueEnd": 5
+      }
+    ],
+    "embeddedVis": {
+      "visName": "lapDistanceCorner",
+      "visIcon": "generalCorner.png",
+      "dataName": "lapDistance",
+      "composeType": "global",
+      "positionX": 630,
+      "positionXAndWidthRatio": 0.87257618,
+      "positionY": 338,
+      "positionYAndHeightRatio": 0.85678074,
+      "positionR": 0,
+      "positionS": 100,
+      "positionSRatio": 0.13850416,
+      "positionMove": false,
+      "editableElementList": [
+        {
+          "id": "text-1",
+          "type": "text",
+          "visible": true,
+          "fontSize": 10,
+          "fontFillColor": "#ffffff"
+        },
+        {
+          "id": "background-shape-1",
+          "type": "shape",
+          "visible": true,
+          "shapeFillColor": "#1B505D",
+          "shapeStrokeColor": "#c9c9c9",
+          "shapeStrokeWidth": 0
+        }
+      ]
+    },
+    "isSelected": false
+  },
+  {
+    "uuid": "bd8eaba9-13bf-4645-90c1-704a2d06e862",
+    "name": "WR Split",
+    "visibility": true,
+    "intervalList": [
+      {
+        "triggerConfig": {
+          "name": "before turn",
+          "triggerType": "start+end",
+          "subjectEnd": "distanceSwam",
+          "compareEnd": "equal to (=)",
+          "priority": 1,
+          "subjectStart": "distanceSwam",
+          "compareStart": "equal to (=)",
+          "valueStart": 40,
+          "valueEnd": 50
+        },
+        "startFrame": 3286,
+        "endFrame": 3829,
+        "relativeStartMoment": 65.72,
+        "relativeEndMoment": 76.58,
+        "duration": 10.86,
+        "isMerged": true,
+        "mergedTriggers": [
+          {
+            "name": "before turn",
+            "triggerType": "start+end",
+            "subjectEnd": "distanceSwam",
+            "compareEnd": "equal to (=)",
+            "priority": 1,
+            "subjectStart": "distanceSwam",
+            "compareStart": "equal to (=)",
+            "valueStart": 40,
+            "valueEnd": 50
+          },
+          {
+            "name": "trigger of turn",
+            "triggerType": "start+duration",
+            "subjectEnd": "duration",
+            "compareEnd": "equal to (=)",
+            "priority": 1,
+            "subjectStart": "event",
+            "compareStart": "equal to (=)",
+            "valueStart": "turn",
+            "valueEnd": 5
+          }
+        ]
+      }
+    ],
+    "triggerCompList": [
+      {
+        "name": "trigger of turn",
+        "triggerType": "start+duration",
+        "subjectEnd": "duration",
+        "compareEnd": "equal to (=)",
+        "priority": 1,
+        "subjectStart": "event",
+        "compareStart": "equal to (=)",
+        "valueStart": "turn",
+        "valueEnd": 5
+      },
+      {
+        "name": "before turn",
+        "triggerType": "start+end",
+        "subjectEnd": "distanceSwam",
+        "compareEnd": "equal to (=)",
+        "priority": 1,
+        "subjectStart": "distanceSwam",
+        "compareStart": "equal to (=)",
+        "valueStart": 40,
+        "valueEnd": 50
+      }
+    ],
+    "embeddedVis": {
+      "visName": "worldRecordSplitCorner",
+      "visIcon": "generalCorner.png",
+      "dataName": "worldRecord",
+      "triggerRecommendation": "This visualization usually appears during the turn.",
+      "composeType": "global",
+      "positionX": 30,
+      "positionXAndWidthRatio": 0.04155125,
+      "positionY": 370,
+      "positionYAndHeightRatio": 0.93789607,
+      "positionR": 0,
+      "positionS": 100,
+      "positionSRatio": 0.13850416,
+      "positionMove": false,
+      "editableElementList": [
+        {
+          "id": "text-1-spit-value",
+          "type": "text",
+          "visible": true,
+          "fontSize": 10,
+          "fontFillColor": "#ffffff"
+        },
+        {
+          "id": "shape-1-WR-text",
+          "type": "shape",
+          "visible": true,
+          "shapeFillColor": "#102C3D",
+          "shapeStrokeColor": "#c9c9c9",
+          "shapeStrokeWidth": 0
+        },
+        {
+          "id": "shape-2-WR-bg",
+          "type": "shape",
+          "visible": true,
+          "shapeFillColor": "#EEAB40",
+          "shapeStrokeColor": "#c9c9c9",
+          "shapeStrokeWidth": 0
+        },
+        {
+          "id": "shape-2-split",
+          "type": "shape",
+          "visible": true,
+          "shapeFillColor": "#ffffff",
+          "shapeStrokeColor": "#c9c9c9",
+          "shapeStrokeWidth": 0
+        },
+        {
+          "id": "background-shape-1",
+          "type": "shape",
+          "visible": true,
+          "shapeFillColor": "#102C3D",
+          "shapeStrokeColor": "#c9c9c9",
+          "shapeStrokeWidth": 0
+        }
+      ]
+    },
+    "isSelected": false
+  },
+  {
+    "uuid": "bb5d9190-e6ba-426d-aadf-df2a535b8b72",
+    "name": "WR line",
+    "visibility": true,
+    "intervalList": [
+      {
+        "triggerConfig": {
+          "name": "near end",
+          "triggerType": "start+end",
+          "subjectEnd": "distanceSwam",
+          "compareEnd": "equal to (=)",
+          "priority": 1,
+          "subjectStart": "distanceSwam",
+          "compareStart": "equal to (=)",
+          "valueStart": 70,
+          "valueEnd": 90
+        },
+        "startFrame": 4056,
+        "endFrame": 4656,
+        "relativeStartMoment": 81.12,
+        "relativeEndMoment": 93.12,
+        "duration": 12,
+        "isMerged": false,
+        "mergedTriggers": []
+      }
+    ],
+    "triggerCompList": [
+      {
+        "name": "near end",
+        "triggerType": "start+end",
+        "subjectEnd": "distanceSwam",
+        "compareEnd": "equal to (=)",
+        "priority": 1,
+        "subjectStart": "distanceSwam",
+        "compareStart": "equal to (=)",
+        "valueStart": 70,
+        "valueEnd": 90
+      }
+    ],
+    "embeddedVis": {
+      "visName": "worldRecordLine",
+      "visIcon": "generalCorner.png",
+      "dataName": "worldRecord",
+      "composeType": "global",
+      "positionX": 0,
+      "positionY": 0,
+      "positionR": 0,
+      "positionS": 100,
+      "positionSRatio": 0.13850416,
+      "positionMove": false,
+      "editableElementList": [
+        {
+          "id": "shape-1",
+          "type": "shape",
+          "visible": true,
+          "shapeFillColor": "#1B3038",
+          "shapeStrokeColor": "#c9c9c9",
+          "shapeStrokeWidth": 0
+        },
+        {
+          "id": "background-shape-1",
+          "type": "shape",
+          "visible": true,
+          "shapeFillColor": "#F0961D",
+          "shapeStrokeColor": "#c9c9c9",
+          "shapeStrokeWidth": 0
+        },
+        {
+          "id": "line-1",
+          "type": "shape",
+          "visible": true,
+          "shapeFillColor": "#c9c9c9",
+          "shapeStrokeColor": "#F0961D",
+          "shapeStrokeWidth": 2
+        }
+      ]
+    },
+    "isSelected": false
+  },
+  {
+    "uuid": "e9fa165f-e3e4-4e98-8160-8ef33f818dd4",
+    "name": "Ranking",
+    "visibility": true,
+    "intervalList": [
+      {
+        "triggerConfig": {
+          "name": "trigger of turn",
+          "triggerType": "start+duration",
+          "subjectEnd": "duration",
+          "compareEnd": "equal to (=)",
+          "priority": 1,
+          "subjectStart": "event",
+          "compareStart": "equal to (=)",
+          "valueStart": "turn",
+          "valueEnd": 5
+        },
+        "startFrame": 3579,
+        "endFrame": 3829,
+        "relativeStartMoment": 71.58,
+        "relativeEndMoment": 76.58,
+        "duration": 5,
+        "isMerged": false,
+        "mergedTriggers": []
+      }
+    ],
+    "triggerCompList": [
+      {
+        "name": "trigger of turn",
+        "triggerType": "start+duration",
+        "subjectEnd": "duration",
+        "compareEnd": "equal to (=)",
+        "priority": 1,
+        "subjectStart": "event",
+        "compareStart": "equal to (=)",
+        "valueStart": "turn",
+        "valueEnd": 5
+      }
+    ],
+    "embeddedVis": {
+      "visName": "rankingBarCorner",
+      "visIcon": "generalCorner.png",
+      "dataName": "ranking",
+      "composeType": "global",
+      "positionX": 30,
+      "positionXAndWidthRatio": 0.04155125,
+      "positionY": 30,
+      "positionYAndHeightRatio": 0.07604563,
+      "positionR": 0,
+      "positionS": 90,
+      "positionSRatio": 0.12465374,
+      "positionMove": false,
+      "editableElementList": [
+        {
+          "id": "background-shape-1",
+          "type": "shape",
+          "visible": true,
+          "shapeFillColor": "#062648",
+          "shapeStrokeColor": "#c9c9c9",
+          "shapeStrokeWidth": 0
+        },
+        {
+          "id": "background-shape-2",
+          "type": "shape",
+          "visible": true,
+          "shapeFillColor": "#BCE9EC",
+          "shapeStrokeColor": "#c9c9c9",
+          "shapeStrokeWidth": 0
+        },
+        {
+          "id": "text-1",
+          "type": "text",
+          "visible": true,
+          "fontFillColor": "#d3ca16",
+          "fontSize": 10
+        },
+        {
+          "id": "text-2",
+          "type": "text",
+          "visible": true,
+          "fontFillColor": "#062648",
+          "fontSize": 10
+        },
+        {
+          "id": "text-3",
+          "type": "text",
+          "visible": true,
+          "fontFillColor": "#062648",
+          "fontSize": 10
+        }
+      ]
+    },
+    "isSelected": false
+  },
+  {
+    "uuid": "efb1c62d-f505-480b-8be3-862458115883",
+    "name": "WR",
+    "visibility": true,
+    "intervalList": [
+      {
+        "triggerConfig": {
+          "name": "near end",
+          "triggerType": "start+end",
+          "subjectEnd": "distanceSwam",
+          "compareEnd": "equal to (=)",
+          "priority": 1,
+          "subjectStart": "distanceSwam",
+          "compareStart": "equal to (=)",
+          "valueStart": 85,
+          "valueEnd": 100
+        },
+        "startFrame": 4498,
+        "endFrame": 4977,
+        "relativeStartMoment": 89.96,
+        "relativeEndMoment": 99.54,
+        "duration": 9.580000000000013,
+        "isMerged": true,
+        "mergedTriggers": [
+          {
+            "name": "near end",
+            "triggerType": "start+end",
+            "subjectEnd": "distanceSwam",
+            "compareEnd": "equal to (=)",
+            "priority": 1,
+            "subjectStart": "distanceSwam",
+            "compareStart": "equal to (=)",
+            "valueStart": 85,
+            "valueEnd": 100
+          },
+          {
+            "name": "after end",
+            "triggerType": "start+duration",
+            "subjectEnd": "duration",
+            "compareEnd": "equal to (=)",
+            "priority": 1,
+            "subjectStart": "event",
+            "compareStart": "equal to (=)",
+            "valueStart": "finish",
+            "valueEnd": 2
+          }
+        ]
+      }
+    ],
+    "triggerCompList": [
+      {
+        "name": "near end",
+        "triggerType": "start+end",
+        "subjectEnd": "distanceSwam",
+        "compareEnd": "equal to (=)",
+        "priority": 1,
+        "subjectStart": "distanceSwam",
+        "compareStart": "equal to (=)",
+        "valueStart": 85,
+        "valueEnd": 100
+      },
+      {
+        "name": "after end",
+        "triggerType": "start+duration",
+        "subjectEnd": "duration",
+        "compareEnd": "equal to (=)",
+        "priority": 1,
+        "subjectStart": "event",
+        "compareStart": "equal to (=)",
+        "valueStart": "finish",
+        "valueEnd": 2
+      }
+    ],
+    "embeddedVis": {
+      "visName": "worldRecordCorner",
+      "visIcon": "generalCorner.png",
+      "dataName": "worldRecord",
+      "composeType": "global",
+      "positionX": 30,
+      "positionXAndWidthRatio": 0.04155125,
+      "positionY": 350,
+      "positionYAndHeightRatio": 0.88719899,
+      "positionR": 0,
+      "positionS": 100,
+      "positionSRatio": 0.13850416,
+      "positionMove": false,
+      "editableElementList": [
+        {
+          "id": "text-1-WR-value",
+          "type": "text",
+          "visible": true,
+          "fontSize": 10,
+          "fontFillColor": "#ffffff"
+        },
+        {
+          "id": "shape-1-WR-text",
+          "type": "shape",
+          "visible": true,
+          "shapeFillColor": "#102C3D",
+          "shapeStrokeColor": "#c9c9c9",
+          "shapeStrokeWidth": 0
+        },
+        {
+          "id": "shape-2-WR-bg",
+          "type": "shape",
+          "visible": true,
+          "shapeFillColor": "#EEAB40",
+          "shapeStrokeColor": "#c9c9c9",
+          "shapeStrokeWidth": 0
+        },
+        {
+          "id": "background-shape-1",
+          "type": "shape",
+          "visible": true,
+          "shapeFillColor": "#102C3D",
+          "shapeStrokeColor": "#c9c9c9",
+          "shapeStrokeWidth": 0
+        }
+      ]
+    },
+    "isSelected": false
+  },
+  {
+    "uuid": "efb1c62d-f505-480b-8be3-862458115883",
+    "name": "OR",
+    "visibility": true,
+    "intervalList": [
+      {
+        "triggerConfig": {
+          "name": "near end",
+          "triggerType": "start+end",
+          "subjectEnd": "distanceSwam",
+          "compareEnd": "equal to (=)",
+          "priority": 1,
+          "subjectStart": "distanceSwam",
+          "compareStart": "equal to (=)",
+          "valueStart": 85,
+          "valueEnd": 100
+        },
+        "startFrame": 4498,
+        "endFrame": 4977,
+        "relativeStartMoment": 89.96,
+        "relativeEndMoment": 99.54,
+        "duration": 9.580000000000013,
+        "isMerged": true,
+        "mergedTriggers": [
+          {
+            "name": "near end",
+            "triggerType": "start+end",
+            "subjectEnd": "distanceSwam",
+            "compareEnd": "equal to (=)",
+            "priority": 1,
+            "subjectStart": "distanceSwam",
+            "compareStart": "equal to (=)",
+            "valueStart": 85,
+            "valueEnd": 100
+          },
+          {
+            "name": "after end",
+            "triggerType": "start+duration",
+            "subjectEnd": "duration",
+            "compareEnd": "equal to (=)",
+            "priority": 1,
+            "subjectStart": "event",
+            "compareStart": "equal to (=)",
+            "valueStart": "finish",
+            "valueEnd": 2
+          }
+        ]
+      }
+    ],
+    "triggerCompList": [
+      {
+        "name": "near end",
+        "triggerType": "start+end",
+        "subjectEnd": "distanceSwam",
+        "compareEnd": "equal to (=)",
+        "priority": 1,
+        "subjectStart": "distanceSwam",
+        "compareStart": "equal to (=)",
+        "valueStart": 85,
+        "valueEnd": 100
+      },
+      {
+        "name": "after end",
+        "triggerType": "start+duration",
+        "subjectEnd": "duration",
+        "compareEnd": "equal to (=)",
+        "priority": 1,
+        "subjectStart": "event",
+        "compareStart": "equal to (=)",
+        "valueStart": "finish",
+        "valueEnd": 2
+      }
+    ],
+    "embeddedVis": {
+      "visName": "olympicRecordCorner",
+      "visIcon": "generalCorner.png",
+      "dataName": "olympicRecord",
+      "triggerRecommendation": "This visualization usually appears before the race end.",
+      "composeType": "global",
+      "positionX": 30,
+      "positionXAndWidthRatio": 0.04155125,
+      "positionY": 370,
+      "positionYAndHeightRatio": 0.93789607,
+      "positionR": 0,
+      "positionS": 100,
+      "positionSRatio": 0.13850416,
+      "positionMove": false,
+      "editableElementList": [
+        {
+          "id": "text-1-OR-value",
+          "type": "text",
+          "visible": true,
+          "fontSize": 10,
+          "fontFillColor": "#ffffff"
+        },
+        {
+          "id": "shape-1-OR-text",
+          "type": "shape",
+          "visible": true,
+          "shapeFillColor": "#102C3D",
+          "shapeStrokeColor": "#c9c9c9",
+          "shapeStrokeWidth": 0
+        },
+        {
+          "id": "shape-2-OR-bg",
+          "type": "shape",
+          "visible": true,
+          "shapeFillColor": "#828F9A",
+          "shapeStrokeColor": "#c9c9c9",
+          "shapeStrokeWidth": 0
+        },
+        {
+          "id": "background-shape-1",
+          "type": "shape",
+          "visible": true,
+          "shapeFillColor": "#102C3D",
+          "shapeStrokeColor": "#c9c9c9",
+          "shapeStrokeWidth": 0
+        }
+      ]
+    },
+    "isSelected": false
+  },
+  {
+    "uuid": "a351aeb6-2427-4b6a-9a83-22c5a9fb6aa8",
+    "name": "Top3's speed",
+    "visibility": true,
+    "intervalList": [
+      {
+        "triggerConfig": {
+          "name": "trigger of swim distance",
+          "triggerType": "start+end",
+          "priority": 1,
+          "subjectStart": "distanceSwam",
+          "compareStart": "equal to (=)",
+          "valueStart": 25,
+          "subjectEnd": "distanceSwam",
+          "compareEnd": "equal to (=)",
+          "valueEnd": 50
+        },
+        "startFrame": 2880,
+        "endFrame": 3580,
+        "relativeStartMoment": 57.6,
+        "relativeEndMoment": 71.6,
+        "duration": 14,
+        "isMerged": false,
+        "mergedTriggers": []
+      }
+    ],
+    "triggerCompList": [
+      {
+        "name": "trigger of swim distance",
+        "triggerType": "start+end",
+        "priority": 1,
+        "subjectStart": "distanceSwam",
+        "compareStart": "equal to (=)",
+        "valueStart": 25,
+        "subjectEnd": "distanceSwam",
+        "compareEnd": "equal to (=)",
+        "valueEnd": 50
+      }
+    ],
+    "embeddedVis": {
+      "visName": "top3SpeedLane",
+      "visIcon": "generalTextLane.png",
+      "dataName": "currentSpeed",
+      "composeType": "individual",
+      "positionX": 60,
+      "positionXAndWidthRatio": 0.08310249,
+      "positionY": 8,
+      "positionR": 0,
+      "positionS": 100,
+      "positionSRatio": 0.13850416,
+      "positionMove": true,
+      "editableElementList": [
+        {
+          "id": "text-speed",
+          "type": "text",
+          "visible": true,
+          "fontSize": 20,
+          "fontFillColor": "#1D4662"
+        },
+        {
+          "id": "icon-flag",
+          "type": "icon",
+          "visible": true,
+          "iconSize": 40
+        },
+        {
+          "id": "shape-bg-speed",
+          "type": "shape",
+          "visible": true,
+          "shapeFillColor": "#E9E9E9",
+          "shapeStrokeColor": "#1D4662",
+          "shapeStrokeWidth": 0
+        }
+      ],
+      "positionYAndHeightRatio": 0.028369580274276215
+    },
+    "isSelected": false
+  },
+  {
+    "uuid": "3737121c-8541-4bd0-adc3-aa268271fda0",
+    "name": "Distance gap",
+    "visibility": true,
+    "intervalList": [
+      {
+        "triggerConfig": {
+          "name": "trigger of swim distance",
+          "triggerType": "start+end",
+          "priority": 1,
+          "subjectStart": "distanceSwam",
+          "compareStart": "equal to (=)",
+          "valueStart": 75,
+          "subjectEnd": "distanceSwam",
+          "compareEnd": "equal to (=)",
+          "valueEnd": 94
+        },
+        "startFrame": 4200,
+        "endFrame": 4773,
+        "relativeStartMoment": 84,
+        "relativeEndMoment": 95.46,
+        "duration": 11.46,
+        "isMerged": false,
+        "mergedTriggers": []
+      }
+    ],
+    "triggerCompList": [
+      {
+        "name": "trigger of swim distance",
+        "triggerType": "start+end",
+        "priority": 1,
+        "subjectStart": "distanceSwam",
+        "compareStart": "equal to (=)",
+        "valueStart": 75,
+        "subjectEnd": "distanceSwam",
+        "compareEnd": "equal to (=)",
+        "valueEnd": 94
+      }
+    ],
+    "embeddedVis": {
+      "visName": "top3DistanceGapLane",
+      "visIcon": "generalTextLane.png",
+      "dataName": "distanceToLeader",
+      "composeType": "individual",
+      "positionX": 0,
+      "positionY": 8,
+      "positionR": 0,
+      "positionS": 100,
+      "positionSRatio": 0.13850416,
+      "positionMove": true,
+      "editableElementList": [
+        {
+          "id": "text-distance-gap",
+          "type": "text",
+          "visible": true,
+          "fontSize": 20,
+          "fontFillColor": "#1D4662"
+        },
+        {
+          "id": "icon-flag",
+          "type": "icon",
+          "visible": true,
+          "iconSize": 40
+        },
+        {
+          "id": "shape-bg-distance-gap",
+          "type": "shape",
+          "visible": true,
+          "shapeFillColor": "#E9E9E9",
+          "shapeStrokeColor": "#1D4662",
+          "shapeStrokeWidth": 0
+        }
+      ],
+      "positionYAndHeightRatio": 0.028369580274276215
+    },
+    "isSelected": false
+  },
+  {
+    "uuid": "fa10caac-a434-4328-89c2-c9152e4f100d",
+    "name": "Distance swum",
+    "visibility": false,
+    "intervalList": null,
+    "triggerCompList": null,
+    "embeddedVis": {
+      "visName": "distanceSwumTextCorner",
+      "visIcon": "generalCorner.png",
+      "dataName": "distanceSwum",
+      "triggerRecommendation": "This visualization usually appears during the whole race.",
+      "composeType": "global",
+      "positionX": 0,
+      "positionY": 0,
+      "positionR": 0,
+      "positionS": 100,
+      "positionSRatio": 0.13850416,
+      "positionMove": false,
+      "editableElementList": [
+        {
+          "id": "text-1",
+          "type": "text",
+          "visible": true,
+          "fontSize": 10,
+          "fontFillColor": "#ffffff"
+        },
+        {
+          "id": "background-shape-1",
+          "type": "shape",
+          "visible": true,
+          "shapeFillColor": "#1B505D",
+          "shapeStrokeColor": "#c9c9c9",
+          "shapeStrokeWidth": 0
+        }
+      ]
+    },
+    "isSelected": false
+  }
+]

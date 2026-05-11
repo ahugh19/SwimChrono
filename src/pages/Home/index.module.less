@@ -1,0 +1,92 @@
+.home {
+  display: grid;
+  grid-template-areas:
+    'header header'
+    'video controllers'
+    'layers controllers';
+  grid-template-columns: auto var(--width-controller-panel);
+  grid-template-rows: var(--height-header) auto var(--height-layer-panel);
+  // grid-template-rows: var(--height-header) minmax(0, 1fr) var(--height-layer-panel);
+
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  // overflow: hidden;
+
+  background-color: var(--background-color);
+
+  color: var(--text-color);
+
+  .area() {
+    border: 1px solid var(--border-color-soft);
+    padding: var(--padding);
+  }
+
+  .header {
+    .area;
+    grid-area: header;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 4px !important;
+    gap: 12px;
+    padding-left: 12px !important;
+
+    * {
+      display: flex;
+      flex-direction: row;
+      gap: 8px;
+      cursor: pointer;
+    }
+
+    img {
+      height: 10px;
+    }
+
+    #logo-container {
+      height: 24px;
+      background: #bcbcbc;
+      border-radius: 2px;
+      position: absolute;
+      right: 4px;
+    }
+
+    #logo-container img {
+      height: 20px;
+      margin: 2px;
+    }
+  }
+
+  .videoPanel {
+    .area;
+    background-color: var(--background-color);
+    grid-area: video;
+    height: calc(100vh - var(--height-header) - var(--height-layer-panel));
+    width: calc(100vw - var(--width-controller-panel));
+    padding: 20px 10px 55px 10px;
+    overflow: hidden;
+  }
+
+  .controllerPanel {
+    .area;
+    background-color: var(--background-color);
+    grid-area: controllers;
+    overflow: auto;
+    max-width: var(--width-controller-panel);
+    overflow-x: hidden;
+  }
+
+  .layerPanel {
+    .area;
+    background-color: var(--background-color);
+    grid-area: layers;
+    overflow: hidden;
+    height: var(--height-layer-panel);
+  }
+
+  .videoPanel, .controllerPanel, .layerPanel {
+    min-width: 0;
+    min-height: 0;
+  }
+}

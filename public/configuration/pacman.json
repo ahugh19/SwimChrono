@@ -1,0 +1,324 @@
+[
+  {
+    "uuid": "1498a0f7-f57e-4a81-aa08-8431de668da9",
+    "name": "Pac man",
+    "visibility": true,
+    "intervalList": null,
+    "triggerCompList": null,
+    "embeddedVis": {
+      "visName": "distanceToLeaderPacManLane",
+      "visIcon": "generalIconLane.png",
+      "dataName": "distanceToLeader",
+      "composeType": "individual",
+      "positionX": 70,
+      "positionXAndWidthRatio": 0.09695291,
+      "positionY": 2,
+      "positionYAndHeightRatio": 0.007092395068569054,
+      "positionR": 0,
+      "positionS": 100,
+      "positionSRatio": 0.13850416,
+      "positionMove": true,
+      "editableElementList": [
+        {
+          "id": "shape-pac-man",
+          "type": "shape",
+          "visible": true,
+          "shapeFillColor": "yellow",
+          "shapeStrokeColor": "#000000",
+          "shapeStrokeWidth": 0
+        },
+        {
+          "id": "shape-food",
+          "type": "shape",
+          "visible": true,
+          "shapeFillColor": "#ffffff",
+          "shapeStrokeColor": "#000000",
+          "shapeStrokeWidth": 0
+        }
+      ]
+    },
+    "isSelected": false
+  },
+  {
+    "uuid": "8aa9b827-4092-4ac6-b57a-d0cc25c6c6df",
+    "name": "Ranking",
+    "visibility": false,
+    "intervalList": null,
+    "triggerCompList": null,
+    "embeddedVis": {
+      "visName": "rankingTextLane",
+      "visIcon": "generalTextLane.png",
+      "dataName": "ranking",
+      "composeType": "individual",
+      "positionX": 0,
+      "positionY": 30,
+      "positionYAndHeightRatio": 0.07604563,
+      "positionR": 0,
+      "positionS": 100,
+      "positionSRatio": 0.13850416,
+      "positionMove": true,
+      "editableElementList": [
+        {
+          "id": "text-1",
+          "type": "text",
+          "visible": true,
+          "fontSize": 20,
+          "fontFillColor": "#ffffff"
+        }
+      ]
+    },
+    "isSelected": false
+  },
+  {
+    "uuid": "adf9988e-1fb0-440b-b9a1-a2f6f33233b0",
+    "name": "Text",
+    "visibility": true,
+    "intervalList": [
+      {
+        "triggerConfig": {
+          "name": "trigger of distance",
+          "triggerType": "start+end",
+          "subjectEnd": "distanceSwam",
+          "compareEnd": "equal to (=)",
+          "priority": 1,
+          "subjectStart": "distanceSwam",
+          "compareStart": "equal to (=)",
+          "valueStart": 55,
+          "valueEnd": 87
+        },
+        "startFrame": 3651,
+        "endFrame": 4566,
+        "relativeStartMoment": 73.02,
+        "relativeEndMoment": 91.32,
+        "duration": 18.3,
+        "isMerged": false,
+        "mergedTriggers": []
+      }
+    ],
+    "triggerCompList": [
+      {
+        "name": "trigger of distance",
+        "triggerType": "start+end",
+        "subjectEnd": "distanceSwam",
+        "compareEnd": "equal to (=)",
+        "priority": 1,
+        "subjectStart": "distanceSwam",
+        "compareStart": "equal to (=)",
+        "valueStart": 55,
+        "valueEnd": 87
+      }
+    ],
+    "embeddedVis": {
+      "visName": "VisCustomizedTextGlobal",
+      "visIcon": "generalTextCustomized.png",
+      "dataName": "distanceSwum",
+      "composeType": "global",
+      "positionX": 490,
+      "positionXAndWidthRatio": 0.67867036,
+      "positionY": 150,
+      "positionYAndHeightRatio": 0.38022814,
+      "positionR": 10,
+      "positionS": 100,
+      "positionSRatio": 0.13850416,
+      "positionMove": false,
+      "customizedText": "Come on!",
+      "editableElementList": [
+        {
+          "id": "text-1",
+          "type": "text",
+          "visible": true,
+          "fontFillColor": "#ffffff",
+          "fontSize": 20
+        }
+      ]
+    },
+    "isSelected": false
+  },
+  {
+    "uuid": "5bb74e80-4246-423b-95df-69d5b39e4e0e",
+    "name": "Happy",
+    "visibility": true,
+    "intervalList": [
+      {
+        "triggerConfig": {
+          "name": "trigger of celebration",
+          "triggerType": "start+duration",
+          "subjectEnd": "duration",
+          "compareEnd": "equal to (=)",
+          "priority": 1,
+          "subjectStart": "distanceSwam",
+          "compareStart": "equal to (=)",
+          "valueStart": 87,
+          "valueEnd": 5
+        },
+        "startFrame": 4561,
+        "endFrame": 4811,
+        "relativeStartMoment": 91.22,
+        "relativeEndMoment": 96.22,
+        "duration": 5,
+        "isMerged": false,
+        "mergedTriggers": []
+      }
+    ],
+    "triggerCompList": [
+      {
+        "name": "trigger of celebration",
+        "triggerType": "start+duration",
+        "subjectEnd": "duration",
+        "compareEnd": "equal to (=)",
+        "priority": 1,
+        "subjectStart": "distanceSwam",
+        "compareStart": "equal to (=)",
+        "valueStart": 87,
+        "valueEnd": 5
+      }
+    ],
+    "embeddedVis": {
+      "visName": "VisCustomizedIconGlobal",
+      "visIcon": "generalIconCustomized.png",
+      "dataName": "distanceSwum",
+      "composeType": "global",
+      "positionX": 350,
+      "positionXAndWidthRatio": 0.48476454,
+      "positionY": 180,
+      "positionYAndHeightRatio": 0.45627376,
+      "positionR": 0,
+      "positionS": 60,
+      "positionSRatio": 0.08310249,
+      "positionMove": false,
+      "editableElementList": [],
+      "customizedIcon": {
+        "svgContent": "<?xml version=\"1.0\" standalone=\"no\"?><!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\"><svg t=\"1741963152763\" class=\"icon\" viewBox=\"0 0 1024 1024\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" p-id=\"6184\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" width=\"200\" height=\"200\"><path d=\"M483.555556 540.444444m-483.555556 0a483.555556 483.555556 0 1 0 967.111111 0 483.555556 483.555556 0 1 0-967.111111 0Z\" fill=\"#FFCC4D\" p-id=\"6185\" data-spm-anchor-id=\"a313x.search_index.0.i0.66f83a8154owyU\" class=\"selected\"></path><path d=\"M455.082667 739.555556a71.111111 56.888889 90 1 0 113.777777 0 71.111111 56.888889 90 1 0-113.777777 0Z\" fill=\"#664500\" p-id=\"6186\"></path><path d=\"M230.712889 608.227556a28.444444 28.444444 0 0 1-24.035556-43.605334c26.055111-41.329778 105.272889-112.014222 218.737778-84.252444a28.444444 28.444444 0 0 1-13.539555 55.239111c-102.513778-25.088-156.501333 58.481778-157.041778 59.335111a28.472889 28.472889 0 0 1-24.120889 13.283556z m340.565333-106.439112a28.444444 28.444444 0 0 1-18.033778-50.460444c90.339556-74.069333 192.341333-44.430222 233.671112-18.375111a28.444444 28.444444 0 0 1-30.264889 48.184889c-3.925333-2.389333-86.812444-51.854222-167.367111 14.193778a28.216889 28.216889 0 0 1-18.005334 6.456888z\" fill=\"#664500\" p-id=\"6187\"></path><path d=\"M379.619556 889.543111a21.333333 21.333333 0 0 1-20.536889-27.136c12.430222-43.804444 7.338667-86.158222-13.937778-116.224-14.136889-19.968-34.275556-32.170667-55.267556-33.507555-11.776-0.711111-20.707556-10.865778-19.968-22.613334s10.837333-21.361778 22.613334-19.939555c33.934222 2.104889 65.792 20.849778 87.409777 51.399111 28.757333 40.647111 36.124444 96.227556 20.167112 152.490666a21.304889 21.304889 0 0 1-20.48 15.530667z m313.941333-87.068444a21.162667 21.162667 0 0 1-11.719111-3.527111c-33.194667-21.902222-51.768889-60.216889-50.972445-105.102223 0.824889-46.506667 23.011556-89.685333 56.433778-110.051555a21.276444 21.276444 0 0 1 29.297778 7.139555 21.276444 21.276444 0 0 1-7.139556 29.297778c-20.906667 12.743111-35.384889 42.638222-35.953777 74.353778-0.568889 30.008889 11.064889 55.068444 31.800888 68.750222a21.333333 21.333333 0 0 1-11.747555 39.139556z\" fill=\"#E2A62D\" p-id=\"6188\"></path><path d=\"M488.647111 77.368889a9.244444 9.244444 0 0 0-5.376-2.588445S30.321778-11.207111 10.723556 6.087111C-8.846222 23.409778 21.048889 483.498667 21.048889 483.498667c0.142222 2.304 0.654222 4.266667 1.905778 5.660444 17.180444 19.456 135.338667-57.002667 263.936-170.695111 128.625778-113.720889 218.936889-221.639111 201.756444-241.095111z\" fill=\"#DD2E44\" p-id=\"6189\"></path><path d=\"M9.927111 7.708444a13.824 13.824 0 0 0-1.080889 3.498667C13.368889 50.204444 57.059556 371.086222 84.280889 471.381333c40.846222-22.840889 82.346667-53.873778 131.100444-92.529777C173.966222 303.047111 32.938667 4.152889 9.927111 7.708444z\" fill=\"#EA596E\" p-id=\"6190\"></path><path d=\"M850.545778 831.402667l-300.743111-37.063111c-32.142222-2.901333-88.661333-3.185778-85.76-54.101334 2.645333-46.165333 58.026667-39.054222 98.958222-32.995555l302.592 50.460444-15.047111 73.699556z\" fill=\"#3B88C3\" p-id=\"6191\"></path><path d=\"M865.564444 757.731556l-120.092444-20.593778c-14.051556-2.531556-26.567111 18.403556-27.192889 40.561778-0.711111 24.632889 6.456889 37.091556 20.650667 39.992888l117.873778 14.563556 8.760888-74.524444z\" fill=\"#88C9F9\" p-id=\"6192\"></path><path d=\"M993.223111 749.255111l-74.581333 68.579556-133.319111-144.981334 74.581333-68.579555a95.914667 95.914667 0 0 1 135.139556 5.660444l3.84 4.181334a95.943111 95.943111 0 0 1-5.660445 135.139555z\" fill=\"#3B88C3\" p-id=\"6193\"></path><path d=\"M793.943807 798.712066a98.474667 78.791111 47.403 1 0 116.001399-106.657545 98.474667 78.791111 47.403 1 0-116.001399 106.657545Z\" fill=\"#88C9F9\" p-id=\"6194\"></path><path d=\"M822.944157 772.04768a59.079111 39.395556 47.403 1 0 58.000699-53.328773 59.079111 39.395556 47.403 1 0-58.000699 53.328773Z\" fill=\"#226699\" p-id=\"6195\"></path><path d=\"M71.111111 952.888889m-42.666667 0a42.666667 42.666667 0 1 0 85.333334 0 42.666667 42.666667 0 1 0-85.333334 0Z\" fill=\"#55ACEE\" p-id=\"6196\"></path><path d=\"M824.888889 56.888889m-56.888889 0a56.888889 56.888889 0 1 0 113.777778 0 56.888889 56.888889 0 1 0-113.777778 0Z\" fill=\"#55ACEE\" p-id=\"6197\"></path><path d=\"M138.353778 831.886222L71.850667 672.142222 11.719111 844.088889zM739.555556 142.222222l-113.777778 28.444445 28.444444-113.777778z\" fill=\"#EA596E\" p-id=\"6198\"></path><path d=\"M910.193778 369.777778L1024 227.527111 938.666667 170.666667z\" fill=\"#77B255\" p-id=\"6199\"></path></svg>",
+        "size": 1,
+        "visible": true
+      }
+    },
+    "isSelected": false
+  },
+  {
+    "uuid": "20ba8c45-74c0-4e27-8846-1303cd36fce8",
+    "name": "Heart",
+    "visibility": true,
+    "intervalList": [
+      {
+        "triggerConfig": {
+          "name": "trigger of fighting",
+          "triggerType": "start+end",
+          "subjectEnd": "distanceSwam",
+          "compareEnd": "equal to (=)",
+          "priority": 1,
+          "subjectStart": "distanceSwam",
+          "compareStart": "equal to (=)",
+          "valueStart": 0,
+          "valueEnd": 87
+        },
+        "startFrame": 2360,
+        "endFrame": 4566,
+        "relativeStartMoment": 47.2,
+        "relativeEndMoment": 91.32,
+        "duration": 44.12,
+        "isMerged": false,
+        "mergedTriggers": []
+      }
+    ],
+    "triggerCompList": [
+      {
+        "name": "trigger of fighting",
+        "triggerType": "start+end",
+        "subjectEnd": "distanceSwam",
+        "compareEnd": "equal to (=)",
+        "priority": 1,
+        "subjectStart": "distanceSwam",
+        "compareStart": "equal to (=)",
+        "valueStart": 0,
+        "valueEnd": 87
+      }
+    ],
+    "embeddedVis": {
+      "visName": "VisCustomizedIconGlobal",
+      "visIcon": "generalIconCustomized.png",
+      "dataName": "elapsedTime",
+      "composeType": "global",
+      "positionX": 50,
+      "positionXAndWidthRatio": 0.06925208,
+      "positionY": 280,
+      "positionYAndHeightRatio": 0.70975919,
+      "positionR": 0,
+      "positionS": 100,
+      "positionSRatio": 0.13850416,
+      "positionMove": false,
+      "editableElementList": [],
+      "customizedIcon": {
+        "svgContent": "<?xml version=\"1.0\" standalone=\"no\"?><!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\"><svg t=\"1741941682472\" class=\"icon\" viewBox=\"0 0 1024 1024\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" p-id=\"32779\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" width=\"200\" height=\"200\"><path d=\"M621.0048 807.9872h-71.3728v-110.7968H463.4624v110.7968H392.0896a51.712 51.712 0 1 0 0 103.424h228.9152a51.712 51.712 0 0 0 0-103.424z\" fill=\"#FF6C73\" p-id=\"32780\"></path><path d=\"M506.5216 738.4064v64.8704a24.4224 24.4224 0 0 0 24.4224 24.3712h83.8144s17.5616 4.4032 17.5616 27.1872c0 19.712-22.9376 20.8384-57.7536 20.8384H404.48a119.808 119.808 0 0 1-64.1024-15.9744c11.1616 32.1024 23.04 48.4352 147.5072 48.4352s187.3408 0 184.832-48.4352-126.5152-59.2384-126.5152-59.2384l-4.4544-72.2432z\" fill=\"#FF4E51\" p-id=\"32781\"></path><path d=\"M621.0048 931.84H392.0896a72.192 72.192 0 1 1 0-144.3328h50.8928v-90.3168a20.48 20.48 0 0 1 20.48-20.48h86.1696a20.48 20.48 0 0 1 20.48 20.48v90.3168h50.8928a72.192 72.192 0 1 1 0 144.3328z m-228.9152-103.3728a31.232 31.232 0 1 0 0 62.4128h228.9152a31.232 31.232 0 1 0 0-62.4128h-71.3728a20.48 20.48 0 0 1-20.48-20.48v-90.3168h-45.2096v90.3168a20.48 20.48 0 0 1-20.48 20.48z\" fill=\"#211D38\" p-id=\"32782\"></path><path d=\"M237.9776 502.528h34.0992V234.1888H171.3152a66.56 66.56 0 0 0-66.56 66.56v68.4544a133.12 133.12 0 0 0 133.2224 133.3248zM785.2032 502.528h-34.048V234.1888h100.7104a66.56 66.56 0 0 1 66.56 66.56v68.4544a133.12 133.12 0 0 1-133.2224 133.3248z\" fill=\"#FF6C73\" p-id=\"32783\"></path><path d=\"M167.1168 242.176v193.3824s-29.44-7.1168-52.2752-44.3904c15.36 52.6336 41.3696 97.28 99.1232 101.3248-5.12-95.4368-5.12-250.3168-5.12-250.3168zM871.168 242.8416V368.64c0 35.2256-20.48 84.224-53.8624 96-5.12 26.9824-7.168 35.84-7.168 35.84S911.36 459.008 911.36 371.5072V266.24z\" fill=\"#FF4E51\" p-id=\"32784\"></path><path d=\"M272.0768 523.008h-34.0992a154.0096 154.0096 0 0 1-153.6-153.6V300.8512a87.04 87.04 0 0 1 87.04-87.04h100.6592a20.48 20.48 0 0 1 20.48 20.48v268.2368a20.48 20.48 0 0 1-20.48 20.48zM171.3152 254.6688a46.08 46.08 0 0 0-46.08 46.08v68.4544a112.9984 112.9984 0 0 0 112.64 112.64h13.6192V254.6688zM785.2032 523.008h-34.048a20.48 20.48 0 0 1-20.48-20.48V234.1888a20.48 20.48 0 0 1 20.48-20.48h100.7104a87.04 87.04 0 0 1 87.04 87.04v68.4544a153.9584 153.9584 0 0 1-153.7024 153.8048z m-13.568-40.96h13.568a112.9472 112.9472 0 0 0 112.64-112.64V300.8512a46.08 46.08 0 0 0-46.08-46.08h-80.128z\" fill=\"#211D38\" p-id=\"32785\"></path><path d=\"M256 120.9344h500.6336a45.1072 45.1072 0 0 1 45.1072 45.1072v267.5712a295.424 295.424 0 0 1-295.424 295.424 295.424 295.424 0 0 1-295.424-295.424V166.0416A45.1072 45.1072 0 0 1 256 120.9344z\" fill=\"#FAC573\" p-id=\"32786\"></path><path d=\"M737.8432 138.7008v307.2c0 58.7776-43.5712 215.04-215.9616 226.5088s-221.1328-53.6576-246.8352-83.968c38.4512 64.7168 103.7824 144.0256 246.8352 144.0256s295.424-130.3552 295.424-293.12V143.36z\" fill=\"#EF981A\" p-id=\"32787\"></path><path d=\"M506.5216 749.5168a316.2112 316.2112 0 0 1-315.8528-315.904V166.0416A65.6384 65.6384 0 0 1 256 100.4544h500.6336a65.6384 65.6384 0 0 1 65.5872 65.5872v267.5712a316.2624 316.2624 0 0 1-315.6992 315.904zM256 141.4144a24.6272 24.6272 0 0 0-24.576 24.6272v267.5712a274.944 274.944 0 1 0 549.8368 0V166.0416a24.6784 24.6784 0 0 0-24.6272-24.6272z\" fill=\"#211D38\" p-id=\"32788\"></path><path d=\"M533.8624 268.032l20.1216 40.704a30.72 30.72 0 0 0 22.9376 16.6912l44.9024 6.5024a30.72 30.72 0 0 1 16.896 52.0704l-32.512 31.6928a30.72 30.72 0 0 0-8.7552 26.9824l7.68 44.7488a30.72 30.72 0 0 1-44.2368 32.1024l-40.192-21.0944a30.72 30.72 0 0 0-28.3648 0l-40.192 21.0944a30.72 30.72 0 0 1-44.1856-32.1024l7.68-44.7488a30.72 30.72 0 0 0-8.7552-26.9824L374.3744 384a30.72 30.72 0 0 1 16.8448-51.968l44.9536-6.5024a30.72 30.72 0 0 0 22.9376-16.6912l20.1216-40.704a30.4128 30.4128 0 0 1 54.6304-0.1024z\" fill=\"#FF6C73\" p-id=\"32789\"></path><path d=\"M492.6976 268.9536l32.256 65.9456A44.544 44.544 0 0 0 558.08 359.424l42.9568 6.6048-47.4112 54.272 12.0832 57.4976-41.8816-16.9984a32.256 32.256 0 0 0-25.9584 0.6656l-56.32 26.3168-15.36-27.0848-14.3872 44.0832 27.9552 12.3392 74.8544-26.7776 74.1888 32.6656 14.0288-89.344 45.1072-80.0768-93.952-44.8512L506.5728 250.88z\" fill=\"#FF4E51\" p-id=\"32790\"></path><path d=\"M575.1296 543.488a50.5856 50.5856 0 0 1-23.7568-5.9392l-40.192-21.0944a9.8816 9.8816 0 0 0-9.2672 0L461.6704 537.6a50.8928 50.8928 0 0 1-73.8816-53.7088l7.68-44.8a9.9328 9.9328 0 0 0-2.8672-9.0112l-32.5632-31.6928a51.2 51.2 0 0 1 28.2624-87.04l44.9536-6.5024a9.8816 9.8816 0 0 0 7.4752-5.4784l20.1216-40.96a51.2 51.2 0 0 1 91.392 0l20.0704 40.96a10.24 10.24 0 0 0 7.5264 5.4784l44.8 6.8096a51.2 51.2 0 0 1 28.2112 87.04L620.4928 430.08a9.9328 9.9328 0 0 0-2.8672 8.8064l7.68 44.8a51.2 51.2 0 0 1-50.176 59.5968z m-68.608-69.1712a50.4832 50.4832 0 0 1 23.7056 5.888l40.192 21.0944a10.24 10.24 0 0 0 14.5408-10.24l-7.68-44.7488a50.8416 50.8416 0 0 1 14.6432-45.1072l32.7168-31.9488a10.24 10.24 0 0 0-5.5296-17.0496l-44.9536-6.5536a50.8928 50.8928 0 0 1-38.3488-27.8528l-20.1216-40.96a9.984 9.984 0 0 0-17.92 0l-20.0704 40.96a51.2 51.2 0 0 1-38.3488 27.904L394.24 352.2048a9.8816 9.8816 0 0 0-8.0896 6.8096 9.728 9.728 0 0 0 2.56 10.24l32.512 31.6928a50.7904 50.7904 0 0 1 14.6432 45.1072l-7.68 44.7488a9.7792 9.7792 0 0 0 3.9936 9.7792 9.6256 9.6256 0 0 0 10.24 0.7168l40.192-21.0944a50.4832 50.4832 0 0 1 23.9104-5.888z\" fill=\"#211D38\" p-id=\"32791\"></path><path d=\"M387.6352 167.2704h-30.1056a12.8 12.8 0 0 1 0-25.6h30.1056a12.8 12.8 0 0 1 0 25.6zM244.6336 452.352a12.7488 12.7488 0 0 1-12.8-12.8V177.1008a35.4304 35.4304 0 0 1 35.4304-35.4304h42.2912a12.8 12.8 0 0 1 0 25.6H267.264a9.8304 9.8304 0 0 0-9.8304 9.8304v262.4512a12.7488 12.7488 0 0 1-12.8 12.8zM136.8064 381.184a12.8 12.8 0 0 1-12.8-12.8V303.616a12.8 12.8 0 0 1 25.6 0V368.64a12.8 12.8 0 0 1-12.8 12.544zM835.7376 381.184a12.8 12.8 0 0 1-12.8-12.8V303.616a12.8 12.8 0 1 1 25.6 0V368.64a12.8 12.8 0 0 1-12.8 12.544zM439.8592 370.688a12.8 12.8 0 0 1-1.9968-25.6l2.2016-0.3072a49.92 49.92 0 0 0 35.0208-23.9104 12.7488 12.7488 0 1 1 22.016 12.9536 75.1104 75.1104 0 0 1-52.992 36.352l-2.2016 0.3584z\" fill=\"#FFFFFF\" p-id=\"32792\"></path><path d=\"M911.36 146.688m-32 0a32 32 0 1 0 64 0 32 32 0 1 0-64 0Z\" fill=\"#F9C47B\" p-id=\"32793\"></path><path d=\"M157.9008 822.8864m-32 0a32 32 0 1 0 64 0 32 32 0 1 0-64 0Z\" fill=\"#F9C47B\" p-id=\"32794\"></path><path d=\"M267.6736 755.4048a15.872 15.872 0 0 1-6.4-2.4576C197.376 711.68 173.312 665.0368 172.288 663.04a16.7424 16.7424 0 0 1 29.9008-15.36c0.3584 0.7168 21.7088 40.96 77.2608 76.8a16.7424 16.7424 0 0 1-11.776 30.72z\" fill=\"#E2E5F1\" p-id=\"32795\"></path><path d=\"M810.1376 846.7968a46.3872 46.3872 0 1 1 46.336-46.08 46.4384 46.4384 0 0 1-46.336 46.08z m0-64.9216a18.5856 18.5856 0 1 0 18.5344 18.5856 18.6368 18.6368 0 0 0-18.5344-18.5856z\" fill=\"#97B5FF\" p-id=\"32796\"></path></svg>",
+        "size": 0.5,
+        "visible": true
+      }
+    },
+    "isSelected": false
+  },
+  {
+    "uuid": "3fa6c76c-0f70-4f71-9c37-35148ed01ca0",
+    "name": "Best",
+    "visibility": true,
+    "intervalList": [
+      {
+        "triggerConfig": {
+          "name": "trigger of swim distance",
+          "triggerType": "start+end",
+          "priority": "1",
+          "subjectStart": "distanceSwam",
+          "compareStart": "=",
+          "valueStart": "0",
+          "subjectEnd": "distanceSwam",
+          "compareEnd": "=",
+          "valueEnd": "87"
+        },
+        "startFrame": 2360,
+        "endFrame": 4566,
+        "relativeStartMoment": 47.2,
+        "relativeEndMoment": 91.32,
+        "duration": 44.12,
+        "isMerged": false,
+        "mergedTriggers": []
+      }
+    ],
+    "triggerCompList": [
+      {
+        "name": "trigger of swim distance",
+        "triggerType": "start+end",
+        "priority": "1",
+        "subjectStart": "distanceSwam",
+        "compareStart": "=",
+        "valueStart": "0",
+        "subjectEnd": "distanceSwam",
+        "compareEnd": "=",
+        "valueEnd": "87"
+      }
+    ],
+    "embeddedVis": {
+      "visName": "VisCustomizedTextGlobal",
+      "visIcon": "generalTextCustomized.png",
+      "dataName": "elapsedTime",
+      "composeType": "global",
+      "positionX": 150,
+      "positionXAndWidthRatio": 0.20775623,
+      "positionY": 330,
+      "positionYAndHeightRatio": 0.8365019,
+      "positionR": 0,
+      "positionS": 100,
+      "positionSRatio": 0.13850416,
+      "positionMove": false,
+      "customizedText": "Good Luck to Team A!",
+      "editableElementList": [
+        {
+          "id": "text-1",
+          "type": "text",
+          "visible": true,
+          "fontFillColor": "#ad3b0d",
+          "fontSize": 40
+        }
+      ]
+    },
+    "isSelected": false
+  }
+]

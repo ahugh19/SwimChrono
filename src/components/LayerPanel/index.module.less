@@ -1,0 +1,68 @@
+.swimflowTimelineContainer {
+  overflow: hidden;
+  transition: 0.5s ease;
+
+  .topPart {
+    display: flex;
+    height: 60px;
+    .topLeftPart {
+      border-bottom: 1px solid var(--border-color-soft);
+      .ioBtnContainer {
+        width: 224px;
+      }
+    }
+
+    .topRightPart {
+      .sliderContainer {
+        padding: 0;
+      }
+      .timelineAxisContainer {}
+    }
+  }
+
+  .bottomPart {
+    display: flex;
+    flex-direction: row;
+    height: calc(var(--height-layer-panel) - var(--padding) - var(--padding) - 60px);
+
+    .layerWrapper {
+      min-height: calc(var(--height-layer-panel) - var(--padding) - var(--padding) - 60px);
+      width: 224px;
+      min-width: 224px;
+      overflow: hidden;
+      .layerContainer {
+        height: calc(var(--height-layer-panel) - var(--padding) - var(--padding) - 60px);
+        min-width: 224px;
+        z-index: 10;
+        background-color: var(--background-color);
+        display: block;
+        overflow-y: auto;
+        scrollbar-width: none;
+        /* Firefox */
+        -ms-overflow-style: none;
+        /* Internet Explorer 10+ */
+        &::-webkit-scrollbar {
+          display: none;
+          /* Chrome, Safari, Opera */
+        }
+      }
+    }
+
+    .ganttWrapper {
+      max-height: calc(var(--height-layer-panel) - var(--padding) - var(--padding) - 60px + 10px);
+      width: 100%;
+      height: calc(var(--height-layer-panel) - var(--padding) - var(--padding) - 60px + 10px);
+      overflow: hidden;
+      position: relative;
+      top: -10px;
+
+      .ganttContainer {
+        position: relative;
+        height: calc(var(--height-layer-panel) - var(--padding) - var(--padding) - 60px);
+        top: 10px;
+        overflow: auto;
+      }
+    }
+
+  }
+}

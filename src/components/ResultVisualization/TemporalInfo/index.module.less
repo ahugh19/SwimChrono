@@ -1,0 +1,56 @@
+.temporalInfoContainer{
+  background: var(--background-color);
+  color: var(--text-color-bright);
+  width: 100vw;
+  height: 15600px;
+  .controlerContainer {
+    position: absolute;
+    top: 0px;
+    left: 700px;
+  }
+  .canvasContainer {
+    position: absolute;
+    top: 0px;
+    left: 700px;
+    overflow-x: scroll;
+  }
+  .videoPart {
+    position: fixed;
+    left: 0;
+    font-size: 14px;
+  
+    .videoMajor {
+      position: absolute;
+      left: 10px;
+    }
+  
+    .labelPreview {
+      z-index: 100;
+      position: absolute;
+      left: 10px;
+      pointer-events: none;
+    }
+  
+    .editBtnGroup {
+      position: absolute;
+      top: 370px;
+      left: 10px;
+      .bboxText {
+        width: 380px;
+      }
+    }
+  
+    .playBtnGroup {
+      position: absolute;
+      top: 410px;
+      left: 10px;
+    }
+
+    .visTableContainer {
+      width: 640px;
+      left: 10px;
+      position: absolute;
+      top: 445px;
+    }
+  }
+}

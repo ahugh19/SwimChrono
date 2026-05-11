@@ -1,0 +1,567 @@
+[
+  {
+    "uuid": "ff68a08f-f31d-481d-bb0b-6e857b13daca",
+    "name": "highlight",
+    "visibility": true,
+    "intervalList": [
+      {
+        "triggerConfig": {
+          "name": "swimmer acceleration",
+          "triggerType": "start+duration",
+          "priority": "1",
+          "subjectStart": "acceleration",
+          "compareStart": ">",
+          "valueStart": "0.8",
+          "subjectEnd": "duration",
+          "compareEnd": "=",
+          "valueEnd": "3"
+        },
+        "startFrame": 2620,
+        "endFrame": 2770,
+        "relativeStartMoment": 52.4,
+        "relativeEndMoment": 55.4,
+        "duration": 3,
+        "isMerged": false,
+        "mergedTriggers": []
+      },
+      {
+        "triggerConfig": {
+          "name": "swimmer acceleration",
+          "triggerType": "start+duration",
+          "priority": "1",
+          "subjectStart": "acceleration",
+          "compareStart": ">",
+          "valueStart": "0.8",
+          "subjectEnd": "duration",
+          "compareEnd": "=",
+          "valueEnd": "3"
+        },
+        "startFrame": 3394,
+        "endFrame": 3829,
+        "relativeStartMoment": 67.88,
+        "relativeEndMoment": 76.58,
+        "duration": 8.700000000000003,
+        "isMerged": true,
+        "mergedTriggers": [
+          {
+            "name": "swimmer acceleration",
+            "triggerType": "start+duration",
+            "priority": "1",
+            "subjectStart": "acceleration",
+            "compareStart": ">",
+            "valueStart": "0.8",
+            "subjectEnd": "duration",
+            "compareEnd": "=",
+            "valueEnd": "3"
+          },
+          {
+            "name": "swimmer acceleration",
+            "triggerType": "start+duration",
+            "priority": "1",
+            "subjectStart": "acceleration",
+            "compareStart": ">",
+            "valueStart": "0.8",
+            "subjectEnd": "duration",
+            "compareEnd": "=",
+            "valueEnd": "3"
+          },
+          {
+            "name": "trigger of turning event",
+            "triggerType": "start+duration",
+            "priority": "1",
+            "subjectStart": "event",
+            "compareStart": "=",
+            "valueStart": "turn",
+            "subjectEnd": "duration",
+            "compareEnd": "=",
+            "valueEnd": "5"
+          }
+        ]
+      },
+      {
+        "triggerConfig": {
+          "name": "swimmer acceleration",
+          "triggerType": "start+duration",
+          "priority": "1",
+          "subjectStart": "acceleration",
+          "compareStart": ">",
+          "valueStart": "0.8",
+          "subjectEnd": "duration",
+          "compareEnd": "=",
+          "valueEnd": "3"
+        },
+        "startFrame": 3912,
+        "endFrame": 4062,
+        "relativeStartMoment": 78.24,
+        "relativeEndMoment": 81.24,
+        "duration": 3,
+        "isMerged": false,
+        "mergedTriggers": []
+      },
+      {
+        "triggerConfig": {
+          "name": "swimmer acceleration",
+          "triggerType": "start+duration",
+          "priority": "1",
+          "subjectStart": "acceleration",
+          "compareStart": ">",
+          "valueStart": "0.8",
+          "subjectEnd": "duration",
+          "compareEnd": "=",
+          "valueEnd": "3"
+        },
+        "startFrame": 4197,
+        "endFrame": 4347,
+        "relativeStartMoment": 83.94,
+        "relativeEndMoment": 86.94,
+        "duration": 3,
+        "isMerged": false,
+        "mergedTriggers": []
+      },
+      {
+        "triggerConfig": {
+          "name": "swimmer acceleration",
+          "triggerType": "start+duration",
+          "priority": "1",
+          "subjectStart": "acceleration",
+          "compareStart": ">",
+          "valueStart": "0.8",
+          "subjectEnd": "duration",
+          "compareEnd": "=",
+          "valueEnd": "3"
+        },
+        "startFrame": 4881,
+        "endFrame": 4977,
+        "relativeStartMoment": 97.62,
+        "relativeEndMoment": 99.54,
+        "duration": 1.92,
+        "isMerged": false,
+        "mergedTriggers": []
+      }
+    ],
+    "triggerCompList": [
+      {
+        "name": "trigger of turning event",
+        "triggerType": "start+duration",
+        "priority": "1",
+        "subjectStart": "event",
+        "compareStart": "=",
+        "valueStart": "turn",
+        "subjectEnd": "duration",
+        "compareEnd": "=",
+        "valueEnd": "5"
+      },
+      {
+        "name": "swimmer acceleration",
+        "triggerType": "start+duration",
+        "priority": "1",
+        "subjectStart": "acceleration",
+        "compareStart": ">",
+        "valueStart": "0.8",
+        "subjectEnd": "duration",
+        "compareEnd": "=",
+        "valueEnd": "3"
+      }
+    ],
+    "embeddedVis": {
+      "visName": "laneHighlight",
+      "visIcon": "generalIconLane.png",
+      "dataName": "currentSpeed",
+      "composeType": "individual",
+      "positionX": 0,
+      "positionY": 0,
+      "positionR": 0,
+      "positionS": 100,
+      "positionSRatio": 0.13850416,
+      "positionMove": false,
+      "editableElementList": [
+        {
+          "id": "background-shape-1",
+          "type": "shape",
+          "visible": true,
+          "shapeFillColor": "#5ac35757",
+          "shapeStrokeColor": "#c9c9c9",
+          "shapeStrokeWidth": 0
+        }
+      ],
+      "visibleLanes": [
+        3
+      ]
+    },
+    "isSelected": false
+  },
+  {
+    "uuid": "ff68a08f-f31d-481d-bb0b-6e857b13daca",
+    "name": "rocket",
+    "visibility": true,
+    "intervalList": [
+      {
+        "triggerConfig": {
+          "name": "swimmer acceleration",
+          "triggerType": "start+duration",
+          "priority": "1",
+          "subjectStart": "acceleration",
+          "compareStart": ">",
+          "valueStart": "0.8",
+          "subjectEnd": "duration",
+          "compareEnd": "=",
+          "valueEnd": "3"
+        },
+        "startFrame": 2620,
+        "endFrame": 2770,
+        "relativeStartMoment": 52.4,
+        "relativeEndMoment": 55.4,
+        "duration": 3,
+        "isMerged": false,
+        "mergedTriggers": []
+      },
+      {
+        "triggerConfig": {
+          "name": "swimmer acceleration",
+          "triggerType": "start+duration",
+          "priority": "1",
+          "subjectStart": "acceleration",
+          "compareStart": ">",
+          "valueStart": "0.8",
+          "subjectEnd": "duration",
+          "compareEnd": "=",
+          "valueEnd": "3"
+        },
+        "startFrame": 3394,
+        "endFrame": 3829,
+        "relativeStartMoment": 67.88,
+        "relativeEndMoment": 76.58,
+        "duration": 8.700000000000003,
+        "isMerged": true,
+        "mergedTriggers": [
+          {
+            "name": "swimmer acceleration",
+            "triggerType": "start+duration",
+            "priority": "1",
+            "subjectStart": "acceleration",
+            "compareStart": ">",
+            "valueStart": "0.8",
+            "subjectEnd": "duration",
+            "compareEnd": "=",
+            "valueEnd": "3"
+          },
+          {
+            "name": "swimmer acceleration",
+            "triggerType": "start+duration",
+            "priority": "1",
+            "subjectStart": "acceleration",
+            "compareStart": ">",
+            "valueStart": "0.8",
+            "subjectEnd": "duration",
+            "compareEnd": "=",
+            "valueEnd": "3"
+          },
+          {
+            "name": "trigger of turning event",
+            "triggerType": "start+duration",
+            "priority": "1",
+            "subjectStart": "event",
+            "compareStart": "=",
+            "valueStart": "turn",
+            "subjectEnd": "duration",
+            "compareEnd": "=",
+            "valueEnd": "5"
+          }
+        ]
+      },
+      {
+        "triggerConfig": {
+          "name": "swimmer acceleration",
+          "triggerType": "start+duration",
+          "priority": "1",
+          "subjectStart": "acceleration",
+          "compareStart": ">",
+          "valueStart": "0.8",
+          "subjectEnd": "duration",
+          "compareEnd": "=",
+          "valueEnd": "3"
+        },
+        "startFrame": 3912,
+        "endFrame": 4062,
+        "relativeStartMoment": 78.24,
+        "relativeEndMoment": 81.24,
+        "duration": 3,
+        "isMerged": false,
+        "mergedTriggers": []
+      },
+      {
+        "triggerConfig": {
+          "name": "swimmer acceleration",
+          "triggerType": "start+duration",
+          "priority": "1",
+          "subjectStart": "acceleration",
+          "compareStart": ">",
+          "valueStart": "0.8",
+          "subjectEnd": "duration",
+          "compareEnd": "=",
+          "valueEnd": "3"
+        },
+        "startFrame": 4197,
+        "endFrame": 4347,
+        "relativeStartMoment": 83.94,
+        "relativeEndMoment": 86.94,
+        "duration": 3,
+        "isMerged": false,
+        "mergedTriggers": []
+      },
+      {
+        "triggerConfig": {
+          "name": "swimmer acceleration",
+          "triggerType": "start+duration",
+          "priority": "1",
+          "subjectStart": "acceleration",
+          "compareStart": ">",
+          "valueStart": "0.8",
+          "subjectEnd": "duration",
+          "compareEnd": "=",
+          "valueEnd": "3"
+        },
+        "startFrame": 4881,
+        "endFrame": 4977,
+        "relativeStartMoment": 97.62,
+        "relativeEndMoment": 99.54,
+        "duration": 1.92,
+        "isMerged": false,
+        "mergedTriggers": []
+      }
+    ],
+    "triggerCompList": [
+      {
+        "name": "trigger of turning event",
+        "triggerType": "start+duration",
+        "priority": "1",
+        "subjectStart": "event",
+        "compareStart": "=",
+        "valueStart": "turn",
+        "subjectEnd": "duration",
+        "compareEnd": "=",
+        "valueEnd": "5"
+      },
+      {
+        "name": "swimmer acceleration",
+        "triggerType": "start+duration",
+        "priority": "1",
+        "subjectStart": "acceleration",
+        "compareStart": ">",
+        "valueStart": "0.8",
+        "subjectEnd": "duration",
+        "compareEnd": "=",
+        "valueEnd": "3"
+      }
+    ],
+    "embeddedVis": {
+      "visName": "VisCustomizedIconIndividual",
+      "visIcon": "generalIconLaneCustomized.png",
+      "dataName": "distanceSwum",
+      "composeType": "individual",
+      "positionX": 130,
+      "positionXAndWidthRatio": 0.1800554,
+      "positionY": 0,
+      "positionR": 0,
+      "positionS": 100,
+      "positionSRatio": 0.13850416,
+      "positionMove": true,
+      "editableElementList": [],
+      "customizedIcon": {
+        "svgContent": "<svg width=\"43\" height=\"39\" viewBox=\"0 0 43 39\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M20.8067 16.1408L24.8314 16.1408L27.515 16.1408L29.5273 14.1285L34.8939 12.7867L34.223 10.7739L24.8314 10.7743L20.8067 16.1408ZM20.8067 22.8491L24.8317 28.216L34.2233 28.2157L34.8942 26.2029L29.5277 24.8611L27.5153 22.8488L24.8317 22.8488L20.8067 22.8491Z\" fill=\"#CCCCCC\"/>\n<path d=\"M32.8811 22.8491C36.1307 22.2425 40.5312 21.8895 41.6018 20.8368C42.4151 20.0371 42.4215 18.96 41.6018 18.1532C40.5137 17.0837 36.221 16.8185 32.8811 16.1408L32.8811 22.8491Z\" fill=\"#FFCC66\"/>\n<path d=\"M30.1976 21.5076C33.4472 20.901 38.5275 21.2279 39.5895 20.1658C40.2904 19.465 40.193 19.4275 39.5895 18.824C38.5107 17.7452 33.5378 18.1603 30.1979 17.4826L30.1976 21.5076Z\" fill=\"#ED7161\"/>\n<path d=\"M1.35223 20.8366C3.59084 22.8147 7.48208 26.2035 16.1107 26.2031C22.4575 26.2035 29.856 24.3728 34.2233 22.6156L34.2233 16.3319C29.8856 14.5794 22.5114 12.7865 16.1107 12.7865C7.53811 12.7865 3.64151 16.1949 1.35223 18.153C0.33053 19.0277 0.421175 20.014 1.35223 20.8366Z\" fill=\"#387AA7\"/>\n<path d=\"M1.3522 20.8368C3.59081 22.8149 7.48205 26.2037 16.1107 26.2033C21.2916 26.2033 27.1695 24.9818 31.5339 23.5786L31.5343 15.3704C27.1913 13.9808 21.3284 12.787 16.1107 12.7867C7.53808 12.7867 3.64148 16.1951 1.3522 18.1532C0.330501 19.0279 0.421146 20.0142 1.3522 20.8368Z\" fill=\"#EF904C\"/>\n<path d=\"M13.4274 22.1781C13.7798 21.8257 14.0593 21.4074 14.25 20.947C14.4407 20.4866 14.5388 19.9931 14.5388 19.4948C14.5388 18.9965 14.4407 18.503 14.25 18.0426C14.0593 17.5822 13.7798 17.1639 13.4274 16.8116C13.075 16.4592 12.6567 16.1797 12.1963 15.989C11.7359 15.7983 11.2425 15.7001 10.7441 15.7001C10.2458 15.7001 9.75237 15.7983 9.29197 15.989C8.83158 16.1797 8.41325 16.4592 8.06088 16.8116C7.70851 17.1639 7.429 17.5822 7.2383 18.0426C7.04759 18.503 6.94944 18.9965 6.94944 19.4948C6.94944 19.9931 7.04759 20.4866 7.23829 20.947C7.429 21.4074 7.70851 21.8257 8.06088 22.1781C8.41325 22.5304 8.83158 22.81 9.29197 23.0007C9.75237 23.1914 10.2458 23.2895 10.7441 23.2895C11.2425 23.2895 11.7359 23.1914 12.1963 23.0007C12.6567 22.81 13.075 22.5304 13.4274 22.1781Z\" fill=\"#4D4D4D\"/>\n<path d=\"M12.0859 20.8367C12.4418 20.4808 12.6417 19.9981 12.6417 19.4949C12.6417 18.9916 12.4418 18.5089 12.0859 18.153C11.7301 17.7972 11.2474 17.5973 10.7441 17.5973C10.2409 17.5973 9.7582 17.7972 9.40233 18.153C9.04646 18.5089 8.84654 18.9916 8.84654 19.4949C8.84654 19.9981 9.04646 20.4808 9.40233 20.8367C9.7582 21.1925 10.2409 21.3925 10.7441 21.3925C11.2474 21.3925 11.7301 21.1925 12.0859 20.8367Z\" fill=\"white\"/>\n</svg>\n",
+        "size": 1.5,
+        "visible": true
+      },
+      "visibleLanes": [
+        3
+      ]
+    },
+    "isSelected": false
+  },
+  {
+    "uuid": "ff68a08f-f31d-481d-bb0b-6e857b13daca",
+    "name": "appluase",
+    "visibility": true,
+    "intervalList": [
+      {
+        "triggerConfig": {
+          "name": "swimmer acceleration",
+          "triggerType": "start+duration",
+          "priority": "1",
+          "subjectStart": "acceleration",
+          "compareStart": ">",
+          "valueStart": "0.8",
+          "subjectEnd": "duration",
+          "compareEnd": "=",
+          "valueEnd": "3"
+        },
+        "startFrame": 2620,
+        "endFrame": 2770,
+        "relativeStartMoment": 52.4,
+        "relativeEndMoment": 55.4,
+        "duration": 3,
+        "isMerged": false,
+        "mergedTriggers": []
+      },
+      {
+        "triggerConfig": {
+          "name": "swimmer acceleration",
+          "triggerType": "start+duration",
+          "priority": "1",
+          "subjectStart": "acceleration",
+          "compareStart": ">",
+          "valueStart": "0.8",
+          "subjectEnd": "duration",
+          "compareEnd": "=",
+          "valueEnd": "3"
+        },
+        "startFrame": 3394,
+        "endFrame": 3829,
+        "relativeStartMoment": 67.88,
+        "relativeEndMoment": 76.58,
+        "duration": 8.700000000000003,
+        "isMerged": true,
+        "mergedTriggers": [
+          {
+            "name": "swimmer acceleration",
+            "triggerType": "start+duration",
+            "priority": "1",
+            "subjectStart": "acceleration",
+            "compareStart": ">",
+            "valueStart": "0.8",
+            "subjectEnd": "duration",
+            "compareEnd": "=",
+            "valueEnd": "3"
+          },
+          {
+            "name": "swimmer acceleration",
+            "triggerType": "start+duration",
+            "priority": "1",
+            "subjectStart": "acceleration",
+            "compareStart": ">",
+            "valueStart": "0.8",
+            "subjectEnd": "duration",
+            "compareEnd": "=",
+            "valueEnd": "3"
+          },
+          {
+            "name": "trigger of turning event",
+            "triggerType": "start+duration",
+            "priority": "1",
+            "subjectStart": "event",
+            "compareStart": "=",
+            "valueStart": "turn",
+            "subjectEnd": "duration",
+            "compareEnd": "=",
+            "valueEnd": "5"
+          }
+        ]
+      },
+      {
+        "triggerConfig": {
+          "name": "swimmer acceleration",
+          "triggerType": "start+duration",
+          "priority": "1",
+          "subjectStart": "acceleration",
+          "compareStart": ">",
+          "valueStart": "0.8",
+          "subjectEnd": "duration",
+          "compareEnd": "=",
+          "valueEnd": "3"
+        },
+        "startFrame": 3912,
+        "endFrame": 4062,
+        "relativeStartMoment": 78.24,
+        "relativeEndMoment": 81.24,
+        "duration": 3,
+        "isMerged": false,
+        "mergedTriggers": []
+      },
+      {
+        "triggerConfig": {
+          "name": "swimmer acceleration",
+          "triggerType": "start+duration",
+          "priority": "1",
+          "subjectStart": "acceleration",
+          "compareStart": ">",
+          "valueStart": "0.8",
+          "subjectEnd": "duration",
+          "compareEnd": "=",
+          "valueEnd": "3"
+        },
+        "startFrame": 4197,
+        "endFrame": 4347,
+        "relativeStartMoment": 83.94,
+        "relativeEndMoment": 86.94,
+        "duration": 3,
+        "isMerged": false,
+        "mergedTriggers": []
+      },
+      {
+        "triggerConfig": {
+          "name": "swimmer acceleration",
+          "triggerType": "start+duration",
+          "priority": "1",
+          "subjectStart": "acceleration",
+          "compareStart": ">",
+          "valueStart": "0.8",
+          "subjectEnd": "duration",
+          "compareEnd": "=",
+          "valueEnd": "3"
+        },
+        "startFrame": 4881,
+        "endFrame": 4977,
+        "relativeStartMoment": 97.62,
+        "relativeEndMoment": 99.54,
+        "duration": 1.92,
+        "isMerged": false,
+        "mergedTriggers": []
+      }
+    ],
+    "triggerCompList": [
+      {
+        "name": "trigger of turning event",
+        "triggerType": "start+duration",
+        "priority": "1",
+        "subjectStart": "event",
+        "compareStart": "=",
+        "valueStart": "turn",
+        "subjectEnd": "duration",
+        "compareEnd": "=",
+        "valueEnd": "5"
+      },
+      {
+        "name": "swimmer acceleration",
+        "triggerType": "start+duration",
+        "priority": "1",
+        "subjectStart": "acceleration",
+        "compareStart": ">",
+        "valueStart": "0.8",
+        "subjectEnd": "duration",
+        "compareEnd": "=",
+        "valueEnd": "3"
+      }
+    ],
+    "embeddedVis": {
+      "visName": "VisCustomizedIconGlobal",
+      "visIcon": "generalIconCustomized.png",
+      "dataName": "distanceSwum",
+      "composeType": "global",
+      "positionX": 350,
+      "positionY": 180,
+      "positionR": 0,
+      "positionS": 40,
+      "positionMove": false,
+      "editableElementList": [],
+      "customizedIcon": {
+        "svgContent": "<?xml version=\"1.0\" standalone=\"no\"?><!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\"><svg t=\"1741940975926\" class=\"icon\" viewBox=\"0 0 1024 1024\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" p-id=\"16166\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" width=\"200\" height=\"200\"><path d=\"M918.812444 692.536889c-19.768889-28.728889-8.732444-70.257778-13.653333-116.110222-5.063111-74.808889-37.205333-147.285333-99.555555-205.255111l-212.366223-197.461334s-41.841778-38.940444-80.810666 2.929778c-38.912 41.841778 2.958222 80.782222 2.958222 80.782222l89.713778 83.456 77.767111 72.305778s-19.484444 20.935111-105.557334-59.107556l-290.702222-270.392888s-41.898667-38.912-80.839111 2.958222c-38.912 41.841778 2.929778 80.782222 2.929778 80.782222l274.887111 255.687111c-0.597333-0.568889-20.792889 19.683556-21.162667 19.342222L168.305778 168.903111s-41.870222-38.940444-80.810667 2.929778c-38.940444 41.870222 2.929778 80.782222 2.929778 80.782222L384.568889 526.222222c0.341333 0.341333-18.602667 21.731556-18.033778 22.272l-253.724444-236.032s-41.870222-38.940444-80.810667 2.929778c-38.940444 41.870222 2.929778 80.810667 2.929778 80.810667l269.767111 250.88c2.474667 2.304-14.222222 25.827556-11.121778 28.700444l-194.389333-180.792889s-41.870222-38.940444-80.810667 2.958222c-38.940444 41.870222 2.929778 80.810667 2.929778 80.810667L338.375111 873.528889c52.935111 49.237333 107.292444 74.154667 172.828445 83.285333 13.340444 1.848889 30.407111 1.848889 37.404444 2.730667 22.101333 2.787556 41.500444 10.638222 67.470222 26.567111 33.422222 20.48 83.569778 29.013333 112.384-1.792l98.247111-105.102222 90.709334-97.052445c28.785778-30.776889 23.637333-57.344 1.393777-89.628444z\" fill=\"#EF9645\" p-id=\"16167\"></path><path d=\"M55.637333 996.295111a28.416 28.416 0 0 1-20.110222-48.554667L136.533333 846.791111a28.416 28.416 0 1 1 40.220445 40.220445l-101.006222 100.977777a28.330667 28.330667 0 0 1-20.110223 8.305778z m191.886223 26.225778a28.416 28.416 0 0 1-26.851556-37.831111l27.619556-78.876445a28.444444 28.444444 0 0 1 53.674666 18.773334l-27.619555 78.876444a28.444444 28.444444 0 0 1-26.823111 19.057778z m-218.083556-218.083556a28.472889 28.472889 0 0 1-9.472-55.267555l70.968889-25.059556a28.444444 28.444444 0 1 1 18.944 53.646222l-70.968889 25.059556a28.472889 28.472889 0 0 1-9.472 1.621333z m837.973333-619.150222a28.444444 28.444444 0 0 1-20.110222-48.583111l101.034667-100.977778a28.444444 28.444444 0 0 1 40.220444 40.248889l-101.034666 100.977778a28.245333 28.245333 0 0 1-20.110223 8.334222z m-118.442666-48.270222a28.444444 28.444444 0 0 1-26.851556-37.859556l27.591111-78.876444a28.444444 28.444444 0 0 1 53.703111 18.773333l-27.591111 78.876445a28.444444 28.444444 0 0 1-26.851555 19.086222z m174.734222 164.238222a28.472889 28.472889 0 0 1-9.472-55.267555l70.940444-25.059556a28.444444 28.444444 0 1 1 18.944 53.646222l-70.940444 25.059556a28.472889 28.472889 0 0 1-9.472 1.621333z\" fill=\"#FA743E\" p-id=\"16168\"></path><path d=\"M1006.648889 677.603556c-18.801778-29.354667-6.371556-70.513778-9.728-116.508445-2.56-74.922667-32.227556-148.451556-92.586667-208.497778l-205.596444-204.487111s-40.504889-40.305778-80.867556 0.227556c-40.305778 40.504889 0.227556 80.839111 0.227556 80.839111l86.869333 86.442667 75.264 74.865777s-20.195556 20.252444-103.509333-62.634666c-83.370667-82.915556-281.429333-280.035556-281.429334-280.035556s-40.533333-40.305778-80.867555 0.227556c-40.334222 40.504889 0.199111 80.810667 0.199111 80.810666l266.126222 264.817778c-0.568889-0.568889-21.447111 18.972444-21.816889 18.602667L274.204444 128.967111s-40.533333-40.334222-80.867555 0.199111c-40.305778 40.533333 0.199111 80.839111 0.199111 80.839111l284.757333 283.363556c0.341333 0.341333-19.342222 21.077333-18.773333 21.646222L213.902222 270.592s-40.533333-40.305778-80.867555 0.227556 0.199111 80.867556 0.199111 80.867555l261.148444 259.84c2.389333 2.360889-15.075556 25.344-12.088889 28.330667l-188.188444-187.249778s-40.533333-40.305778-80.867556 0.227556 0.199111 80.867556 0.199111 80.867555l306.915556 305.265778c51.256889 51.000889 104.732444 77.710222 169.927111 89.059555 13.283556 2.304 30.350222 2.872889 37.290667 3.982223 21.987556 3.527111 41.102222 12.032 66.56 28.842666 32.711111 21.589333 82.545778 31.800889 112.384 1.991111l101.745778-101.717333 93.923555-93.923555c29.838222-29.866667 25.6-56.604444 4.465778-89.6z\" fill=\"#FFDB5E\" p-id=\"16169\"></path></svg>",
+        "size": 1,
+        "visible": true
+      },
+      "positionXAndWidthRatio": 0.5756578369484111,
+      "positionYAndHeightRatio": 0.5263157425091176,
+      "positionSRatio": 0.06578946707981842
+    },
+    "isSelected": false
+  }
+]

@@ -1,0 +1,45 @@
+.idea
+# *.mp4
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Environment files (must not be committed)
+.env
+.env.*
+!.env.example
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# backend/database/
+backend/database/backup
+backend/__pycache__/
+
+# temp files
+src/utils/data
+src/utils/temp.js
+src/utils/temp.ts
+
+public/video/2024_JO_Paris_dos_hommes_100_finaleA_from_above.mp4
+
+.vscode
