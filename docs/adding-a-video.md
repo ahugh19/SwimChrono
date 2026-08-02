@@ -33,6 +33,16 @@ python3 -m sportsdata.validators.cli \
   public/csv/my-race.csv
 ```
 
+> **Where do these CSVs come from?** The shipped per-frame CSVs are not
+> written by hand. They are generated from the raw annotation CSVs (the
+> sportsdata/aquanote cycles format, one file per lane) by our data
+> processing pipeline: it aligns the annotation columns (`strokeCount`,
+> `strokeDistance`), inserts the frames between strokes, adds swimmer
+> metadata and records, computes speed / acceleration / elapsed time /
+> predictions (winner, distance to leader, next passing), and merges
+> everything into the final per-frame wide table. The processing scripts
+> will be released in a future version.
+
 ## 3. Register the race in `videoMetaDataList`
 
 Open `src/utils/values.tsx`, find `videoMetaDataList`, and append a copy of

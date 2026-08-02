@@ -5,6 +5,8 @@ This is a repository for original codes of an authoring tool, *SwimChrono*, prov
 
 See also [*SwimFlow*](https://aviz.gitlabpages.inria.fr/vis-in-motion-swimflow/), our related tool for embedded visualizations in swimming videos.
 
+**Experimental**: the tool also ships a speed-climbing case to show the approach generalizes beyond swimming — pick *Climbing* in the video dropdown and load the *Climbing* example.
+
 If you use *SwimChrono* and our results on **temporal arrangements for embedded visualization** in new projects or use it in a different way, we would appreciate a citation:
 
 * Junxiu Tang, Lijie Yao, Lu Ying, Romain Vuillemot, Petra Isenberg. Diving Deep Into Time: Temporal Arrangements for Embedded Visualization in Swimming Videos. IEEE Transactions on Visualization and Computer Graphics, 32(7):6825–6841, 2026. doi: [10.1109/TVCG.2026.3689361](https://doi.org/10.1109/TVCG.2026.3689361). [Preprint on HAL](https://hal.science/hal-05612503).
