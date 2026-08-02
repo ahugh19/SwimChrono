@@ -38,6 +38,7 @@ const DataSelectionPanel = forwardRef((props: DataSelectionPanelProps, ref) => {
             value={currentLayer.embeddedVis?.dataName}
             options={[
               { value: 'elapsedTime', label: 'Elapsed Time' },
+              { value: 'climb', label: 'Climb' },
               { value: 'nationality', label: 'Nationality' },
               { value: 'currentSpeed', label: 'Current Speed' },
               { value: 'worldRecord', label: 'World Record' },

@@ -22,12 +22,12 @@ const VideoPanel = forwardRef((props: VideoPanelProps, ref) => {
   const [isVideoLoading, setIsVideoLoading] = useState<boolean>(true);
   const [isDataLoading, setIsDataLoading] = useState<boolean>(true);
   const [videoSrc, setVideoSrc] = useState<string>("");
+  const [frameRate, setFrameRate] = useState<number>(50);
   const [currentFrameIndex, setCurrentFrameIndex] = useState<number>(0);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [size, setSize] = useState({ width: 0, height: 0 });
   const [videoRatio, setVideoRatio] = useState<number | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
-  const frameRate = 50;
 
   useImperativeHandle(ref, () => ({
     videoPanelComponent: videoRef.current
@@ -36,6 +36,7 @@ const VideoPanel = forwardRef((props: VideoPanelProps, ref) => {
   useEffect(() => {
     if (!store || !store.currentVideoMetaData) return
     setVideoSrc(store.currentVideoMetaData.video)
+    setFrameRate(store.currentVideoMetaData.framerate)
     const fetchVideoData = async () => {
       setIsDataLoading(true)
       const csvFileName = store.currentVideoMetaData?.dataCSV; // CSV file derived from the video metadata

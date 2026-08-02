@@ -1,5 +1,5 @@
 import { LayerType, SwimmerVideoDataType, SwimmerVideoFrameType, VideoFrameDataType, VisIntervalType } from "../../../../types"
-import { embeddedVisTypeComposeType_GLOBAL, VALUE_customizedIconGlobal, VALUE_customizedTextGlobal, VALUE_distanceSwumTextCorner, VALUE_elapsedTimeCorner, VALUE_lapDistanceCorner, VALUE_olympicRecordCorner, VALUE_raceNameCorner, VALUE_rankingBarCorner, VALUE_worldRecordCorner, VALUE_worldRecordLine, VALUE_worldRecordSplitCorner, VALUE_worldRecordSplitDiffCorner, VALUE_leaderLaneNumberTextCorner, VALUE_distanceSwumBarCorner } from "../../../../utils/values";
+import { embeddedVisTypeComposeType_GLOBAL, VALUE_customizedIconGlobal, VALUE_customizedTextGlobal, VALUE_distanceSwumTextCorner, VALUE_elapsedTimeCorner, VALUE_lapDistanceCorner, VALUE_olympicRecordCorner, VALUE_raceNameCorner, VALUE_rankingBarCorner, VALUE_worldRecordCorner, VALUE_worldRecordLine, VALUE_worldRecordSplitCorner, VALUE_worldRecordSplitDiffCorner, VALUE_leaderLaneNumberTextCorner, VALUE_distanceSwumBarCorner, VALUE_climbLine } from "../../../../utils/values";
 import VisCustomizedIcon from "./VisCustomizedIcon";
 import VisElapsedTimeCorner from "./VisElapsedTimeCorner";
 import VisCustomizedText from "./VisCustomizedText";
@@ -14,6 +14,7 @@ import VisRaceNameCorner from "./VisRaceNameCorner";
 import VisDistanceSwumTextCorner from "./VisDistanceSwumTextCorner";
 import VisLeaderLaneNumberTextCorner from "./VisLeaderLaneNumberTextCorner";
 import VisDistanceSwumBarCorner from "./VisDistanceSwumBarCorner";
+import VisClimbLine from "./VisClimbLine";
 
 interface VisGlobalProps {
   layerList: LayerType[]
@@ -208,6 +209,19 @@ function VisGlobal(props: VisGlobalProps) {
               svgHeight={svgHeight} />
           case VALUE_worldRecordLine:
             return <VisWorldRecordLine
+              key={`${layer.uuid}-layer-${i}`}
+              visibility={layer.visibility}
+              x={embeddedVis.positionXAndWidthRatio && svgWidth? embeddedVis.positionXAndWidthRatio * svgWidth :  embeddedVis.positionX}
+              y={embeddedVis.positionYAndHeightRatio && svgHeight ? embeddedVis.positionYAndHeightRatio * svgHeight : embeddedVis.positionY}
+              r={embeddedVis.positionR}
+              s={embeddedVis.positionSRatio && svgWidth? embeddedVis.positionSRatio * svgWidth : embeddedVis.positionS}
+              editableElementList={embeddedVis.editableElementList}
+              currentSwimmerVideo={currentSwimmerVideo}
+              currentFrameIndex={currentFrameIndex}
+              svgWidth={svgWidth}
+              svgHeight={svgHeight} />
+          case VALUE_climbLine:
+            return <VisClimbLine
               key={`${layer.uuid}-layer-${i}`}
               visibility={layer.visibility}
               x={embeddedVis.positionXAndWidthRatio && svgWidth? embeddedVis.positionXAndWidthRatio * svgWidth :  embeddedVis.positionX}

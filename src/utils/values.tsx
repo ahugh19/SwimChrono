@@ -71,6 +71,10 @@ export const globalUIPadding = 12
 export const globalConfigPanelWidth = 240
 export const layerPartWidth = 224
 export const VALUEHalfDistance = 50
+export const VALUEClimbHeight = 14.4
+export const VALUEClimbWidth = 3.2
+export const VALUEClimbVideoHeight = 1920
+export const VALUEClimbVideoWidth = 368
 // Reference video pixel width used as a fallback when the live svgWidth is
 // unavailable (the source videos in this repo are 1920×1080).
 export const DEFAULT_VIDEO_PIXEL_WIDTH = 1920
@@ -836,6 +840,30 @@ export const videoMetaDataList = [
       }
     ]
   },
+  {
+    "name": "Climbing",
+    "lanes": 1,
+    "raceStartTime": 3.3,
+    "dataCSV": "climb_processed.csv",
+    "framerate": 60,
+    "distance": 15,
+    "poolLapLength": 15,
+    "gender": "women",
+    "year": 2024,
+    "type": "individual",
+    "style": "climbing",
+    "level": "Olympic",
+    "videoName": "climbing",
+    "video": "video/climbing.mp4",
+    "note": "climbing",
+    "swimmersInfo": [
+      {
+        "name": "MADE RITA D.M.",
+        "nationality": "INA",
+        "swimmerId": 0,
+      },
+    ]
+  },
 ]
 
 export const exampleList = [
@@ -853,6 +881,11 @@ export const exampleList = [
     videoName: "paris24-men-back-final-100m",
     exampleName: "Acceleration (Case 3)",
     configuration: "acc.json"
+  },
+  {
+    videoName: "climbing",
+    exampleName: "Climbing",
+    configuration: "climb.json"
   },
 ]
 
@@ -897,6 +930,9 @@ export const VALUE_top3SpeedLane = "top3SpeedLane" as const
 export const VALUE_top3DistanceGapLane = "top3DistanceGapLane" as const
 export const VALUE_distanceToLeaderPacManLane = "distanceToLeaderPacManLane" as const
 export const VALUE_distanceLeftLane = "distanceLeftLane" as const
+export const VALUE_climbCount = "climbCount" as const
+export const VALUE_climbLine = "climbLine" as const
+export const VALUE_climbIcon = "climbIcon" as const
 
 
 // map data to visualizations
@@ -1715,6 +1751,54 @@ export const visControllerPanelConfig: visControllerPanelConfigType = {
         ]
       },
     ]
+  },
+  "climb": {
+    visList: [
+      {
+        visName: VALUE_climbCount,
+        visIcon: "generalTextLane.png",
+        dataName: "climb",
+        composeType: embeddedVisTypeComposeType_INDIVIDUAL,
+        positionX: DEFAULTSwimFlow2PositionX,
+        positionY: DEFAULTSwimFlow2PositionY,
+        positionR: DEFAULTSwimFlow2PositionR,
+        positionS: DEFAULTSwimFlow2PositionS,
+        positionMove: true,
+        editableElementList: [
+          { id: "text-1", type: "text", visible: true, fontSize: DEFAULTSwimFlow2TextControllerFontSize, fontFillColor: DEFAULTSwimFlow2TextControllerFillColor,  }
+        ]
+      },
+      {
+        visName: VALUE_climbIcon,
+        visIcon: "generalIconLane.png",
+        dataName: "climb",
+        composeType: embeddedVisTypeComposeType_INDIVIDUAL,
+        positionX: DEFAULTSwimFlow2PositionX,
+        positionY: DEFAULTSwimFlow2PositionY,
+        positionR: DEFAULTSwimFlow2PositionR,
+        positionS: DEFAULTSwimFlow2PositionS,
+        positionMove: true,
+        editableElementList: [
+          { id: "background-shape-1", type: "shape", visible: true, shapeFillColor: "#d42121", shapeStrokeColor: "#c9c9c9", shapeStrokeWidth: 0 },
+        ]
+      },
+      {
+        visName: VALUE_climbLine,
+        visIcon: "generalCorner.png",
+        dataName: "climb",
+        composeType: embeddedVisTypeComposeType_GLOBAL,
+        positionX: DEFAULTSwimFlow2PositionX,
+        positionY: DEFAULTSwimFlow2PositionY,
+        positionR: DEFAULTSwimFlow2PositionR,
+        positionS: DEFAULTSwimFlow2PositionS,
+        positionMove: false,
+        editableElementList: [
+          { id: "shape-1-circle", type: "shape", visible: true, shapeFillColor: "#ff2916", shapeStrokeColor: "#ff2916", shapeStrokeWidth: 2 },
+          { id: "shape-2-trial", type: "shape", visible: true, shapeFillColor: "#ff2916", shapeStrokeColor: "#ff2916", shapeStrokeWidth: 1},
+          { id: "shape-3-line", type: "shape", visible: true, shapeFillColor: "#ff8075", shapeStrokeColor: "#ff8075", shapeStrokeWidth: 2 }
+        ]
+      },
+    ]
   }
 }
 
@@ -1869,6 +1953,17 @@ export const editableElementInVisConfig: editableElementInVisConfigType = {
     { id: "text-1", type: "text", visible: true },
     { id: "background-shape-1-start", type: "shape", visible: true },
     { id: "background-shape-1-end", type: "shape", visible: true },
+  ],
+  "climbCount": [
+    { id: "text-1", type: "text", visible: true }
+  ],
+  "climbLine": [
+    { id: "shape-1-circle", type: "shape", visible: true },
+    { id: "shape-2-trial", type: "shape", visible: true },
+    { id: "shape-3-line", type: "shape", visible: true }
+  ],
+  "climbIcon": [
+    { id: "background-shape-1", type: "shape", visible: true }
   ]
 }
 
@@ -1896,4 +1991,7 @@ export const visSelectionPanelTooltip: VisSelectionPanelTooltipTitleType = {
   "laneHighlight": "Highlight selected lanes",
   "worldRecordLine": "",
   "worldRecordSplitCorner": "",
+  "climbCount": "",
+  "climbLine": "",
+  "climbIcon": "",
 }

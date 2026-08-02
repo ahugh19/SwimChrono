@@ -12,7 +12,7 @@ import VisNationalityTextLane from "./VisNationalityTextLane"
 import VisSwimmerNameTextLane from "./VisSwimmerNameTextLane"
 import VisWorldRecordTextLane from "./VisWorldRecordTextLane"
 import { LayerType, SwimmerInfoType, SwimmerVideoDataType, VisIntervalType } from "../../../../types"
-import { embeddedVisTypeComposeType_INDIVIDUAL, VALUE_customizedIconIndividual, VALUE_elapsedTimeLane, VALUE_nationalityIconLane, VALUE_nationalityTextLane, VALUE_currentSpeedTextLane, VALUE_accelerationTextLane, VALUE_distanceSwumTextLane, VALUE_distanceToLeaderTextLane, VALUE_rankingTextLane, VALUE_swimmerNameTextLane, VALUE_worldRecordTextLane, VALUE_currentSpeedGlyphLane, VALUE_customizedTextIndividual, VALUE_laneHighlight, VALUE_rankingFlagLane, VALUE_distanceDivedTextLane, VALUE_distanceDivedArrowLane, VALUE_strokeCountTextLane, VALUE_distanceToLeaderBarLane, VALUE_top3SpeedLane, VALUE_top3DistanceGapLane, VALUE_distanceToLeaderPacManLane, VALUE_distanceLeftLane, VALUE_rankingChangeTextLane } from "../../../../utils/values"
+import { embeddedVisTypeComposeType_INDIVIDUAL, VALUE_customizedIconIndividual, VALUE_elapsedTimeLane, VALUE_nationalityIconLane, VALUE_nationalityTextLane, VALUE_currentSpeedTextLane, VALUE_accelerationTextLane, VALUE_distanceSwumTextLane, VALUE_distanceToLeaderTextLane, VALUE_rankingTextLane, VALUE_swimmerNameTextLane, VALUE_worldRecordTextLane, VALUE_currentSpeedGlyphLane, VALUE_customizedTextIndividual, VALUE_laneHighlight, VALUE_rankingFlagLane, VALUE_distanceDivedTextLane, VALUE_distanceDivedArrowLane, VALUE_strokeCountTextLane, VALUE_distanceToLeaderBarLane, VALUE_top3SpeedLane, VALUE_top3DistanceGapLane, VALUE_distanceToLeaderPacManLane, VALUE_distanceLeftLane, VALUE_rankingChangeTextLane, VALUE_climbCount, VALUE_climbIcon } from "../../../../utils/values"
 import { useEffect } from "react"
 import VisRankingChangeTextLane from "./VisRankingChangeTextLane"
 import VisRankingTextLane from "./VisRankingTextLane"
@@ -25,6 +25,8 @@ import VisTop3SpeedLane from "./VisTop3SpeedLane"
 import VisTop3DistanceGapLane from "./VisTop3DistanceGapLane"
 import VisDistanceToLeaderPacManLane from "./VisDistanceToLeaderPacManLane"
 import VisDistanceLeftLane from "./VisDistanceLeftLane"
+import VisClimbCount from "./VisClimbCount"
+import VisClimbIcon from "./VisClimbIcon"
 
 interface VisAlongLaneProps {
   layerList: LayerType[]
@@ -456,6 +458,40 @@ function VisAlongLane(props: VisAlongLaneProps) {
                   />
                 case VALUE_worldRecordTextLane:
                   return <VisWorldRecordTextLane
+                    key={`lane-${laneIndex}-${layer.uuid}-layer-${i}`}
+                    laneIndex={laneIndex}
+                    svgWidth={svgWidth}
+                    svgHeight={svgHeight}
+                    x={embeddedVis.positionXAndWidthRatio && svgWidth ? embeddedVis.positionXAndWidthRatio * svgWidth : embeddedVis.positionX}
+                    y={embeddedVis.positionYAndHeightRatio && svgHeight ? embeddedVis.positionYAndHeightRatio * svgHeight : embeddedVis.positionY}
+                    r={embeddedVis.positionR}
+                    s={embeddedVis.positionSRatio && svgWidth? embeddedVis.positionSRatio * svgWidth : embeddedVis.positionS}
+                    isMove={embeddedVis.positionMove}
+                    layerList={layerList}
+                    currentSwimmerVideo={currentSwimmerVideo}
+                    currentFrameIndex={currentFrameIndex}
+                    editableElementList={embeddedVis.editableElementList}
+                    visibility={layer.visibility}
+                  />
+                case VALUE_climbCount:
+                  return <VisClimbCount
+                    key={`lane-${laneIndex}-${layer.uuid}-layer-${i}`}
+                    laneIndex={laneIndex}
+                    svgWidth={svgWidth}
+                    svgHeight={svgHeight}
+                    x={embeddedVis.positionXAndWidthRatio && svgWidth ? embeddedVis.positionXAndWidthRatio * svgWidth : embeddedVis.positionX}
+                    y={embeddedVis.positionYAndHeightRatio && svgHeight ? embeddedVis.positionYAndHeightRatio * svgHeight : embeddedVis.positionY}
+                    r={embeddedVis.positionR}
+                    s={embeddedVis.positionSRatio && svgWidth? embeddedVis.positionSRatio * svgWidth : embeddedVis.positionS}
+                    isMove={embeddedVis.positionMove}
+                    layerList={layerList}
+                    currentSwimmerVideo={currentSwimmerVideo}
+                    currentFrameIndex={currentFrameIndex}
+                    editableElementList={embeddedVis.editableElementList}
+                    visibility={layer.visibility}
+                  />
+                case VALUE_climbIcon:
+                  return <VisClimbIcon
                     key={`lane-${laneIndex}-${layer.uuid}-layer-${i}`}
                     laneIndex={laneIndex}
                     svgWidth={svgWidth}
