@@ -5,7 +5,13 @@ This is a repository for original codes of an authoring tool, *SwimChrono*, prov
 
 See also [*SwimFlow*](https://aviz.gitlabpages.inria.fr/vis-in-motion-swimflow/), our related tool for embedded visualizations in swimming videos.
 
-**Experimental**: the tool also ships a speed-climbing case to show the approach generalizes beyond swimming — pick *Climbing* in the video dropdown and load the *Climbing* example.
+![SwimChrono authoring interface with the Olympic Style example loaded](./docs/img/tool-screenshot.jpg)
+
+## Documentation & Materials
+
+* [Adding a new video](./docs/adding-a-video.md) — step-by-step instructions, a copy/paste metadata template, and notes on the data-processing pipeline.
+* [The speed-climbing case](./docs/climbing-case.md) — an experimental demonstration that the approach generalizes beyond swimming.
+* [Supplementary materials on OSF](https://osf.io/t82cw/overview) — materials accompanying the paper.
 
 If you use *SwimChrono* and our results on **temporal arrangements for embedded visualization** in new projects or use it in a different way, we would appreciate a citation:
 
@@ -121,14 +127,6 @@ src/
 ├── utils/           # values, prompts, flag SVGs, helpers
 └── test/            # vitest setup + shared fixtures
 ```
-
-## Adding a New Video
-
-Races are registered in `src/utils/values.tsx → videoMetaDataList` (video
-file in `public/video/`, per-frame CSV in `public/csv/`). See
-[docs/adding-a-video.md](./docs/adding-a-video.md) for step-by-step
-instructions, a copy/paste metadata template, and notes on the planned
-dynamic video index (aquanote / sportsdata formats).
 
 ## Editing-element contract
 
