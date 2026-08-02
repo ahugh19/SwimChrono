@@ -1,38 +1,24 @@
 # SwimChrono
 
-This is a repository for original codes of an authoring tool, *SwimChrono*, provided in the paper ["Diving Deep into Time: Temporal Arrangements for Embedded Visualization in Swimming Videos"](https://doi.org/10.1109/TVCG.2026.3689361), published at [IEEE Transactions on Visualization and Computer Graphics](https://www.computer.org/csdl/journal/tg).
-*SwimChrono* lets users author embedded visualizations on top of swimming-race videos — pick a race, select data fields, attach visualizations to lanes or screen corners, edit each element's style, and define triggers (manually or via the built-in AI assistant) that decide when each layer appears. An online interactive version can be accessed at https://aviz.gitlabpages.inria.fr/swimchrono/.
+This is a repository for original codes of an authoring tool, *SwimChrono*, provided in the paper ["Diving Deep into Time: Temporal Arrangements for Embedded Visualization in Swimming Videos"](https://doi.org/10.1109/TVCG.2026.3689361) ([preprint on HAL](https://hal.science/hal-05612503)), published at [IEEE Transactions on Visualization and Computer Graphics](https://www.computer.org/csdl/journal/tg).
+*SwimChrono* lets users author embedded visualizations on top of swimming-race videos — pick a race, select data fields, attach visualizations to lanes or screen corners, edit each element's style, and define triggers (manually or via the built-in AI assistant) that decide when each layer appears. An online interactive version can be accessed at https://aviz.gitlabpages.inria.fr/swimchrono/ or https://ahugh19.github.io/SwimChrono/.
+
+See also [*SwimFlow*](https://aviz.gitlabpages.inria.fr/vis-in-motion-swimflow/), our related tool for embedded visualizations in swimming videos.
 
 If you use *SwimChrono* and our results on **temporal arrangements for embedded visualization** in new projects or use it in a different way, we would appreciate a citation:
 
-*SwimChrono* is released under [MIT LICENSE](https://opensource.org/license/mit), to cite *SwimChrono* as a single tool:
-
-* [*SwimChrono*](https://aviz.gitlabpages.inria.fr/swimchrono/), created by AVIZ, Inria in 2025.
+* Junxiu Tang, Lijie Yao, Lu Ying, Romain Vuillemot, Petra Isenberg. Diving Deep Into Time: Temporal Arrangements for Embedded Visualization in Swimming Videos. IEEE Transactions on Visualization and Computer Graphics, 32(7):6825–6841, 2026. doi: [10.1109/TVCG.2026.3689361](https://doi.org/10.1109/TVCG.2026.3689361). [Preprint on HAL](https://hal.science/hal-05612503).
 
     ```
-    @misc{SwimChrono,
-        author = {AVIZ, Inria},
-        title = {SwimChrono: An authoring tool for embedded visualizations in swimming videos},
-        url = {https://aviz.gitlabpages.inria.fr/swimchrono/},
-        year = {Created 2025}
-    }
-    ```
-
-To cite the entire paper:
-
-* Junxiu Tang, Lijie Yao, Lu Ying, Romain Vuillemot, Petra Isenberg. Diving Deep into Time: Temporal Arrangements for Embedded Visualization in Swimming Videos. IEEE Transactions on Visualization and Computer Graphics, 2026. doi: [10.1109/TVCG.2026.3689361](https://doi.org/10.1109/TVCG.2026.3689361).
-
-    ```
-    @ARTICLE{TANG:2026:SwimChrono,
-        author = {Tang, Junxiu and Yao, Lijie and Ying, Lu and Vuillemot, Romain and and Isenberg, Petra},
-        journal = {IEEE Transactions on Visualization and Computer Graphics},
-        title = {Diving Deep into Time: Temporal Arrangements for Embedded Visualization in Swimming Videos},
-        year = {2026},
-        volume = {TBD},
-        number = {TBD},
-        pages = {TBD},
-        doi = {10.1109/TVCG.2026.3689361}
-    }
+    @ARTICLE{11501810,
+        author={Tang, Junxiu and Yao, Lijie and Ying, Lu and Vuillemot, Romain and Isenberg, Petra},
+        journal={IEEE Transactions on Visualization and Computer Graphics},
+        title={Diving Deep Into Time: Temporal Arrangements for Embedded Visualization in Swimming Videos},
+        year={2026},
+        volume={32},
+        number={7},
+        pages={6825-6841},
+        doi={10.1109/TVCG.2026.3689361}}
     ```
 
 ## Local Deployment
