@@ -64,13 +64,13 @@ function VideoLabel(props: VideoLabelProps) {
   }, [])
 
   useEffect(() => {
-    if (store.urlList.length > 0 && urlIndex >= 0) {
+    if (store.urlList.length > 0 && urlIndex >= 0 && urlIndex < store.urlList.length) {
       setUrl(store.urlList[urlIndex].key)
       setUrlVideoName(store.urlList[urlIndex].urlVideoName)
       store.setSelectedVideoRecord(null)
       // setVideoDuration(videoMajorPlayerRef.current.getDuration())
     }
-  }, [urlIndex])
+  }, [urlIndex, store.urlList])
 
   useEffect(() => {
     if (!editor) return

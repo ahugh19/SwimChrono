@@ -99,7 +99,17 @@ export function initVisData(): VisType[] {
 }
 
 export function initUrlList(): UrlType[] {
-  return []
+  // Default fallback video shipped with the repository so the label tools
+  // load with a playable video even when the existing-data fetch fails.
+  return [
+    {
+      key: "video/zip-paris24-women-free-50-final.mp4",
+      urlVideoName: "paris24-women-free-final-50m (local)",
+      sportsType: "swimming",
+      raceLevel: "Olympic",
+      year: 2024,
+    }
+  ]
 }
 
 export function initEventList(): EventType[] {
