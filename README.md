@@ -43,7 +43,7 @@ If you use *SwimChrono* and our results on **temporal arrangements for embedded 
    yarn run dev
    ```
 
-4. The system is usually served on [http://localhost:5173/swimchrono/](http://localhost:5173/swimchrono/).
+4. The system is usually served on [http://localhost:5173/SwimChrono/](http://localhost:5173/SwimChrono/).
 
 To build the project, run:
 ```bash

@@ -19,10 +19,10 @@ of concept, not a fully supported sport.
 
 | Asset | Role |
 |---|---|
-| `public/video/climbing.mp4` | Women's speed-climbing run (MADE RITA D.M., INA), from-above strip view, 60 fps, ~11 s |
+| `public/video/climbing.mp4` | Women's speed-climbing run (MADE RITA D.M., INA), 1920×368 strip view of the wall, 60 fps, ~11 s |
 | `public/csv/climb_processed.csv` | Per-frame data derived from the event-level annotations |
 | `public/configuration/climb.json` | The *Climbing* example: four layers with acceleration-threshold triggers |
-| `VisClimbCount` / `VisClimbIcon` / `VisClimbLine` | Climbing-specific visualization components (count text, acceleration icon, trajectory line) |
+| `VisClimbCount` / `VisClimbIcon` / `VisClimbLine` | Climbing-specific visualization components (count text, arrow icon, trajectory line) |
 | `videoMetaDataList` entry `"Climbing"` | Registers the race (single lane, 15 m wall, 60 fps) in `src/utils/values.tsx` |
 
 ## Notes and limitations

@@ -7,7 +7,7 @@ import { ThemeProvider, ThemedAntdProvider } from "./utils/theme";
 
 function App() {
   return (
-    <Router basename="/swimchrono">
+    <Router basename="/SwimChrono">
       <ThemeProvider>
         <ThemedAntdProvider>
           <Routes>

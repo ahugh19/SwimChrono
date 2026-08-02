@@ -59,7 +59,7 @@ this template:
   "poolLapLength": 50,                  // pool length in meters
   "gender": "women",                    // "men" | "women" | "mixed"
   "year": 2024,
-  "type": "individual",                 // "individual" | "relay"
+  "type": "individual",                 // race type, e.g. "individual"
   "style": "freestyle",                 // stroke, e.g. "freestyle" | "backstroke" | ...
   "level": "Olympic",                   // free-text competition level
   "videoName": "my-race",
@@ -93,7 +93,9 @@ entry to `exampleList` in `src/utils/values.tsx`:
 yarn run dev
 ```
 
-Open the Visualization page and pick the new race in the Header dropdown.
+Open the tool's main page and pick the new race in the Header dropdown
+(the `/visualization` route is the cross-race statistics view, not the
+authoring interface).
 If the video plays but visualizations stay empty, check that `dataCSV`
 points to the right file and that `framerate` / `raceStartTime` match the
 video.
