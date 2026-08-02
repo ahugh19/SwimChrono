@@ -120,6 +120,14 @@ src/
 └── test/            # vitest setup + shared fixtures
 ```
 
+## Adding a New Video
+
+Races are registered in `src/utils/values.tsx → videoMetaDataList` (video
+file in `public/video/`, per-frame CSV in `public/csv/`). See
+[docs/adding-a-video.md](./docs/adding-a-video.md) for step-by-step
+instructions, a copy/paste metadata template, and notes on the planned
+dynamic video index (aquanote / sportsdata formats).
+
 ## Editing-element contract
 
 Each visualization advertises an editable element list in
