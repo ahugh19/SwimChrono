@@ -9,6 +9,7 @@ See also [*SwimFlow*](https://aviz.gitlabpages.inria.fr/vis-in-motion-swimflow/)
 
 ## Documentation & Materials
 
+* [Replicating paper results](./docs/replicating-paper-results.md) — clear instructions to reproduce Figures 4–6 from the paper with the shipped examples.
 * [Adding a new video](./docs/adding-a-video.md) — step-by-step instructions, a copy/paste metadata template, and notes on the data-processing pipeline.
 * [The speed-climbing case](./docs/climbing-case.md) — an experimental demonstration that the approach generalizes beyond swimming.
 * [Supplementary materials on OSF](https://osf.io/t82cw/overview) — materials accompanying the paper.
