@@ -439,6 +439,7 @@ export class Store {
 
   copyLayer = (index: number) => {
     const newLayer = _.cloneDeep(this.layerList[index])
+    newLayer.uuid = generateUUID() // copies must not share the original's identity
     newLayer.name = `${newLayer.name} copy`
     newLayer.isSelected = false
     this.layerList.splice(index + 1, 0, newLayer)
