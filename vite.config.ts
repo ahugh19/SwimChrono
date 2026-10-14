@@ -25,6 +25,24 @@ function redirectLowercaseBase(): Plugin {
 export default defineConfig({
   base: '/SwimChrono/',
   plugins: [react(), redirectLowercaseBase()],
+  // Debug logging stays in the sources for development; strip it from
+  // production bundles (console.warn / console.error are kept).
+  esbuild: {
+    pure: ['console.log'],
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        // Split stable third-party code into its own chunks so a change in
+        // the app code doesn't invalidate the cached vendor bundles.
+        manualChunks: {
+          react: ['react', 'react-dom', 'react-router-dom'],
+          antd: ['antd', '@ant-design/icons'],
+          konva: ['konva', 'react-konva'],
+        },
+      },
+    },
+  },
   css: {
     preprocessorOptions: {
       less: {

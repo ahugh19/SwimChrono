@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Input, Button, Card, Spin, message, Row, Descriptions, Typography } from "antd";
-import OpenAI from "openai";
 import { aiConfig } from "../../../../../utils/aiConfig";
 import { TriggerCompType } from "../../../../../types";
 import { promptDraftEn } from "../../../../../utils/prompt";
@@ -77,6 +76,9 @@ function AIChat(props: IAIChatProps) {
 
     setLoading(true);
     try {
+      // The SDK is only needed once the user asks the assistant; loading it
+      // here keeps ~100 kB out of the initial bundle.
+      const { default: OpenAI } = await import("openai");
       const openai = new OpenAI({
         baseURL: aiConfig.baseURL,
         apiKey: aiConfig.apiKey,
