@@ -38,7 +38,7 @@ function PageHeader({ title, children, extra, tour }: PageHeaderProps) {
 
   const pagesStep: NonNullable<TourProps['steps']>[number] = {
     title: '🧭 Pages',
-    description: 'Switch between the authoring tool, the three labelling tools and the result charts here. The same menu sits in the top-right corner of the authoring page.',
+    description: 'Use these tabs to switch between the authoring tool, the three labelling tools and the result charts. The authoring page has the same menu in its top-right corner.',
     target: () => document.querySelector('[data-tour="pages"]') as HTMLElement,
   }
 

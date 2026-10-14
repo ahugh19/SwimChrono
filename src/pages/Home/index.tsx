@@ -112,18 +112,23 @@ function Home(props: IComponentPropsWithStore) {
     {
       title: '📺 Video Panel',
       description: <div>
-        <p>Watch the video along with embedded visualizations here. 🎬</p>
-        <p>Hover a visualization to highlight it and <b>click it to select its layer</b> for editing. 🎯</p>
+        <p>Watch the video with the embedded visualizations here. 🎬</p>
+        <p>Hover a visualization to highlight it. Click it to select its layer. 🎯</p>
       </div>,
       target: () => childVideoPanelRef.current?.videoPanelComponent,
     },
     {
       title: '📊 Layer Panel & Timeline',
       description: <div>
-        <p>Each layer is a row; the bars show <b>when</b> it is visible. 🕒</p>
-        <p>Drag on the ruler or the rows to <b>seek</b>, drag a bar's edges to <b>change its length</b>, or drag the bar to move it. Edited bars get a dashed outline; <RollbackOutlined /> restores the trigger result.</p>
-        <p>Keys: <b>Space</b> play/pause · <b>←/→</b> one frame (Shift: 1 s) · <b>Home</b> race start · <b>Ctrl/⌘ + wheel</b> zoom.</p>
-        <p>Drag the gutters between the panels to resize them (double-click to reset). ↔️</p>
+        <p>Each layer is a row. The bars show when the layer is visible. 🕒</p>
+        <ul style={{ paddingLeft: 18, margin: "4px 0" }}>
+          <li>Drag on the ruler or on a row to move the playhead.</li>
+          <li>Drag the edges of a bar to change its length. Drag the middle to move it.</li>
+          <li>Edited bars get a dashed outline. The <RollbackOutlined /> button brings back the trigger result.</li>
+          <li>Space plays and pauses. The arrow keys step one frame, or one second with Shift. Home jumps to the race start.</li>
+          <li>Hold Ctrl (or ⌘) and scroll to zoom the timeline.</li>
+        </ul>
+        <p>You can also drag the gutters between the panels to resize them. Double-click a gutter to reset it. ↔️</p>
       </div>,
       target: () => childLayerPanelRef.current?.layerPanelComponent,
       placement: "top"
@@ -164,14 +169,14 @@ function Home(props: IComponentPropsWithStore) {
     {
       title: <div><AppstoreOutlined /> Other Pages</div>,
       description: <div>
-        <p>This <b>Pages</b> menu is the entrance to the other tools of the project:</p>
+        <p>The other tools of the project open from this Pages menu:</p>
         <ul style={{ paddingLeft: 18, margin: "4px 0" }}>
-          <li><b>Vis labels</b> — label embedded visualizations in race videos (bbox, data, placement, animation).</li>
-          <li><b>Event labels</b> — label race events (start, turns, finish …).</li>
-          <li><b>Camera labels</b> — label camera shots.</li>
-          <li><b>Results</b> — gantt charts of all 1544 annotations of the systematic review, per video or all at once.</li>
+          <li><b>Vis labels</b>: mark the embedded visualizations in race videos, with their bounding box, data, placement and animation.</li>
+          <li><b>Event labels</b>: mark race events such as the start, the turns and the finish.</li>
+          <li><b>Camera labels</b>: mark camera shots.</li>
+          <li><b>Results</b>: gantt charts of the 1544 annotations from the systematic review, one video at a time or all at once.</li>
         </ul>
-        <p>Each page has its own short tour behind the <QuestionCircleOutlined /> button in its header. The About dialog lists the paper and the changelog.</p>
+        <p>Every page has a short tour of its own. Open it with the <QuestionCircleOutlined /> button in the page header. The About dialog lists the paper and the changelog.</p>
       </div>,
       target: () => childHeaderRef.current?.pages,
       placement: "bottomRight"
@@ -219,7 +224,7 @@ function Home(props: IComponentPropsWithStore) {
           max={720}
           onChange={setControllerWidth}
           onDoubleClick={() => setControllerWidth(null)}
-          title="Drag to resize the controller panel · double-click to reset"
+          title="Drag to resize the controller panel. Double-click to reset."
         />
       </div>
       <div className={styles.layerGutter}>
@@ -231,7 +236,7 @@ function Home(props: IComponentPropsWithStore) {
           max={Math.max(260, window.innerHeight - 260)}
           onChange={setLayerHeight}
           onDoubleClick={() => setLayerHeight(null)}
-          title="Drag to resize the layer panel · double-click to reset"
+          title="Drag to resize the layer panel. Double-click to reset."
         />
       </div>
       <input type="file" onChange={(e) => onFileInput(e)} style={{ display: 'none' }} ref={fileInputRef} />

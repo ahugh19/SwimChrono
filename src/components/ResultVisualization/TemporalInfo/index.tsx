@@ -213,11 +213,11 @@ function TemporalInfo(props: TemporalInfoProps) {
         tour={{
           storageKey: "swimchrono.tourSeen.results",
           steps: [
-            { title: '🎥 Pick a video', description: 'The 31 reviewed race videos. Use ‹ › to step through them; the list is searchable.', target: () => document.querySelector('[data-tour="video-select"]') as HTMLElement },
-            { title: '📺 Player', description: 'Plays the chosen video. Switch "bbox" on to outline the annotations that are visible at the current moment (orange), the selected one (blue) and the hovered one (dashed).', target: () => document.querySelector('[data-tour="player"]') as HTMLElement },
-            { title: '🗂 Annotations', description: '"At this moment" lists what is on screen right now — click a card to select it. "Table" has every annotation of the video with column filters; filtering dims the non-matching bars in the chart and hides their bboxes.', target: () => document.querySelector('[data-tour="side"]') as HTMLElement, placement: 'left' },
-            { title: '🎛 Chart controls', description: 'Group the bars by placement or movement, show all videos at once (optionally on one time scale), zoom, and read the colour legend.', target: () => document.querySelector('[data-tour="gantt-bar"]') as HTMLElement, placement: 'top' },
-            { title: '📊 Gantt chart', description: 'Each bar is an annotation. Click one to select it and seek the player, drag on the chart to scrub, ctrl/⌘ + wheel to zoom, Space to play. Drag the gutter above the chart to change its height.', target: () => document.querySelector('[data-tour="gantt"]') as HTMLElement, placement: 'top' },
+            { title: '🎥 Pick a video', description: 'This list holds the 31 race videos of the review. You can search it, or step through it with the arrow buttons.', target: () => document.querySelector('[data-tour="video-select"]') as HTMLElement },
+            { title: '📺 Player', description: 'The chosen video plays here. Turn on "bbox" to draw the annotations that are visible right now. Orange is visible, blue is selected, dashed is hovered.', target: () => document.querySelector('[data-tour="player"]') as HTMLElement },
+            { title: '🗂 Annotations', description: 'The first tab lists what is on screen at the current time. Click a card to select it. The second tab is the full table of the video. When you filter a column, the other bars in the chart fade out and their boxes disappear from the video.', target: () => document.querySelector('[data-tour="side"]') as HTMLElement, placement: 'left' },
+            { title: '🎛 Chart controls', description: 'Group the bars by placement or by movement. Show all videos at once, on one shared time scale if you like. Zoom the chart. The legend explains the colours.', target: () => document.querySelector('[data-tour="gantt-bar"]') as HTMLElement, placement: 'top' },
+            { title: '📊 Gantt chart', description: 'Each bar is one annotation. Click a bar to select it and jump the player to it. Drag on the chart to move the playhead. Hold Ctrl (or ⌘) and scroll to zoom. Press Space to play. Drag the gutter above the chart to change its height.', target: () => document.querySelector('[data-tour="gantt"]') as HTMLElement, placement: 'top' },
           ],
         }}
       >
