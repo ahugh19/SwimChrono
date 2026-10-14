@@ -184,6 +184,11 @@ Navigation
 * The floating buttons in the bottom-right corner are gone. Every page header now carries the page navigation: a compact "Pages" menu in the authoring header, and a tab strip in the slim header of the label tools and the result charts. Links are router links, so switching pages no longer reloads the app.
 * The bbox overlay on the result player is off by default, as before, so it never covers the video.
 
+Onboarding & appearance
+* Guided tours on the result charts and on each label tool (? button in the header), shown once on first visit; the authoring tour gained steps for the timeline, click-to-select on the video, resizable panels and the Pages menu.
+* The label tools use a two-column flow layout instead of fixed absolute offsets, so nothing overlaps any more.
+* Light mode uses a deeper accent blue (#1a8fc7) and firmer selection tints; the accent is theme-aware in the timeline and chart canvases.
+
 ### 1.3.0
 
 Timeline
