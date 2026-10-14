@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ConfigurationType } from "./index";
+import { ConfigurationType, LayerType } from "./index";
 
 // Zod schema for EditableElementType
 const EditableElementSchema = z.object({
@@ -94,4 +94,40 @@ export function validateConfiguration(json: unknown): json is ConfigurationType 
     console.error("Validation failed:", error);
     return false; // invalid
   }
+}
+
+// Versioned export envelope (since app 1.2.0). Bump CONFIG_FORMAT_VERSION
+// when the layer schema changes incompatibly and add a migration below.
+export const CONFIG_FORMAT_VERSION = 1
+
+const ConfigurationEnvelopeSchema = z.object({
+  format: z.number().int().positive(),
+  appVersion: z.string().optional(),
+  video: z.string().optional(),
+  exportedAt: z.string().optional(),
+  layers: ConfigurationSchema,
+});
+
+export interface NormalizedConfiguration {
+  layers: LayerType[]
+  video?: string
+  format: number
+}
+
+// Accepts either the legacy bare layer array or the versioned envelope and
+// returns the layers in the current in-memory shape, or null if invalid.
+export function normalizeConfiguration(json: unknown): NormalizedConfiguration | null {
+  if (Array.isArray(json)) {
+    return validateConfiguration(json) ? { layers: json as LayerType[], format: 0 } : null
+  }
+  const parsed = ConfigurationEnvelopeSchema.safeParse(json)
+  if (!parsed.success) {
+    console.error("Validation failed:", parsed.error)
+    return null
+  }
+  if (parsed.data.format > CONFIG_FORMAT_VERSION) {
+    console.error(`Configuration format ${parsed.data.format} is newer than supported ${CONFIG_FORMAT_VERSION}`)
+    return null
+  }
+  return { layers: parsed.data.layers as LayerType[], video: parsed.data.video, format: parsed.data.format }
 }
