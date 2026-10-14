@@ -5,6 +5,7 @@ import { LayerType, TriggerCompType, TriggerFormProps } from '../../../../types'
 import { optionsTriggerType, optionsCompare, TRIGGER_COMP_START_DURATION, optionsSubjectNoDuration, optionsSubjectDuration, SUBJECT_DURATION, SUBJECT_event, COMPARE_EQUAL, optionsCompareOnlyEqual, optionsEvent } from '../../../../utils/values';
 import { getNumberUnit, getNumberStep } from '../../../../utils';
 import AIChat from './AIChat';
+import { buildRecommendation, loadRecommendationSummary, Recommendation, RecommendationSummary } from '../../../../utils/triggerRecommendation';
 
 const { Text, Title, Paragraph } = Typography
 
@@ -24,7 +25,12 @@ function TriggerDrawer(props: TriggerDrawerProps) {
   // const subjectValue = Form.useWatch('subjectStart', form);
   const [subjectStartValue, setSubjectStartValue] = useState<string>("")
   const [subjectEndValue, setSubjectEndValue] = useState<string>("")
-  const [triggerRecommendation, setTriggerRecommendation] = useState<string>("")
+  const [summary, setSummary] = useState<RecommendationSummary | null>(null)
+  const [recommendation, setRecommendation] = useState<Recommendation | null>(null)
+
+  useEffect(() => {
+    loadRecommendationSummary().then(setSummary)
+  }, [])
 
   function onTriggerTypeChange(fieldName: number, value: string) {
     if (value === TRIGGER_COMP_START_DURATION) {
@@ -65,10 +71,12 @@ function TriggerDrawer(props: TriggerDrawerProps) {
     } else {
       form.setFieldsValue({ triggerCompList: currentLayer.triggerCompList })
     }
-    if (currentLayer.embeddedVis && currentLayer.embeddedVis.triggerRecommendation) {
-      setTriggerRecommendation(currentLayer.embeddedVis.triggerRecommendation)
-    }
   }, [currentLayer])
+
+  // Recommendation computed from the review annotations for this data.
+  useEffect(() => {
+    setRecommendation(buildRecommendation(currentLayer?.embeddedVis?.dataName, summary))
+  }, [currentLayer?.embeddedVis?.dataName, summary])
 
   useEffect(() => {
     setSubjectEndValue(SUBJECT_DURATION)
@@ -115,12 +123,31 @@ function TriggerDrawer(props: TriggerDrawerProps) {
     >
       <Card style={{ maxWidth: 330, marginBottom: 20 }}>
         <Row>
-          <Title level={5} style={{ margin: "0 0 10px 0" }}>
+          <Title level={5} style={{ margin: "0 0 6px 0" }}>
             Trigger recommendation
           </Title>
-          <Paragraph>
-            {triggerRecommendation === "" ? "No trigger recommendation for this visualization" : triggerRecommendation}
-          </Paragraph>
+          {recommendation ? (
+            <div style={{ width: "100%" }}>
+              <Paragraph style={{ marginBottom: 6 }}>
+                In the reviewed videos, visualizations of <Text strong>{recommendation.labels.join(", ")}</Text> appeared {recommendation.total} times, most often:
+              </Paragraph>
+              <ul style={{ paddingLeft: 18, margin: "0 0 6px 0" }}>
+                {recommendation.patterns.map((p) => (
+                  <li key={p.text}><Text strong>{p.text}</Text> <Text type="secondary">{p.percent}% ({p.count})</Text></li>
+                ))}
+              </ul>
+              {recommendation.medianDuration !== null && (
+                <Paragraph style={{ marginBottom: 0 }}>Typical duration: about {recommendation.medianDuration} s.</Paragraph>
+              )}
+              <Text type="secondary" style={{ fontSize: 11 }}>
+                Source: {summary?.annotations} annotations from {summary?.videos} videos of the systematic review.
+              </Text>
+            </div>
+          ) : (
+            <Paragraph style={{ marginBottom: 0 }}>
+              {summary ? "The review has no annotations for this kind of data." : "Loading the review data…"}
+            </Paragraph>
+          )}
         </Row>
       </Card>
       <AIChat

@@ -306,7 +306,6 @@ export class Store {
         visName: "elapsedTimeCorner",
         visIcon: "generalCorner.png",
         dataName: "elapsedTime",
-        triggerRecommendation: "This visualization usually appears during the whole race",
         composeType: "global",
         positionX: 0,
         positionY: 0,

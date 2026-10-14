@@ -1,0 +1,1234 @@
+{
+ "source": "labelTool/result-vis25.json",
+ "generatedAt": "2026-10-14",
+ "videos": 31,
+ "annotations": 1544,
+ "byData": {
+  "abbr first name": {
+   "total": 38,
+   "medianDuration": 4.3,
+   "patterns": [
+    {
+     "relation": "after",
+     "event": "turning",
+     "count": 19
+    },
+    {
+     "relation": "before",
+     "event": "race start",
+     "count": 6
+    },
+    {
+     "relation": "after",
+     "event": "race end",
+     "count": 5
+    },
+    {
+     "relation": "after",
+     "event": "race start",
+     "count": 4
+    },
+    {
+     "relation": "before",
+     "event": "turning",
+     "count": 4
+    }
+   ]
+  },
+  "abbr last name": {
+   "total": 12,
+   "medianDuration": 137.77,
+   "patterns": [
+    {
+     "relation": "after",
+     "event": "turning",
+     "count": 7
+    },
+    {
+     "relation": "after",
+     "event": "race start",
+     "count": 3
+    },
+    {
+     "relation": "after+before+during",
+     "event": "turning",
+     "count": 1
+    },
+    {
+     "relation": "after",
+     "event": "race end",
+     "count": 1
+    }
+   ]
+  },
+  "all players": {
+   "total": 394,
+   "medianDuration": 15.66,
+   "patterns": [
+    {
+     "relation": "after",
+     "event": "turning",
+     "count": 308
+    },
+    {
+     "relation": "after",
+     "event": "race start",
+     "count": 41
+    },
+    {
+     "relation": "before",
+     "event": "race start",
+     "count": 18
+    },
+    {
+     "relation": "during",
+     "event": "general swimming",
+     "count": 10
+    },
+    {
+     "relation": "after",
+     "event": "jump into the water",
+     "count": 5
+    },
+    {
+     "relation": "after",
+     "event": "race end",
+     "count": 4
+    },
+    {
+     "relation": "before",
+     "event": "turning",
+     "count": 4
+    },
+    {
+     "relation": "during",
+     "event": "whole race",
+     "count": 1
+    },
+    {
+     "relation": "after+during",
+     "event": "race end",
+     "count": 1
+    },
+    {
+     "relation": "after+before+during",
+     "event": "turning",
+     "count": 1
+    },
+    {
+     "relation": "before",
+     "event": "race end",
+     "count": 1
+    }
+   ]
+  },
+  "cr (competition record)": {
+   "total": 34,
+   "medianDuration": 10.4,
+   "patterns": [
+    {
+     "relation": "before",
+     "event": "race end",
+     "count": 19
+    },
+    {
+     "relation": "after+before+during",
+     "event": "race end",
+     "count": 8
+    },
+    {
+     "relation": "after",
+     "event": "race end",
+     "count": 3
+    },
+    {
+     "relation": "before",
+     "event": "turning",
+     "count": 2
+    },
+    {
+     "relation": "during",
+     "event": "last lane",
+     "count": 1
+    },
+    {
+     "relation": "after",
+     "event": "turning",
+     "count": 1
+    }
+   ]
+  },
+  "cr (competition record) splitted": {
+   "total": 51,
+   "medianDuration": 8.8,
+   "patterns": [
+    {
+     "relation": "before",
+     "event": "turning",
+     "count": 51
+    }
+   ]
+  },
+  "distance diving": {
+   "total": 4,
+   "medianDuration": 6.5,
+   "patterns": [
+    {
+     "relation": "after",
+     "event": "jump into the water",
+     "count": 4
+    }
+   ]
+  },
+  "distance of current laps": {
+   "total": 121,
+   "medianDuration": 8.16,
+   "patterns": [
+    {
+     "relation": "after+before+during",
+     "event": "turning",
+     "count": 57
+    },
+    {
+     "relation": "before",
+     "event": "turning",
+     "count": 46
+    },
+    {
+     "relation": "after",
+     "event": "turning",
+     "count": 9
+    },
+    {
+     "relation": "during",
+     "event": "turning",
+     "count": 4
+    },
+    {
+     "relation": "after",
+     "event": "race start",
+     "count": 3
+    },
+    {
+     "relation": "before",
+     "event": "overtake (in relay)",
+     "count": 2
+    }
+   ]
+  },
+  "distance swam": {
+   "total": 20,
+   "medianDuration": 10.08,
+   "patterns": [
+    {
+     "relation": "after",
+     "event": "race start",
+     "count": 10
+    },
+    {
+     "relation": "during",
+     "event": "general swimming",
+     "count": 10
+    }
+   ]
+  },
+  "elapsed time of race": {
+   "total": 123,
+   "medianDuration": 23.01,
+   "patterns": [
+    {
+     "relation": "after",
+     "event": "turning",
+     "count": 92
+    },
+    {
+     "relation": "after",
+     "event": "race start",
+     "count": 21
+    },
+    {
+     "relation": "during",
+     "event": "whole race",
+     "count": 4
+    },
+    {
+     "relation": "before",
+     "event": "race start",
+     "count": 2
+    },
+    {
+     "relation": "after",
+     "event": "race end",
+     "count": 1
+    },
+    {
+     "relation": "after+during",
+     "event": "general swimming",
+     "count": 1
+    },
+    {
+     "relation": "after+before+during",
+     "event": "whole race",
+     "count": 1
+    },
+    {
+     "relation": "after+during",
+     "event": "whole race",
+     "count": 1
+    }
+   ]
+  },
+  "full first name": {
+   "total": 29,
+   "medianDuration": 4.54,
+   "patterns": [
+    {
+     "relation": "after",
+     "event": "turning",
+     "count": 10
+    },
+    {
+     "relation": "after",
+     "event": "race end",
+     "count": 6
+    },
+    {
+     "relation": "before",
+     "event": "race start",
+     "count": 5
+    },
+    {
+     "relation": "after",
+     "event": "race start",
+     "count": 5
+    },
+    {
+     "relation": "during",
+     "event": "turning",
+     "count": 3
+    }
+   ]
+  },
+  "full last name": {
+   "total": 144,
+   "medianDuration": 4.95,
+   "patterns": [
+    {
+     "relation": "after",
+     "event": "turning",
+     "count": 103
+    },
+    {
+     "relation": "after",
+     "event": "race end",
+     "count": 15
+    },
+    {
+     "relation": "before",
+     "event": "race start",
+     "count": 12
+    },
+    {
+     "relation": "after",
+     "event": "race start",
+     "count": 12
+    },
+    {
+     "relation": "during",
+     "event": "whole race",
+     "count": 1
+    },
+    {
+     "relation": "after+during",
+     "event": "race end",
+     "count": 1
+    }
+   ]
+  },
+  "lane number": {
+   "total": 190,
+   "medianDuration": 4.97,
+   "patterns": [
+    {
+     "relation": "after",
+     "event": "turning",
+     "count": 129
+    },
+    {
+     "relation": "after",
+     "event": "race start",
+     "count": 24
+    },
+    {
+     "relation": "before",
+     "event": "race start",
+     "count": 22
+    },
+    {
+     "relation": "after",
+     "event": "race end",
+     "count": 8
+    },
+    {
+     "relation": "after",
+     "event": "overtake (in relay)",
+     "count": 4
+    },
+    {
+     "relation": "during",
+     "event": "turning",
+     "count": 1
+    },
+    {
+     "relation": "during",
+     "event": "whole race",
+     "count": 1
+    },
+    {
+     "relation": "after+before+during",
+     "event": "turning",
+     "count": 1
+    }
+   ]
+  },
+  "leader's lap time": {
+   "total": 98,
+   "medianDuration": 8.97,
+   "patterns": [
+    {
+     "relation": "after",
+     "event": "turning",
+     "count": 90
+    },
+    {
+     "relation": "after",
+     "event": "race end",
+     "count": 3
+    },
+    {
+     "relation": "after",
+     "event": "race start",
+     "count": 3
+    },
+    {
+     "relation": "after+during",
+     "event": "race end",
+     "count": 1
+    },
+    {
+     "relation": "before",
+     "event": "race end",
+     "count": 1
+    }
+   ]
+  },
+  "nation abbr": {
+   "total": 124,
+   "medianDuration": 4.95,
+   "patterns": [
+    {
+     "relation": "after",
+     "event": "turning",
+     "count": 97
+    },
+    {
+     "relation": "before",
+     "event": "race start",
+     "count": 11
+    },
+    {
+     "relation": "after",
+     "event": "race end",
+     "count": 8
+    },
+    {
+     "relation": "after",
+     "event": "overtake (in relay)",
+     "count": 3
+    },
+    {
+     "relation": "during",
+     "event": "turning",
+     "count": 3
+    },
+    {
+     "relation": "after+during",
+     "event": "race end",
+     "count": 1
+    },
+    {
+     "relation": "after",
+     "event": "race start",
+     "count": 1
+    }
+   ]
+  },
+  "nation flag": {
+   "total": 452,
+   "medianDuration": 4.96,
+   "patterns": [
+    {
+     "relation": "after",
+     "event": "turning",
+     "count": 213
+    },
+    {
+     "relation": "before",
+     "event": "turning",
+     "count": 80
+    },
+    {
+     "relation": "after",
+     "event": "race end",
+     "count": 29
+    },
+    {
+     "relation": "after",
+     "event": "race start",
+     "count": 24
+    },
+    {
+     "relation": "before",
+     "event": "race start",
+     "count": 22
+    },
+    {
+     "relation": "after+before",
+     "event": "turning",
+     "count": 17
+    },
+    {
+     "relation": "before",
+     "event": "race end",
+     "count": 13
+    },
+    {
+     "relation": "during",
+     "event": "general swimming",
+     "count": 13
+    },
+    {
+     "relation": "others",
+     "event": "others",
+     "count": 9
+    },
+    {
+     "relation": "after",
+     "event": "overtake (in relay)",
+     "count": 7
+    },
+    {
+     "relation": "before",
+     "event": "lap",
+     "count": 5
+    },
+    {
+     "relation": "after",
+     "event": "lap",
+     "count": 3
+    },
+    {
+     "relation": "during",
+     "event": "turning",
+     "count": 3
+    },
+    {
+     "relation": "after+before+during",
+     "event": "turning",
+     "count": 2
+    },
+    {
+     "relation": "before",
+     "event": "overtake (in relay)",
+     "count": 2
+    },
+    {
+     "relation": "during",
+     "event": "lap",
+     "count": 2
+    },
+    {
+     "relation": "unspecified",
+     "event": "others",
+     "count": 2
+    },
+    {
+     "relation": "during",
+     "event": "whole race",
+     "count": 1
+    },
+    {
+     "relation": "after+during",
+     "event": "race end",
+     "count": 1
+    },
+    {
+     "relation": "during",
+     "event": "last lane",
+     "count": 1
+    },
+    {
+     "relation": "after+before",
+     "event": "overtake (in relay)",
+     "count": 1
+    },
+    {
+     "relation": "after+before",
+     "event": "lap",
+     "count": 1
+    },
+    {
+     "relation": "before+others",
+     "event": "turning",
+     "count": 1
+    }
+   ]
+  },
+  "nation full name": {
+   "total": 36,
+   "medianDuration": 3.46,
+   "patterns": [
+    {
+     "relation": "after",
+     "event": "turning",
+     "count": 20
+    },
+    {
+     "relation": "before",
+     "event": "race start",
+     "count": 5
+    },
+    {
+     "relation": "after",
+     "event": "race start",
+     "count": 4
+    },
+    {
+     "relation": "after",
+     "event": "overtake (in relay)",
+     "count": 4
+    },
+    {
+     "relation": "after",
+     "event": "race end",
+     "count": 3
+    }
+   ]
+  },
+  "only leader": {
+   "total": 302,
+   "medianDuration": 4.93,
+   "patterns": [
+    {
+     "relation": "after",
+     "event": "turning",
+     "count": 269
+    },
+    {
+     "relation": "after",
+     "event": "race end",
+     "count": 11
+    },
+    {
+     "relation": "before",
+     "event": "turning",
+     "count": 9
+    },
+    {
+     "relation": "after",
+     "event": "overtake (in relay)",
+     "count": 8
+    },
+    {
+     "relation": "during",
+     "event": "turning",
+     "count": 4
+    },
+    {
+     "relation": "after",
+     "event": "race start",
+     "count": 1
+    }
+   ]
+  },
+  "others": {
+   "total": 4,
+   "medianDuration": 9.13,
+   "patterns": [
+    {
+     "relation": "after",
+     "event": "race start",
+     "count": 4
+    }
+   ]
+  },
+  "others' distance differerences to leader": {
+   "total": 151,
+   "medianDuration": 19.48,
+   "patterns": [
+    {
+     "relation": "after",
+     "event": "turning",
+     "count": 120
+    },
+    {
+     "relation": "before",
+     "event": "turning",
+     "count": 12
+    },
+    {
+     "relation": "during",
+     "event": "general swimming",
+     "count": 10
+    },
+    {
+     "relation": "before",
+     "event": "race end",
+     "count": 4
+    },
+    {
+     "relation": "unspecified",
+     "event": "others",
+     "count": 2
+    },
+    {
+     "relation": "others",
+     "event": "others",
+     "count": 2
+    },
+    {
+     "relation": "after+before+during",
+     "event": "turning",
+     "count": 1
+    }
+   ]
+  },
+  "others' lap time difference to leader": {
+   "total": 260,
+   "medianDuration": 8.9,
+   "patterns": [
+    {
+     "relation": "after",
+     "event": "turning",
+     "count": 249
+    },
+    {
+     "relation": "after",
+     "event": "race end",
+     "count": 3
+    },
+    {
+     "relation": "after",
+     "event": "overtake (in relay)",
+     "count": 3
+    },
+    {
+     "relation": "after",
+     "event": "race start",
+     "count": 3
+    },
+    {
+     "relation": "after+during",
+     "event": "race end",
+     "count": 1
+    },
+    {
+     "relation": "before",
+     "event": "race end",
+     "count": 1
+    }
+   ]
+  },
+  "race name": {
+   "total": 29,
+   "medianDuration": 119.5,
+   "patterns": [
+    {
+     "relation": "after",
+     "event": "race start",
+     "count": 21
+    },
+    {
+     "relation": "before",
+     "event": "race start",
+     "count": 4
+    },
+    {
+     "relation": "during",
+     "event": "whole race",
+     "count": 2
+    },
+    {
+     "relation": "after+before+during",
+     "event": "whole race",
+     "count": 1
+    },
+    {
+     "relation": "after",
+     "event": "race end",
+     "count": 1
+    }
+   ]
+  },
+  "ranking number": {
+   "total": 421,
+   "medianDuration": 7.73,
+   "patterns": [
+    {
+     "relation": "after",
+     "event": "turning",
+     "count": 295
+    },
+    {
+     "relation": "before",
+     "event": "turning",
+     "count": 31
+    },
+    {
+     "relation": "after",
+     "event": "race end",
+     "count": 29
+    },
+    {
+     "relation": "after+before",
+     "event": "turning",
+     "count": 29
+    },
+    {
+     "relation": "during",
+     "event": "general swimming",
+     "count": 11
+    },
+    {
+     "relation": "before",
+     "event": "lap",
+     "count": 4
+    },
+    {
+     "relation": "after",
+     "event": "overtake (in relay)",
+     "count": 4
+    },
+    {
+     "relation": "before",
+     "event": "race end",
+     "count": 3
+    },
+    {
+     "relation": "after",
+     "event": "lap",
+     "count": 3
+    },
+    {
+     "relation": "after",
+     "event": "race start",
+     "count": 3
+    },
+    {
+     "relation": "after+during",
+     "event": "race end",
+     "count": 2
+    },
+    {
+     "relation": "before",
+     "event": "overtake (in relay)",
+     "count": 2
+    },
+    {
+     "relation": "during",
+     "event": "lap",
+     "count": 2
+    },
+    {
+     "relation": "during",
+     "event": "last lane",
+     "count": 1
+    },
+    {
+     "relation": "after+before",
+     "event": "overtake (in relay)",
+     "count": 1
+    },
+    {
+     "relation": "after+before",
+     "event": "lap",
+     "count": 1
+    }
+   ]
+  },
+  "reaction time": {
+   "total": 13,
+   "medianDuration": 5.84,
+   "patterns": [
+    {
+     "relation": "after",
+     "event": "race start",
+     "count": 12
+    },
+    {
+     "relation": "after",
+     "event": "jump into the water",
+     "count": 1
+    }
+   ]
+  },
+  "speed": {
+   "total": 202,
+   "medianDuration": 6.26,
+   "patterns": [
+    {
+     "relation": "before",
+     "event": "turning",
+     "count": 74
+    },
+    {
+     "relation": "after",
+     "event": "turning",
+     "count": 53
+    },
+    {
+     "relation": "after+before",
+     "event": "turning",
+     "count": 29
+    },
+    {
+     "relation": "during",
+     "event": "general swimming",
+     "count": 13
+    },
+    {
+     "relation": "before",
+     "event": "race end",
+     "count": 9
+    },
+    {
+     "relation": "others",
+     "event": "others",
+     "count": 7
+    },
+    {
+     "relation": "before",
+     "event": "lap",
+     "count": 5
+    },
+    {
+     "relation": "after",
+     "event": "lap",
+     "count": 3
+    },
+    {
+     "relation": "before",
+     "event": "overtake (in relay)",
+     "count": 2
+    },
+    {
+     "relation": "during",
+     "event": "lap",
+     "count": 2
+    },
+    {
+     "relation": "during",
+     "event": "last lane",
+     "count": 1
+    },
+    {
+     "relation": "after+before",
+     "event": "overtake (in relay)",
+     "count": 1
+    },
+    {
+     "relation": "after+before",
+     "event": "lap",
+     "count": 1
+    },
+    {
+     "relation": "after",
+     "event": "race end",
+     "count": 1
+    },
+    {
+     "relation": "before+others",
+     "event": "turning",
+     "count": 1
+    }
+   ]
+  },
+  "time difference of the leader to cr": {
+   "total": 4,
+   "medianDuration": 5.13,
+   "patterns": [
+    {
+     "relation": "after",
+     "event": "turning",
+     "count": 4
+    }
+   ]
+  },
+  "time difference of the leader to cr (splitted)": {
+   "total": 47,
+   "medianDuration": 5.13,
+   "patterns": [
+    {
+     "relation": "after",
+     "event": "turning",
+     "count": 44
+    },
+    {
+     "relation": "before",
+     "event": "turning",
+     "count": 3
+    }
+   ]
+  },
+  "time difference of the leader to wr": {
+   "total": 7,
+   "medianDuration": 5.09,
+   "patterns": [
+    {
+     "relation": "after",
+     "event": "turning",
+     "count": 7
+    }
+   ]
+  },
+  "time difference of the leader to wr (splitted)": {
+   "total": 92,
+   "medianDuration": 5,
+   "patterns": [
+    {
+     "relation": "after",
+     "event": "turning",
+     "count": 85
+    },
+    {
+     "relation": "before",
+     "event": "turning",
+     "count": 3
+    },
+    {
+     "relation": "after",
+     "event": "overtake (in relay)",
+     "count": 3
+    },
+    {
+     "relation": "after",
+     "event": "race start",
+     "count": 1
+    }
+   ]
+  },
+  "top x player": {
+   "total": 320,
+   "medianDuration": 5.02,
+   "patterns": [
+    {
+     "relation": "after",
+     "event": "turning",
+     "count": 131
+    },
+    {
+     "relation": "before",
+     "event": "turning",
+     "count": 83
+    },
+    {
+     "relation": "after+before",
+     "event": "turning",
+     "count": 29
+    },
+    {
+     "relation": "after",
+     "event": "race end",
+     "count": 19
+    },
+    {
+     "relation": "before",
+     "event": "race end",
+     "count": 13
+    },
+    {
+     "relation": "during",
+     "event": "general swimming",
+     "count": 13
+    },
+    {
+     "relation": "others",
+     "event": "others",
+     "count": 9
+    },
+    {
+     "relation": "before",
+     "event": "lap",
+     "count": 5
+    },
+    {
+     "relation": "after",
+     "event": "lap",
+     "count": 3
+    },
+    {
+     "relation": "after",
+     "event": "overtake (in relay)",
+     "count": 3
+    },
+    {
+     "relation": "before",
+     "event": "overtake (in relay)",
+     "count": 2
+    },
+    {
+     "relation": "during",
+     "event": "lap",
+     "count": 2
+    },
+    {
+     "relation": "unspecified",
+     "event": "others",
+     "count": 2
+    },
+    {
+     "relation": "after+during",
+     "event": "race end",
+     "count": 1
+    },
+    {
+     "relation": "during",
+     "event": "last lane",
+     "count": 1
+    },
+    {
+     "relation": "after+before",
+     "event": "overtake (in relay)",
+     "count": 1
+    },
+    {
+     "relation": "after+before",
+     "event": "lap",
+     "count": 1
+    },
+    {
+     "relation": "before+others",
+     "event": "turning",
+     "count": 1
+    },
+    {
+     "relation": "after+before+during",
+     "event": "turning",
+     "count": 1
+    }
+   ]
+  },
+  "wr (world record)": {
+   "total": 171,
+   "medianDuration": 8.53,
+   "patterns": [
+    {
+     "relation": "before",
+     "event": "turning",
+     "count": 58
+    },
+    {
+     "relation": "after",
+     "event": "turning",
+     "count": 37
+    },
+    {
+     "relation": "before",
+     "event": "race end",
+     "count": 33
+    },
+    {
+     "relation": "after",
+     "event": "race end",
+     "count": 15
+    },
+    {
+     "relation": "after+before+during",
+     "event": "race end",
+     "count": 8
+    },
+    {
+     "relation": "after+before",
+     "event": "turning",
+     "count": 8
+    },
+    {
+     "relation": "during",
+     "event": "general swimming",
+     "count": 6
+    },
+    {
+     "relation": "during",
+     "event": "last lane",
+     "count": 2
+    },
+    {
+     "relation": "during",
+     "event": "lap",
+     "count": 1
+    },
+    {
+     "relation": "after",
+     "event": "lap",
+     "count": 1
+    },
+    {
+     "relation": "after",
+     "event": "race start",
+     "count": 1
+    },
+    {
+     "relation": "others",
+     "event": "others",
+     "count": 1
+    }
+   ]
+  },
+  "wr (world record) splitted": {
+   "total": 99,
+   "medianDuration": 8.5,
+   "patterns": [
+    {
+     "relation": "after+before+during",
+     "event": "turning",
+     "count": 47
+    },
+    {
+     "relation": "before",
+     "event": "turning",
+     "count": 41
+    },
+    {
+     "relation": "during",
+     "event": "turning",
+     "count": 3
+    },
+    {
+     "relation": "after",
+     "event": "race start",
+     "count": 3
+    },
+    {
+     "relation": "before",
+     "event": "overtake (in relay)",
+     "count": 2
+    },
+    {
+     "relation": "during",
+     "event": "general swimming",
+     "count": 1
+    },
+    {
+     "relation": "before",
+     "event": "race end",
+     "count": 1
+    },
+    {
+     "relation": "after",
+     "event": "turning",
+     "count": 1
+    }
+   ]
+  }
+ }
+}
