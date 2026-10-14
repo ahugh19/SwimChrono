@@ -1,12 +1,23 @@
 import { VisBboxType, UrlType, VideoType, VisType, EventType, CameraShotType, VideoMetaDataType, TriggerFormProps, SwimmerVideoFrameType, VisIntervalType, SwimmerStatsType, SwimmerVideoDataType, GlobalSettingType } from "../types"
 import _ from "lodash";
-import { COMPARE_EQUAL, COMPARE_GREATER, COMPARE_GREATER_AND_EQUAL, COMPARE_SMALLER, COMPARE_SMALLER_AND_EQUAL, TRIGGER_COMP_START_END, TRIGGER_COMP_START_DURATION, subjectListUnitMeter, subjectListUnitSecond, subjectListUnitMeterPerSquareSecond, videoMetaDataList, DEFAULTSwimFlow2GLOBAL_blur, DEFAULTSwimFlow2GLOBAL_minDuration } from "./values";
+import { COMPARE_EQUAL, COMPARE_GREATER, COMPARE_GREATER_AND_EQUAL, COMPARE_SMALLER, COMPARE_SMALLER_AND_EQUAL, TRIGGER_COMP_START_END, TRIGGER_COMP_START_DURATION, subjectListUnitMeter, subjectListUnitSecond, subjectListUnitMeterPerSquareSecond, subjectListUnitMeterPerSecond, videoMetaDataList, DEFAULTSwimFlow2GLOBAL_blur, DEFAULTSwimFlow2GLOBAL_minDuration } from "./values";
 import { useEffect, useRef } from 'react';
 import { message } from "./feedback"
 import { flagBE, flagGB, flagCA, flagCH, flagESP, flagFR, flagIT, flagNL, flagRSA, flagUS, flagGRE, flagCHN, flagJPN } from "./flag";
 
 export function formatTimeNumber(v: number) {
   return `${v > 10 ? v.toString() : "0" + v.toString()}`
+}
+
+// Compact clock text for the timeline: "m:ss" or "m:ss.ff" (no hours).
+export function formatClock(seconds: number | undefined, decimals = 0) {
+  const t = Math.max(0, seconds ?? 0)
+  const m = Math.floor(t / 60)
+  const s = t - m * 60
+  const sText = decimals > 0
+    ? s.toFixed(decimals).padStart(3 + decimals, "0")
+    : String(Math.floor(s)).padStart(2, "0")
+  return `${m}:${sText}`
 }
 
 export function formatTime(time: number | undefined) {
@@ -417,16 +428,22 @@ export function useDeepEffect(callback: any, dependencies: any) {
   useEffect(callback, [currentDependenciesRef.current]);
 }
 
-export function getNumberUnit(subjectName: string) {
-  let unit = ""
-  if (subjectListUnitMeter.indexOf(subjectName) !== -1) {
-    unit = "m"
-  } else if (subjectListUnitMeterPerSquareSecond.indexOf(subjectName) !== -1) {
-    unit = "m/ss"
-  } else if (subjectListUnitSecond.indexOf(subjectName) !== -1) {
-    unit = "s"
-  }
-  return unit
+// Unit shown next to a trigger value, derived from the selected subject.
+export function getNumberUnit(subjectName: string | undefined) {
+  if (!subjectName) return ""
+  if (subjectListUnitMeter.indexOf(subjectName) !== -1) return "m"
+  if (subjectListUnitMeterPerSecond.indexOf(subjectName) !== -1) return "m/s"
+  if (subjectListUnitMeterPerSquareSecond.indexOf(subjectName) !== -1) return "m/s²"
+  if (subjectListUnitSecond.indexOf(subjectName) !== -1) return "s"
+  return ""
+}
+
+// Sensible spinner step per unit (metres and seconds in tenths, speeds in hundredths).
+export function getNumberStep(subjectName: string | undefined) {
+  const unit = getNumberUnit(subjectName)
+  if (unit === "m" || unit === "s") return 0.1
+  if (unit === "m/s" || unit === "m/s²") return 0.01
+  return 1
 }
 
 export function generateUUID() {

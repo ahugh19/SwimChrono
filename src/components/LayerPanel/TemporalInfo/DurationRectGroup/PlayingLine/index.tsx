@@ -9,14 +9,15 @@ interface PlayingLineProps {
 }
 
 function PlayingLine(props: PlayingLineProps) {
-  const { playingLineX, playingLineY1 } = props
+  const { playingLineX, playingLineY1, playingLineY2 } = props
   const palette = useThemeColors()
 
   return (
     <>
       <Line
         key={`playingLine`}
-        points={[playingLineX, playingLineY1, playingLineX, 10000]}
+        points={[playingLineX, playingLineY1, playingLineX, Math.max(playingLineY2, playingLineY1)]}
+        listening={false}
         stroke={uiBlue}
         strokeWidth={1}
         lineCap='round'
@@ -35,6 +36,7 @@ function PlayingLine(props: PlayingLineProps) {
         fill={uiBlue}
         stroke={uiBlue}
         strokeWidth={2}
+        listening={false}
       />
       <Line
         points={[playingLineX, playingLineY1 + 2 * 1.732, playingLineX, playingLineY1 + 4 * 1.732]}

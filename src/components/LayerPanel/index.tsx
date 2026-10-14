@@ -1,8 +1,8 @@
 import TimelinePanel from "./TimelinePanel"
 import TriggerPanel from "./TriggerPanel"
-import { useEffect, useState, useRef, forwardRef, useImperativeHandle } from 'react';
+import { useEffect, useState, useRef, forwardRef, useImperativeHandle, useCallback } from 'react';
 import { DownloadOutlined, LoginOutlined, PlusOutlined } from '@ant-design/icons';
-import { Button, Tooltip, Slider } from 'antd';
+import { Button, Tooltip, Slider, Typography } from 'antd';
 import { Stage, Layer, Text } from 'react-konva';
 import Konva from 'konva';
 import TemporalInfo from './TemporalInfo'
@@ -12,7 +12,7 @@ import TimelineAxis from './TimelineAxis';
 import { chromeScrollBarWidth, durationRectHeight, layerPartWidth } from '../../utils/values';
 import styles from "./index.module.less"
 import LayerGroup from "./LayerGroup"
-import { formatTime, downloadJson, readFile } from '../../utils';
+import { formatTime, formatClock, downloadJson, readFile } from '../../utils';
 
 
 interface LayerPanelProps extends IComponentPropsWithStore {
@@ -41,6 +41,10 @@ const LayerPanel = forwardRef((props: LayerPanelProps, ref) => {
   const [timelineDivWidth, setTimelineDivWidth] = useState<number>(0)
   const [sliderWidth, setSliderWidth] = useState<number>(0)
   const [raceStart, setRaceStart] = useState<number>(0)
+  // Visible window of the timeline in percent of the video; drives both
+  // the range slider and the canvas zoom (ctrl/cmd + wheel).
+  const [zoomRange, setZoomRange] = useState<[number, number]>([0, 100])
+  const axisScrollRef = useRef<HTMLDivElement | null>(null)
 
   // from js
   const [videoEle, setVideoEle] = useState<HTMLVideoElement | null>(null)
@@ -66,6 +70,9 @@ const LayerPanel = forwardRef((props: LayerPanelProps, ref) => {
     const handleTemporalInfoScroll = () => {
       if (layerGroupRef.current && temporalInfoRef.current) {
         layerGroupRef.current.scrollTop = temporalInfoRef.current.scrollTop
+      }
+      if (axisScrollRef.current && temporalInfoRef.current) {
+        axisScrollRef.current.scrollLeft = temporalInfoRef.current.scrollLeft
       }
     };
 
@@ -161,13 +168,79 @@ const LayerPanel = forwardRef((props: LayerPanelProps, ref) => {
     }
   }
 
+  // Apply a visible window [startPct, endPct] of the video to the canvas.
+  const applyZoom = useCallback((startPct: number, endPct: number) => {
+    const range = Math.max(2, Math.min(100, endPct - startPct))
+    const start = Math.max(0, Math.min(100 - range, startPct))
+    setZoomRange([start, start + range])
+    const width = ganttAreaWidth / (range / 100)
+    setCanvasWidth(width)
+    // The stage is exactly `width` wide, so the scroll offset can be
+    // derived without waiting for the DOM to re-measure.
+    const scrollLeft = width * (start / 100)
+    if (temporalInfoRef.current) temporalInfoRef.current.scrollLeft = scrollLeft
+    if (axisScrollRef.current) axisScrollRef.current.scrollLeft = scrollLeft
+  }, [ganttAreaWidth])
+
   function handleSliderChange(value: number[]) {
-    const start = value[0] / 100
-    const end = value[1] / 100
-    const range = end - start
-    setCanvasWidth(ganttAreaWidth / range)
-    if (temporalInfoRef.current) {
-      temporalInfoRef.current.scrollLeft = temporalInfoRef.current.scrollWidth * start
+    applyZoom(value[0], value[1])
+  }
+
+  // ctrl / cmd + wheel zooms around the cursor; shift + wheel pans.
+  useEffect(() => {
+    const el = temporalInfoRef.current
+    if (!el) return
+    const onWheel = (e: WheelEvent) => {
+      if (!(e.ctrlKey || e.metaKey)) return
+      e.preventDefault()
+      const [start, end] = zoomRange
+      const range = end - start
+      const factor = e.deltaY > 0 ? 1.15 : 1 / 1.15
+      const newRange = Math.max(2, Math.min(100, range * factor))
+      const rect = el.getBoundingClientRect()
+      const offsetX = e.clientX - rect.left
+      const cursorPct = start + (offsetX / el.clientWidth) * range
+      const newStart = cursorPct - (offsetX / el.clientWidth) * newRange
+      applyZoom(newStart, newStart + newRange)
+    }
+    el.addEventListener('wheel', onWheel, { passive: false })
+    return () => el.removeEventListener('wheel', onWheel)
+  }, [zoomRange, applyZoom])
+
+  const seekTo = useCallback((time: number) => {
+    const video = store?.videoElement
+    if (!video) return
+    const clamped = Math.max(0, Math.min(videoDuration || video.duration || 0, time))
+    if (Number.isFinite(clamped)) video.currentTime = clamped
+  }, [store?.videoElement, videoDuration])
+
+  // Keyboard: space play/pause, arrows step a frame (shift: 1 s), home/end.
+  function onKeyDown(e: React.KeyboardEvent<HTMLDivElement>) {
+    const target = e.target as HTMLElement
+    if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable) return
+    const video = store?.videoElement
+    if (!video) return
+    const frame = 1 / (store?.currentVideoMetaData?.framerate ?? 50)
+    switch (e.key) {
+      case ' ':
+        e.preventDefault()
+        if (video.paused) video.play(); else video.pause()
+        break
+      case 'ArrowLeft':
+        e.preventDefault()
+        seekTo(video.currentTime - (e.shiftKey ? 1 : frame))
+        break
+      case 'ArrowRight':
+        e.preventDefault()
+        seekTo(video.currentTime + (e.shiftKey ? 1 : frame))
+        break
+      case 'Home':
+        // Home returns to the race start, the natural origin for authoring.
+        e.preventDefault(); seekTo(e.shiftKey ? 0 : raceStart); break
+      case 'End':
+        e.preventDefault(); seekTo(videoDuration); break
+      default:
+        break
     }
   }
 
@@ -186,7 +259,7 @@ const LayerPanel = forwardRef((props: LayerPanelProps, ref) => {
   }
 
   return (
-      <div className={styles.swimflowTimelineContainer} ref={timelineDivRef}>
+      <div className={styles.swimflowTimelineContainer} ref={timelineDivRef} tabIndex={0} onKeyDown={onKeyDown}>
         <div className={styles.topPart}>
           <div className={styles.topLeftPart}>
             <div className={styles.ioBtnContainer} ref={refAddLayerBtn}>
@@ -202,21 +275,29 @@ const LayerPanel = forwardRef((props: LayerPanelProps, ref) => {
                 </Button>
               </Tooltip>
             </div>
-            <div title={"Current time of the played video"} className={styles.timeTextContainer}>
-              {currentVideoTime.toFixed(2)}
+            <div title={"Video time · time relative to the race start. Space: play/pause · ←/→: step a frame (shift: 1 s) · Home: race start · drag on the ruler to seek · ctrl/⌘ + wheel: zoom"} className={styles.timeTextContainer}>
+              <Typography.Text style={{ fontVariantNumeric: 'tabular-nums' }}>{formatClock(currentVideoTime, 2)}</Typography.Text>
+              <Typography.Text type="secondary" style={{ marginLeft: 6, fontSize: 11, fontVariantNumeric: 'tabular-nums' }}>
+                race {currentVideoTime - raceStart < 0 ? "−" : "+"}{Math.abs(currentVideoTime - raceStart).toFixed(2)} s
+              </Typography.Text>
             </div>
           </div>
 
           <div className={styles.topRightPart}>
             <div className={styles.sliderContainer} style={{ width: `${sliderWidth}px` }}>
-              <Slider onChange={handleSliderChange} range={{ draggableTrack: true }} defaultValue={[0, 100]} step={0.01} tooltip={{ formatter: (value) => `${value !== undefined ? formatTime(value / 100 * videoDuration) : 0}` }} />
+              <Slider onChange={handleSliderChange} range={{ draggableTrack: true }} value={zoomRange} min={0} max={100} step={0.01} tooltip={{ formatter: (value) => `${value !== undefined ? formatClock(value / 100 * videoDuration, 1) : 0}` }} />
             </div>
-            <div className={styles.timelineAxisContainer}>
-              <Stage width={ganttAreaWidth} height={timelineAxisCanvasHeight} ref={konvaStageTimelineAxisRef}>
+            <div className={styles.timelineAxisContainer} ref={axisScrollRef} style={{ width: ganttAreaWidth }}>
+              <Stage width={canvasWidth} height={timelineAxisCanvasHeight} ref={konvaStageTimelineAxisRef}>
                 <Layer>
                   <TimelineAxis
-                    canvasWidth={ganttAreaWidth}
-                    canvasContentPadding={canvasContentPadding} />
+                    canvasWidth={canvasWidth}
+                    canvasHeight={timelineAxisCanvasHeight}
+                    canvasContentPadding={canvasContentPadding}
+                    videoEnd={videoDuration}
+                    raceStart={raceStart}
+                    currentTime={currentVideoTime}
+                    onSeek={seekTo} />
                 </Layer>
               </Stage>
             </div>
@@ -239,6 +320,7 @@ const LayerPanel = forwardRef((props: LayerPanelProps, ref) => {
                 canvasWidth={canvasWidth}
                 canvasHeight={ganttCanvasHeight}
                 currentVideoTime={currentVideoTime}
+                onSeek={seekTo}
               />
             </div>
           </div>

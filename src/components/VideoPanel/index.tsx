@@ -149,13 +149,22 @@ const VideoPanel = forwardRef((props: VideoPanelProps, ref) => {
   }, [videoSrc, store?.currentVideoMetaData?.raceStartTime])
 
   useEffect(() => {
-    if (!videoRef.current) return
+    const video = videoRef.current
+    if (!video) return
     const handleMetadataLoaded = () => {
-      onVideoDurationChange(videoRef.current!.duration);
+      onVideoDurationChange(video.duration);
     };
-    videoRef.current.addEventListener("loadedmetadata", handleMetadataLoaded);
+    // Play state can also change from the timeline (space key), so follow
+    // the element instead of assuming the button is the only control.
+    const onPlay = () => setIsVideoPlay(true)
+    const onPause = () => setIsVideoPlay(false)
+    video.addEventListener("loadedmetadata", handleMetadataLoaded);
+    video.addEventListener("play", onPlay)
+    video.addEventListener("pause", onPause)
     return () => {
-      videoRef.current?.removeEventListener("loadedmetadata", handleMetadataLoaded);
+      video.removeEventListener("loadedmetadata", handleMetadataLoaded);
+      video.removeEventListener("play", onPlay)
+      video.removeEventListener("pause", onPause)
     };
   }, [videoRef.current]);
 
