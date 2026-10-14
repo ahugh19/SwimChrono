@@ -8,6 +8,7 @@ interface VisGlobalProps {
   currentFrameIndex: number,
   svgWidth: number | undefined,
   svgHeight: number | undefined
+  raceStartFrame?: number
   // click-to-select support (optional so tests can omit it)
   selectedLayerUuid?: string
   onSelectLayer?: (uuid: string) => void
@@ -18,7 +19,7 @@ interface VisGlobalProps {
 // Renders each screen-anchored layer whose trigger interval contains the
 // current frame.
 function VisGlobal(props: VisGlobalProps) {
-  const { layerList, currentSwimmerVideo, currentFrameIndex, svgWidth, svgHeight, selectedLayerUuid, onSelectLayer, selectableClassName, selectedClassName } = props;
+  const { layerList, currentSwimmerVideo, currentFrameIndex, svgWidth, svgHeight, raceStartFrame = 0, selectedLayerUuid, onSelectLayer, selectableClassName, selectedClassName } = props;
   if (!currentSwimmerVideo) return null
 
   return (
@@ -26,7 +27,7 @@ function VisGlobal(props: VisGlobalProps) {
       {layerList.map((layer, i) => {
         const embeddedVis = layer.embeddedVis
         if (!embeddedVis || embeddedVis.composeType !== embeddedVisTypeComposeType_GLOBAL) return null
-        if (!isFrameInIntervals(currentFrameIndex, layer.intervalList)) return null
+        if (!isFrameInIntervals(currentFrameIndex, layer.intervalList, raceStartFrame)) return null
         const Vis = globalVisRegistry[embeddedVis.visName]
         if (!Vis) return null
         const className = [selectableClassName, layer.uuid === selectedLayerUuid ? selectedClassName : ""].filter(Boolean).join(" ")

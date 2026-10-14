@@ -165,14 +165,14 @@ function TemporalInfo(props: TemporalInfoProps) {
     const stage = konvaStageRef.current
     const pointerPos = stage?.getPointerPosition()
     if (!pointerPos) return
-    let text = "Whole video"
+    let text = `Whole race: ${rangeText(raceStart, videoEnd)}`
     if (interval) {
       const names = interval.isMerged
         ? interval.mergedTriggers.map((t) => t.name).filter((n, i, arr) => i === 0 || n !== arr[i - 1]).join(", ")
         : interval.triggerConfig.name
       text = `${rangeText(interval.relativeStartMoment, interval.relativeEndMoment)}\n${edited ? "Edited by hand · ↺ restores the trigger result" : `Trigger: ${names}`}`
     } else {
-      text = `${text} · drag the edges to limit it`
+      text = `${text}\nNo trigger — shown from the race start · drag the edges to limit it`
     }
     setTooltip({ x: pointerPos.x + 12, y: pointerPos.y + 12, text })
   }

@@ -174,6 +174,7 @@ Timeline
 * Ruler with time ticks, a playhead badge and a race-start marker; drag on the ruler or the rows to seek; ctrl/⌘ + wheel zooms around the cursor, shift + wheel pans.
 * Interval bars can be reshaped by dragging their edges or moved by dragging the bar; hand-edited layers show a dashed outline and a ↺ button restores the trigger result. Edits are kept in exported configurations and recomputed from the triggers when a different video is loaded.
 * Keyboard: space plays/pauses, ←/→ step one frame (shift: 1 s), Home jumps to the race start.
+* Layers without triggers span the race start to the end of the video ("whole race") instead of starting at video time 0, both on the timeline and when rendering.
 
 Authoring
 * Hovering a visualization on the video highlights it; clicking it selects its layer.

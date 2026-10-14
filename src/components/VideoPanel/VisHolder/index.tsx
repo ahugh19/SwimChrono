@@ -20,6 +20,8 @@ function VisHolder(props: VisHolderProps) {
   const svgRef = useRef<SVGSVGElement | null>(null);
   const selectedLayerUuid = store && store.selectedLayerIndex !== null ? store.layerList[store.selectedLayerIndex]?.uuid : undefined
   const onSelectLayer = (uuid: string) => store?.selectLayerByUuid(uuid)
+  const meta = store?.currentVideoMetaData
+  const raceStartFrame = meta ? Math.round(meta.raceStartTime * meta.framerate) : 0
 
   useEffect(() => {
     store?.setSvgElement(svgRef.current)
@@ -48,6 +50,7 @@ function VisHolder(props: VisHolderProps) {
           currentFrameIndex={currentFrameIndex}
           svgWidth={svgWidth}
           svgHeight={svgHeight}
+          raceStartFrame={raceStartFrame}
           selectedLayerUuid={selectedLayerUuid}
           onSelectLayer={onSelectLayer}
           selectableClassName={styles.selectable}
@@ -62,6 +65,7 @@ function VisHolder(props: VisHolderProps) {
           currentFrameIndex={currentFrameIndex}
           svgWidth={svgWidth}
           svgHeight={svgHeight}
+          raceStartFrame={raceStartFrame}
           selectedLayerUuid={selectedLayerUuid}
           onSelectLayer={onSelectLayer}
           selectableClassName={styles.selectable}

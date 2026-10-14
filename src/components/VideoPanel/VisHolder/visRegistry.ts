@@ -158,8 +158,10 @@ export function resolveS(vis: { positionS: number; positionSRatio?: number }, sv
   return vis.positionSRatio && svgWidth ? vis.positionSRatio * svgWidth : vis.positionS
 }
 
-export function isFrameInIntervals(frameIndex: number, intervalList: { startFrame: number; endFrame: number }[] | null) {
-  if (!intervalList) return true // no trigger: visible for the whole video
+// Layers without triggers ("whole race") are shown from the race start to
+// the end of the video, matching the bar drawn on the timeline.
+export function isFrameInIntervals(frameIndex: number, intervalList: { startFrame: number; endFrame: number }[] | null, raceStartFrame = 0) {
+  if (!intervalList) return frameIndex >= raceStartFrame
   for (const interval of intervalList) {
     if (frameIndex >= interval.startFrame && frameIndex <= interval.endFrame) return true
   }

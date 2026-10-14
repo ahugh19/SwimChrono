@@ -82,7 +82,7 @@ function TemporalInfoItem(props: TemporalInfoItemProps) {
       {
         !hasIntervals && layer.embeddedVis?.visName
           ? (() => {
-            const { start, end } = draftFor(0, 0, videoEnd)
+            const { start, end } = draftFor(0, raceStart, videoEnd)
             return <DurationRect
               key={`layer-${layer.uuid}-video-duration`}
               x={scaleX(start)}
@@ -90,7 +90,7 @@ function TemporalInfoItem(props: TemporalInfoItemProps) {
               w={scaleW(end - start)}
               h={durationRectHeight}
               color={barFill}
-              label="whole video"
+              label="whole race"
               triggerCompType={TRIGGER_COMP_START_END}
               visibility={layer.visibility}
               edited={false}

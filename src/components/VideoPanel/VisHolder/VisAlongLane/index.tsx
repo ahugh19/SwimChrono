@@ -9,6 +9,7 @@ interface VisAlongLaneProps {
   swimmersInfo: SwimmerInfoType[] | null | undefined,
   svgWidth: number | undefined,
   svgHeight: number | undefined
+  raceStartFrame?: number
   // click-to-select support (optional so tests can omit it)
   selectedLayerUuid?: string
   onSelectLayer?: (uuid: string) => void
@@ -20,7 +21,7 @@ interface VisAlongLaneProps {
 // interval contains the current frame. Layer order is reversed so the
 // first layer in the panel is painted last (on top).
 function VisAlongLane(props: VisAlongLaneProps) {
-  const { layerList, currentSwimmerVideo, currentFrameIndex, swimmersInfo, svgHeight, svgWidth, selectedLayerUuid, onSelectLayer, selectableClassName, selectedClassName } = props;
+  const { layerList, currentSwimmerVideo, currentFrameIndex, swimmersInfo, svgHeight, svgWidth, raceStartFrame = 0, selectedLayerUuid, onSelectLayer, selectableClassName, selectedClassName } = props;
   if (!currentSwimmerVideo || !swimmersInfo) return null
 
   const orderedLayers = layerList.slice().reverse()
@@ -32,7 +33,7 @@ function VisAlongLane(props: VisAlongLaneProps) {
           orderedLayers.map((layer, i) => {
             const embeddedVis = layer.embeddedVis
             if (!embeddedVis || embeddedVis.composeType !== embeddedVisTypeComposeType_INDIVIDUAL) return null
-            if (!isFrameInIntervals(currentFrameIndex, layer.intervalList)) return null
+            if (!isFrameInIntervals(currentFrameIndex, layer.intervalList, raceStartFrame)) return null
             if (embeddedVis.visibleLanes && !embeddedVis.visibleLanes.includes(laneIndex)) return null
             const Vis = laneVisRegistry[embeddedVis.visName]
             if (!Vis) return null
