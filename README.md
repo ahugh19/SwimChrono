@@ -7,6 +7,18 @@ See also [*SwimFlow*](https://aviz.gitlabpages.inria.fr/vis-in-motion-swimflow/)
 
 ![SwimChrono authoring interface with the Olympic Style example loaded](./docs/img/tool-screenshot.jpg)
 
+## Paper version
+
+The code used for the paper is tagged [`v1.0.0`](https://github.com/ahugh19/SwimChrono/releases/tag/v1.0.0)
+(May–Aug 2026). To get exactly that state:
+
+```bash
+git checkout v1.0.0
+```
+
+Later releases (see [Changelog](#changelog)) improve loading, architecture and UI beyond what the paper
+describes; the shipped examples still reproduce Figures 4–6 on the latest version.
+
 ## Documentation & Materials
 
 * [Replicating paper results](./docs/replicating-paper-results.md) — clear instructions to reproduce Figures 4–6 from the paper with the shipped examples.
@@ -183,9 +195,9 @@ Tests
 * App version shown in the header and the Supplementary modal.
 * Documentation: step-by-step instructions to replicate Figures 4–6 of the paper.
 
-### 1.0.0
+### 1.0.0 — paper version
 
-* Initial public release: authoring interface, paper examples (Olympic Style, Pac-man, Acceleration), speed-climbing case, GitHub Pages deployment.
+* The state of the tool described in the paper: authoring interface, paper examples (Olympic Style, Pac-man, Acceleration), speed-climbing case, GitHub Pages deployment.
 
 ## License
 
