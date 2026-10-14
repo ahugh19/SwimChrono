@@ -8,6 +8,7 @@ import { exampleList, videoMetaDataList } from '../../utils/values';
 import SwimChronoLogo from '/SwimChronoLogo.svg'
 import AboutModal from './AboutModal'
 import { useTheme } from '../../utils/theme'
+import { APP_VERSION } from '../../utils/version'
 
 const { Title, Paragraph, Text, Link } = Typography;
 
@@ -81,6 +82,7 @@ const Header = forwardRef((props: HeaderProps, ref) => {
             n
             <span className={styles.highlight}>o</span>
           </div>
+          <div className={styles.version} title={`SwimChrono version ${APP_VERSION}`}>v{APP_VERSION}</div>
           <div className={styles.btnGroupLeft} ref={refVideoSelection}>
             <div className={styles.text}>Video </div>
             <Select

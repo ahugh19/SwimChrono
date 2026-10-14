@@ -16,12 +16,17 @@ import {
   Divider,
   Typography,
 } from "antd";
+import { APP_VERSION } from "../../../utils/version";
 
 const { Title, Paragraph, Text, Link } = Typography;
 
 function AboutModal() {
   return (
     <>
+      <Paragraph>
+        <Text strong>SwimChrono</Text> <Text type="secondary">v{APP_VERSION}</Text>
+      </Paragraph>
+
       <Paragraph>
         We provide following demo links of labeling tools used in our systematic review.
       </Paragraph>
