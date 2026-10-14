@@ -64,12 +64,15 @@ export const triggerEndDurationBorderColorInvisible = "#333333"
 
 export const durationRectMarginY = 0 // vertical gap between rows of rects
 export const durationRectLineStroke = 1 // thickness of the divider line between rows
+export const durationRectHandleWidth = 7 // hit width of the resize handles on interval rects
+export const MIN_INTERVAL_SECONDS = 0.2 // shortest interval that can be created by dragging
+export const MANUAL_TRIGGER_NAME = "manual" // triggerConfig name for hand-drawn intervals
 export const durationRectHeight = 24 - durationRectLineStroke // height of each rect
 export const temporalInfoHeight = 440
 export const chromeScrollBarWidth = 15
 export const globalUIPadding = 12
 export const globalConfigPanelWidth = 240
-export const layerPartWidth = 224
+export const layerPartWidth = 250
 export const VALUEHalfDistance = 50
 export const VALUEClimbHeight = 14.4
 export const VALUEClimbWidth = 3.2
@@ -148,7 +151,7 @@ export const subjectListUnitSecond = [
 ]
 
 // speed
-export const subjectListUnitMeterPerSecond = [
+export const subjectListUnitMeterPerSecond: string[] = [
 ]
 
 // acceleration

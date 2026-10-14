@@ -1,80 +1,105 @@
-import { Rect, Line } from 'react-konva';
-import { TRIGGER_COMP_START_END, rectBorderRadius, triggerEndBorderColor, triggerStartBorderColor, triggerEndDurationBorderColor, triggerStartBorderColorInvisible, triggerEndBorderColorInvisible, triggerEndDurationBorderColorInvisible } from '../../../../../utils/values';
+import { Group, Rect, Line, Text } from 'react-konva';
+import Konva from 'konva';
+import { KonvaEventObject } from 'konva/lib/Node';
+import { TRIGGER_COMP_START_END, rectBorderRadius, triggerEndBorderColor, triggerStartBorderColor, triggerEndDurationBorderColor, triggerStartBorderColorInvisible, triggerEndBorderColorInvisible, triggerEndDurationBorderColorInvisible, durationRectHandleWidth, uiBlue } from '../../../../../utils/values';
 import { useThemeColors } from '../../../../../utils/theme';
+
+export type IntervalEdge = 'start' | 'end' | 'move'
 
 interface DurationRectProps {
   x: number,
   y: number,
   w: number,
-  realStartW: number, // make the part (before video start) grey
   h: number,
   color: string,
-  preStartColor: string,
-  onMousseMoveRect: () => void,
-  onMouseLeaveRect: () => void,
-  onMouseClickRect: () => void,
+  label?: string,
   triggerCompType: string,
   visibility: boolean,
+  edited: boolean,
+  showHandles: boolean,
+  onMouseMoveRect: () => void,
+  onMouseLeaveRect: () => void,
+  onPointerDown: (edge: IntervalEdge, e: KonvaEventObject<MouseEvent>) => void,
+}
+
+function setCursor(e: KonvaEventObject<MouseEvent>, cursor: string) {
+  const container = e.target.getStage()?.container()
+  if (container) container.style.cursor = cursor
 }
 
 function DurationRect(props: DurationRectProps) {
-  const { x, y, w, realStartW, h, color, preStartColor, triggerCompType, onMousseMoveRect, onMouseLeaveRect, onMouseClickRect, visibility } = props;
+  const { x, y, w, h, color, label, triggerCompType, visibility, edited, showHandles, onMouseMoveRect, onMouseLeaveRect, onPointerDown } = props;
   const palette = useThemeColors()
 
-  const triggerBorderWidthNormal = 2
-
-  const handleClick = () => {
-    onMouseClickRect()
-  };
-
-  const handleMove = () => {
-    onMousseMoveRect()
-  }
-
-  const handleLeave = () => {
-    onMouseLeaveRect()
-  }
-
-  function getEndX() {
-    const _xEnd = x + w - triggerBorderWidthNormal
-    if (_xEnd > x + triggerBorderWidthNormal) {
-      return _xEnd
-    } else {
-      return x + triggerBorderWidthNormal
-    }
-  }
+  const borderWidth = 2
+  const endX = Math.max(x + borderWidth, x + w - borderWidth)
+  const endColor = triggerCompType === TRIGGER_COMP_START_END
+    ? (visibility ? triggerEndBorderColor : triggerEndBorderColorInvisible)
+    : (visibility ? triggerEndDurationBorderColor : triggerEndDurationBorderColorInvisible)
+  const startColor = visibility ? triggerStartBorderColor : triggerStartBorderColorInvisible
+  const handleW = durationRectHandleWidth
 
   return (
-    <>
+    <Group>
       <Rect
         x={x}
-        y={y}
-        width={w}
-        height={h}
+        y={y + 2}
+        width={Math.max(1, w)}
+        height={h - 4}
         fill={color}
-        cornerRadius={rectBorderRadius}
-        onClick={handleClick}
-        onMouseMove={handleMove}
-        onMouseLeave={handleLeave}
+        cornerRadius={rectBorderRadius + 2}
+        stroke={edited ? uiBlue : undefined}
+        strokeWidth={edited ? 1 : 0}
+        dash={edited ? [4, 3] : undefined}
+        onMouseDown={(e) => onPointerDown('move', e)}
+        onMouseMove={onMouseMoveRect}
+        onMouseLeave={onMouseLeaveRect}
+        onMouseEnter={(e) => setCursor(e, 'grab')}
+        onMouseOut={(e) => setCursor(e, '')}
       />
-      <Line points={[x, y, x, y + h]}
-        stroke={visibility ? triggerStartBorderColor : triggerStartBorderColorInvisible}
-        strokeWidth={triggerBorderWidthNormal} />
-      <Line points={[getEndX(), y, getEndX(), y + h]}
-        stroke={triggerCompType === TRIGGER_COMP_START_END ? (visibility ? triggerEndBorderColor : triggerEndBorderColorInvisible) : (visibility ? triggerEndDurationBorderColor : triggerEndDurationBorderColorInvisible)}
-        strokeWidth={triggerBorderWidthNormal} />
+      {label && w > 36 && (
+        <Text
+          x={x + 8}
+          y={y + 2}
+          width={Math.max(0, w - 16)}
+          height={h - 4}
+          verticalAlign="middle"
+          text={label}
+          fontSize={10}
+          fill={visibility ? palette.textBright : palette.text}
+          wrap="none"
+          ellipsis
+          listening={false}
+        />
+      )}
+      <Line points={[x + 1, y + 2, x + 1, y + h - 2]} stroke={startColor} strokeWidth={borderWidth} listening={false} />
+      <Line points={[endX, y + 2, endX, y + h - 2]} stroke={endColor} strokeWidth={borderWidth} listening={false} />
+      {/* resize handles: always hit-testable, drawn only on hover / selection */}
       <Rect
-        x={5}
+        x={x - handleW / 2}
         y={y}
-        width={realStartW > triggerBorderWidthNormal ? realStartW - triggerBorderWidthNormal - 3 : 0}
+        width={handleW}
         height={h}
-        fill={ x > triggerBorderWidthNormal ? palette.backgroundElevated : preStartColor}
-        cornerRadius={rectBorderRadius}
-        // onClick={handleClick}
-        // onMouseMove={handleMove}
-        // onMouseLeave={handleLeave}
+        fill={uiBlue}
+        opacity={showHandles ? 0.9 : 0}
+        cornerRadius={2}
+        onMouseDown={(e) => onPointerDown('start', e)}
+        onMouseEnter={(e) => setCursor(e, 'ew-resize')}
+        onMouseLeave={(e) => setCursor(e, '')}
       />
-    </>
+      <Rect
+        x={x + w - handleW / 2}
+        y={y}
+        width={handleW}
+        height={h}
+        fill={uiBlue}
+        opacity={showHandles ? 0.9 : 0}
+        cornerRadius={2}
+        onMouseDown={(e) => onPointerDown('end', e)}
+        onMouseEnter={(e) => setCursor(e, 'ew-resize')}
+        onMouseLeave={(e) => setCursor(e, '')}
+      />
+    </Group>
   );
 }
 

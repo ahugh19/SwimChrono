@@ -79,6 +79,7 @@ const LayerSchema = z.object({
   intervalList: z.array(VisIntervalSchema).nullable(),
   triggerCompList: z.array(TriggerCompSchema).nullable(),
   embeddedVis: EmbeddedVisSchema.nullable(),
+  intervalEdited: z.boolean().optional(),
 });
 
 // Zod schema for ConfigurationType

@@ -3,9 +3,8 @@ import { VideoObjType, TriggerFormProps, VisIntervalType, LayerType } from '../.
 import styles from './index.module.less'
 import { Button, Input } from "antd"
 import { message } from "../../../utils/feedback"
-import { EyeOutlined, EyeInvisibleOutlined, FieldTimeOutlined, CopyOutlined, DeleteOutlined, ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';
+import { EyeOutlined, EyeInvisibleOutlined, FieldTimeOutlined, CopyOutlined, DeleteOutlined, ArrowUpOutlined, ArrowDownOutlined, RollbackOutlined } from '@ant-design/icons';
 import TriggerDrawer from './TriggerDrawer'
-import { useThemeColors } from "../../../utils/theme"
 import { calIntervalByTrigger } from '../../../utils'
 import { IComponentPropsWithStore } from "../../../store"
 import { inject, observer } from "mobx-react"
@@ -16,11 +15,6 @@ interface LayerGroupProps extends IComponentPropsWithStore {
 
 const LayerGroup = forwardRef((props: LayerGroupProps, ref) => {
   const { store } = props;
-  const palette = useThemeColors()
-  const uiBackgroundNormal = palette.background
-  const uiBackgroundNormalInvisible = palette.backgroundElevated
-  const uiBackgroundHighlight = palette.layerRowSelected
-  const uiBackgroundHighlightInvisible = palette.layerRowSelectedInvisible
 
   const [layerList, setLayerList] = useState<LayerType[] | null>(null)
   const [isTriggerDrawerOpen, setIsTriggerDrawerOpen] = useState<boolean>(false);
@@ -97,18 +91,12 @@ const LayerGroup = forwardRef((props: LayerGroupProps, ref) => {
         store
           ?
           store?.layerList?.map((layer, index) => {
-            return <div className={styles.layerItemContainer}
-              style={{
-                backgroundColor: index === store.selectedLayerIndex ?
-                  (layer.visibility ?
-                    uiBackgroundHighlight :
-                    uiBackgroundHighlightInvisible
-                  ) :
-                  (layer.visibility ?
-                    uiBackgroundNormal :
-                    uiBackgroundNormalInvisible
-                  )
-              }}
+            return <div
+              className={[
+                styles.layerItemContainer,
+                index === store.selectedLayerIndex ? styles.selected : "",
+                layer.visibility ? "" : styles.invisible,
+              ].filter(Boolean).join(" ")}
               key={`layer-${index}`}
               ref={index === 0 ? refLayerGroupBtn : null}
             >
@@ -117,6 +105,16 @@ const LayerGroup = forwardRef((props: LayerGroupProps, ref) => {
               </div>
               <div className={styles.controlBtn}>
                 <Button size="small" type="link" title="Set triggers" icon={<FieldTimeOutlined />} onClick={(e) => onTriggerClick(e, index)}></Button>
+              </div>
+              <div className={styles.controlBtn}>
+                <Button
+                  size="small"
+                  type="link"
+                  title={layer.intervalEdited ? "Intervals were edited on the timeline. Click to restore the trigger result." : "Intervals follow the triggers"}
+                  disabled={!layer.intervalEdited}
+                  icon={<RollbackOutlined />}
+                  onClick={(e) => { e.stopPropagation(); store?.resetLayerIntervals(index) }}
+                />
               </div>
               <div className={styles.controlBtn}>
                 <Button size="small" type="link" title="Copy this layer" icon={<CopyOutlined />} onClick={(e) => onCopyClick(e, index)}></Button>

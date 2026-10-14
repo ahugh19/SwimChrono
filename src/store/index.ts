@@ -7,6 +7,7 @@ import { message } from "../utils/feedback"
 import _, { min } from "lodash";
 import { backendApiUrl } from "../utils/aiConfig";
 import { assetUrl } from "../utils/assets";
+import { MANUAL_TRIGGER_NAME, MIN_INTERVAL_SECONDS } from "../utils/values";
 import { APP_VERSION } from "../utils/version";
 import { normalizeConfiguration, CONFIG_FORMAT_VERSION } from "../types/validation";
 
@@ -153,7 +154,60 @@ export class Store {
     } else {
       selectedLayer.triggerCompList = triggerCompList
     }
-    console.log(toJS(this.layerList))
+    selectedLayer.intervalEdited = false
+    this.layerList = [...this.layerList]
+  }
+
+  selectLayerByUuid = (uuid: string) => {
+    const index = this.layerList.findIndex((l) => l.uuid === uuid)
+    if (index >= 0) this.setSelectedLayerIndex(index)
+  }
+
+  // Timeline editing: overwrite one interval of a layer with hand-set
+  // frame bounds. The trigger definition is kept so the layer can be
+  // restored with resetLayerIntervals().
+  updateLayerInterval = (layerIndex: number, intervalIndex: number, startSeconds: number, endSeconds: number) => {
+    const layer = this.layerList[layerIndex]
+    const framerate = this.currentVideoMetaData?.framerate ?? 50
+    if (!layer) return
+    const startFrame = Math.max(0, Math.round(startSeconds * framerate))
+    const endFrame = Math.max(startFrame + Math.round(MIN_INTERVAL_SECONDS * framerate), Math.round(endSeconds * framerate))
+    const base: VisIntervalType = layer.intervalList?.[intervalIndex] ?? {
+      startFrame, endFrame,
+      triggerConfig: {
+        name: MANUAL_TRIGGER_NAME, triggerType: MANUAL_TRIGGER_NAME, priority: 1,
+        subjectStart: "", compareStart: "", valueStart: 0,
+        subjectEnd: "", compareEnd: "", valueEnd: 0,
+      },
+      relativeStartMoment: 0, relativeEndMoment: 0, duration: 0, isMerged: false, mergedTriggers: [],
+    }
+    const updated: VisIntervalType = {
+      ...base,
+      startFrame,
+      endFrame,
+      relativeStartMoment: startFrame / framerate,
+      relativeEndMoment: endFrame / framerate,
+      duration: (endFrame - startFrame) / framerate,
+    }
+    const list = layer.intervalList ? [...layer.intervalList] : []
+    if (intervalIndex < list.length) list[intervalIndex] = updated
+    else list.push(updated)
+    layer.intervalList = list
+    layer.intervalEdited = true
+    this.layerList = [...this.layerList]
+  }
+
+  // Drop hand edits and recompute the layer's intervals from its triggers
+  // (or back to "whole video" when it has none).
+  resetLayerIntervals = (layerIndex: number) => {
+    const layer = this.layerList[layerIndex]
+    if (!layer) return
+    if (layer.triggerCompList && layer.triggerCompList.length > 0 && this.currentVideoMetaData && this.currentSwimmerVideo) {
+      layer.intervalList = calIntervalByTrigger(this.currentVideoMetaData, this.currentSwimmerVideo, { triggerCompList: layer.triggerCompList })
+    } else {
+      layer.intervalList = null
+    }
+    layer.intervalEdited = false
     this.layerList = [...this.layerList]
   }
 
@@ -364,6 +418,7 @@ export class Store {
         intervalList: l.intervalList,
         triggerCompList: l.triggerCompList,
         embeddedVis: l.embeddedVis,
+        intervalEdited: l.intervalEdited ?? false,
         isSelected: false,
       }
     })
@@ -595,7 +650,16 @@ export class Store {
   recalculateIntervals = () => {
     if (!this.currentVideoMetaData || !this.currentSwimmerVideo) return
     let changed = false
+    let droppedEdits = 0
     this.layerList.forEach((layer) => {
+      if (layer.intervalEdited) {
+        droppedEdits += 1
+        layer.intervalEdited = false
+        if (!layer.triggerCompList || layer.triggerCompList.length === 0) {
+          layer.intervalList = null
+          changed = true
+        }
+      }
       if (!layer.triggerCompList || layer.triggerCompList.length === 0) return
       layer.intervalList = calIntervalByTrigger(
         this.currentVideoMetaData as VideoMetaDataType,
@@ -604,6 +668,9 @@ export class Store {
       )
       changed = true
     })
+    if (droppedEdits > 0) {
+      message.info(`Hand-edited intervals of ${droppedEdits} layer(s) were recomputed from their triggers for the new video.`)
+    }
     if (changed) this.layerList = [...this.layerList]
   }
 

@@ -197,6 +197,9 @@ export type LayerType = {
   intervalList: VisIntervalType[] | null,
   triggerCompList: TriggerCompType[] | null,
   embeddedVis: EmbeddedVisType | null,
+  // true when intervalList was edited by hand on the timeline and no
+  // longer equals what triggerCompList computes; reset restores it.
+  intervalEdited?: boolean,
 }
 
 export type TriggerIndividualType = {
