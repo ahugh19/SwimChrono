@@ -18,6 +18,8 @@ function VisHolder(props: VisHolderProps) {
 
   const [layerList, setLayerList] = useState<LayerType[]>([]);
   const svgRef = useRef<SVGSVGElement | null>(null);
+  const selectedLayerUuid = store && store.selectedLayerIndex !== null ? store.layerList[store.selectedLayerIndex]?.uuid : undefined
+  const onSelectLayer = (uuid: string) => store?.selectLayerByUuid(uuid)
 
   useEffect(() => {
     store?.setSvgElement(svgRef.current)
@@ -31,7 +33,7 @@ function VisHolder(props: VisHolderProps) {
   }, [store?.layerList])
 
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox={`0 0 ${svgWidth ? svgWidth : 0} ${svgHeight ? svgHeight : 0}`} ref={svgRef}>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox={`0 0 ${svgWidth ? svgWidth : 0} ${svgHeight ? svgHeight : 0}`} ref={svgRef} style={{ pointerEvents: "none" }}>
       <defs>
         <filter id="blurFilter" x="-50%" y="-50%" width="200%" height="200%">
           <feGaussianBlur in="SourceGraphic" stdDeviation={`${store && store.globalSetting.blur !== null ? store.globalSetting.blur : 0.5}`} />
@@ -46,6 +48,10 @@ function VisHolder(props: VisHolderProps) {
           currentFrameIndex={currentFrameIndex}
           svgWidth={svgWidth}
           svgHeight={svgHeight}
+          selectedLayerUuid={selectedLayerUuid}
+          onSelectLayer={onSelectLayer}
+          selectableClassName={styles.selectable}
+          selectedClassName={styles.selected}
         />
       </g>
 
@@ -55,7 +61,12 @@ function VisHolder(props: VisHolderProps) {
           currentSwimmerVideo={currentSwimmerVideo}
           currentFrameIndex={currentFrameIndex}
           svgWidth={svgWidth}
-          svgHeight={svgHeight} />
+          svgHeight={svgHeight}
+          selectedLayerUuid={selectedLayerUuid}
+          onSelectLayer={onSelectLayer}
+          selectableClassName={styles.selectable}
+          selectedClassName={styles.selected}
+        />
       </g>
     </svg>
   )

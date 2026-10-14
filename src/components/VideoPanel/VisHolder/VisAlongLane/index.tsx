@@ -9,13 +9,18 @@ interface VisAlongLaneProps {
   swimmersInfo: SwimmerInfoType[] | null | undefined,
   svgWidth: number | undefined,
   svgHeight: number | undefined
+  // click-to-select support (optional so tests can omit it)
+  selectedLayerUuid?: string
+  onSelectLayer?: (uuid: string) => void
+  selectableClassName?: string
+  selectedClassName?: string
 }
 
 // Renders, for every lane, each visible per-lane layer whose trigger
 // interval contains the current frame. Layer order is reversed so the
 // first layer in the panel is painted last (on top).
 function VisAlongLane(props: VisAlongLaneProps) {
-  const { layerList, currentSwimmerVideo, currentFrameIndex, swimmersInfo, svgHeight, svgWidth } = props;
+  const { layerList, currentSwimmerVideo, currentFrameIndex, swimmersInfo, svgHeight, svgWidth, selectedLayerUuid, onSelectLayer, selectableClassName, selectedClassName } = props;
   if (!currentSwimmerVideo || !swimmersInfo) return null
 
   const orderedLayers = layerList.slice().reverse()
@@ -31,8 +36,13 @@ function VisAlongLane(props: VisAlongLaneProps) {
             if (embeddedVis.visibleLanes && !embeddedVis.visibleLanes.includes(laneIndex)) return null
             const Vis = laneVisRegistry[embeddedVis.visName]
             if (!Vis) return null
-            return <Vis
+            const className = [selectableClassName, layer.uuid === selectedLayerUuid ? selectedClassName : ""].filter(Boolean).join(" ")
+            return <g
               key={`lane-${laneIndex}-${layer.uuid}-layer-${i}`}
+              className={className || undefined}
+              data-layer-uuid={layer.uuid}
+              onClick={(e) => { e.stopPropagation(); onSelectLayer?.(layer.uuid) }}
+            ><Vis
               laneIndex={laneIndex}
               svgWidth={svgWidth}
               svgHeight={svgHeight}
@@ -48,7 +58,7 @@ function VisAlongLane(props: VisAlongLaneProps) {
               customizedIcon={embeddedVis.customizedIcon}
               customizedText={embeddedVis.customizedText}
               visibility={layer.visibility}
-            />
+            /></g>
           })
         )
       }

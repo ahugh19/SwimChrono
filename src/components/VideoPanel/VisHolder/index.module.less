@@ -1,0 +1,19 @@
+// Rendered visualizations become clickable: painted pixels only, so the
+// video underneath keeps receiving events in empty areas.
+.selectable {
+  pointer-events: visiblePainted;
+  cursor: pointer;
+  transition: filter 0.12s ease;
+
+  &:hover {
+    filter: drop-shadow(0 0 2px rgba(43, 171, 234, 0.9));
+  }
+}
+
+.selected {
+  filter: drop-shadow(0 0 1.5px #2babea) drop-shadow(0 0 5px rgba(43, 171, 234, 0.8));
+
+  &:hover {
+    filter: drop-shadow(0 0 1.5px #2babea) drop-shadow(0 0 6px rgba(43, 171, 234, 0.95));
+  }
+}
