@@ -78,6 +78,17 @@ function TimelineAxis(props: TimelineAxisProps) {
   const badgeW = labelWidth(badgeText) + 4
   const badgeX = Math.min(Math.max(0, playheadX - badgeW / 2), Math.max(0, canvasWidth - badgeW))
   const raceStartText = "race start"
+  const showRaceStart = raceStart > 0 && raceStart < videoEnd && Math.abs(playheadX - x(raceStart)) > badgeW
+  const raceStartLabelX = labelX(raceStart, raceStartText)
+  // Horizontal boxes that tick labels must not run into: the playhead
+  // badge and the race-start label (both matter more than a tick value).
+  const reserved: [number, number][] = [[badgeX - 2, badgeX + badgeW + 2]]
+  if (showRaceStart) reserved.push([raceStartLabelX - 2, raceStartLabelX + labelWidth(raceStartText) + 2])
+  const tickLabelVisible = (t: number, text: string) => {
+    const lx = labelX(t, text)
+    const w = labelWidth(text)
+    return reserved.every(([a, b]) => lx + w < a || lx > b)
+  }
 
   return (
     <Group
@@ -99,7 +110,7 @@ function TimelineAxis(props: TimelineAxisProps) {
             stroke={isMajor ? palette.text : palette.borderSoft}
             strokeWidth={1}
           />
-          {isMajor && (
+          {isMajor && tickLabelVisible(t, formatClock(t)) && (
             <Text
               x={labelX(t, formatClock(t))}
               y={axisY - 20}
@@ -116,8 +127,8 @@ function TimelineAxis(props: TimelineAxisProps) {
         <Group listening={false}>
           <Line points={[x(raceStart), 0, x(raceStart), axisY]} stroke={palette.text} strokeWidth={1} dash={[3, 3]} opacity={0.7} />
           {/* label yields to the playhead badge when they would overlap */}
-          {Math.abs(playheadX - x(raceStart)) > badgeW && <Text
-            x={labelX(raceStart, raceStartText)}
+          {showRaceStart && <Text
+            x={raceStartLabelX}
             y={2}
             text={raceStartText}
             fontSize={9}
