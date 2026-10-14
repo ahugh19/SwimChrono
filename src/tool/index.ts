@@ -20,19 +20,19 @@ export default class CanvasSelect extends EventBus {
     MIN_HEIGHT = 10;
     /** minimum circle radius */
     MIN_RADIUS = 5;
-    /** stroke colour */
+    /** stroke color */
     strokeStyle = '#0f0';
-    /** fill colour */
+    /** fill color */
     fillStyle = 'rgba(0, 0, 255,0.1)';
     /** stroke width */
     lineWidth = 1;
-    /** stroke colour of the currently active shape */
+    /** stroke color of the currently active shape */
     activeStrokeStyle = '#f00';
-    /** fill colour of the currently active shape */
+    /** fill color of the currently active shape */
     activeFillStyle = 'rgba(255, 0, 0,0.1)';
-    /** control-point stroke colour */
+    /** control-point stroke color */
     ctrlStrokeStyle = '#000';
-    /** control-point fill colour */
+    /** control-point fill color */
     ctrlFillStyle = '#fff';
     /** control-point radius */
     ctrlRadius = 3;
@@ -42,7 +42,7 @@ export default class CanvasSelect extends EventBus {
     labelFillStyle = '#fff';
     /** label font */
     labelFont = '10px sans-serif';
-    /** label text colour */
+    /** label text color */
     textFillStyle = '#000';
     /** maximum label length; longer text is ellipsised */
     labelMaxLen = 10;
@@ -94,7 +94,7 @@ export default class CanvasSelect extends EventBus {
     dblTouch = 300;
     /** timestamp of the previous touch */
     dblTouchStore = 0; //
-    /** lets the browser apply internal optimisations */
+    /** lets the browser apply internal optimizations */
     alpha = true;
     /** focus mode: render only the active shape */
     focusMode = false;
@@ -662,7 +662,7 @@ export default class CanvasSelect extends EventBus {
     /**
      * Point-in-circle test.
      * @param point coordinate
-     * @param center circle centre
+     * @param center circle center
      * @param r radius
      * @returns boolean
      */
@@ -974,7 +974,7 @@ export default class CanvasSelect extends EventBus {
     /**
      * Apply a zoom step.
      * @param type true to zoom in 5%, false to zoom out 5%
-     * @param byMouse if true, zoom around the cursor instead of the centre
+     * @param byMouse if true, zoom around the cursor instead of the center
      * @param pure if true, do not redraw
      */
     setScale(type: boolean, byMouse = false, pure = false) {

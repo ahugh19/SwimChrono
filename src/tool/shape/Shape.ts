@@ -11,15 +11,15 @@ export default class Shape {
     public hideLabel: boolean
     /** coordinates */
     public coor: any[] = []
-    /** stroke colour */
+    /** stroke color */
     public strokeStyle: string
-    /** fill colour */
+    /** fill color */
     public fillStyle: string
     /** stroke width */
     public lineWidth: number
-    /** label background colour */
+    /** label background color */
     public labelFillStyle: string
-    /** label text colour */
+    /** label text color */
     public textFillStyle: string
     /** label font */
     public labelFont: string

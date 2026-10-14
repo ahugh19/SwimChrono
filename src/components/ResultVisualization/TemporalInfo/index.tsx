@@ -4,7 +4,17 @@ import { IComponentPropsWithStore, Store } from "../../../store";
 import { Button, Space, Tag, Switch, Tooltip, Select, Segmented, Tabs, Typography, Empty, Spin, Slider, Badge } from 'antd'
 import ReactPlayer from 'react-player'
 import { OnProgressProps } from 'react-player/base'
-import { PlayCircleFilled, PauseCircleFilled, LeftOutlined, RightOutlined, StarTwoTone, SoundOutlined, AudioMutedOutlined } from '@ant-design/icons'
+import Icon, { PlayCircleFilled, PauseCircleFilled, LeftOutlined, RightOutlined, StarTwoTone, SoundOutlined } from '@ant-design/icons'
+
+// Speaker with a cross, drawn in the same 1024-unit grid as antd's
+// SoundOutlined (the icon set has no muted-speaker glyph).
+const MutedSvg = () => (
+  <svg viewBox="0 0 1024 1024" width="1em" height="1em" fill="currentColor">
+    <path d="M538 160.6L312.2 338H160c-17.7 0-32 14.3-32 32v284c0 17.7 14.3 32 32 32h152.2L538 863.4c20.9 16.4 51.6 1.5 51.6-25.2V185.8c0-26.7-30.7-41.6-51.6-25.2zM517.6 783.6L335.5 640.6c-5.7-4.5-12.7-6.9-19.9-6.9H200V390.3h115.6c7.2 0 14.2-2.4 19.9-6.9l182.1-143.1v543.3z" />
+    <path d="M848.7 512l82.8-82.8c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L803.4 466.7l-82.8-82.8c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l82.8 82.8-82.8 82.8c-12.5 12.5-12.5 32.8 0 45.3 6.2 6.2 14.4 9.4 22.6 9.4s16.4-3.1 22.6-9.4l82.8-82.8 82.8 82.8c6.2 6.2 14.4 9.4 22.6 9.4s16.4-3.1 22.6-9.4c12.5-12.5 12.5-32.8 0-45.3L848.7 512z" />
+  </svg>
+)
+const MutedOutlined = () => <Icon component={MutedSvg} />
 import styles from "./index.module.less"
 import { VideoType, VisType } from '../../../types'
 import VisTable from './VisTable'
@@ -20,7 +30,7 @@ import { useThemeColors } from '../../../utils/theme'
 const { Text } = Typography
 
 const GANTT_HEIGHT_KEY = "swimchrono.result.ganttHeight"
-// The bboxes were labelled on a 1280x720 frame and have always been shown
+// The bboxes were labeled on a 1280x720 frame and have always been shown
 // on a fixed 640x360 player (exactly half size). Keep the player fixed so
 // the stored coordinates stay valid without any further transform.
 const PLAYER_WIDTH = 640
@@ -208,7 +218,7 @@ function TemporalInfo(props: TemporalInfoProps) {
     if (!ctx) return
     ctx.clearRect(0, 0, PLAYER_WIDTH, PLAYER_HEIGHT)
     if (!bboxVisible) return
-    // Same mapping as the labelling tool used: half-size frame, 4px inset.
+    // Same mapping as the labeling tool used: half-size frame, 4px inset.
     const draw = (vis: VisType, stroke: string, lineWidth: number, fill?: string, dash?: number[]) => {
       const b = vis.visBbox
       const x = b.x1 / 2, y = (b.y1 - 4) / 2, w = (b.x2 - b.x1 - 4) / 2, h = (b.y2 - b.y1 - 4) / 2
@@ -240,7 +250,7 @@ function TemporalInfo(props: TemporalInfoProps) {
   return (
     <div className={styles.page} onKeyDown={onKeyDown}>
       <PageHeader
-        title="Labelling results"
+        title="Labeling results"
         extra={<Tag bordered={false}>{videos.length} videos · {annotationCount} annotations</Tag>}
         tour={{
           storageKey: "swimchrono.tourSeen.results",
@@ -248,7 +258,7 @@ function TemporalInfo(props: TemporalInfoProps) {
             { title: '🎥 Pick a video', description: 'This list holds the 31 race videos of the review. You can search it, or step through it with the arrow buttons.', target: () => document.querySelector('[data-tour="video-select"]') as HTMLElement },
             { title: '📺 Player', description: 'The chosen video plays here. Turn on "bbox" to draw the annotations that are visible right now. Orange is visible, blue is selected, dashed is hovered.', target: () => document.querySelector('[data-tour="player"]') as HTMLElement },
             { title: '🗂 Annotations', description: 'The first tab lists what is on screen at the current time. Click a card to select it. The second tab is the full table of the video. When you filter a column, the other bars in the chart fade out and their boxes disappear from the video.', target: () => document.querySelector('[data-tour="side"]') as HTMLElement, placement: 'left' },
-            { title: '🎛 Chart controls', description: 'Group the bars by placement or by movement. Show all videos at once, on one shared time scale if you like. Zoom the chart. The legend explains the colours.', target: () => document.querySelector('[data-tour="gantt-bar"]') as HTMLElement, placement: 'top' },
+            { title: '🎛 Chart controls', description: 'Group the bars by placement or by movement. Show all videos at once, on one shared time scale if you like. Zoom the chart. The legend explains the colors.', target: () => document.querySelector('[data-tour="gantt-bar"]') as HTMLElement, placement: 'top' },
             { title: '📊 Gantt chart', description: 'Each bar is one annotation. Click a bar to select it and jump the player to it. Drag on the chart to move the playhead. Hold Ctrl (or ⌘) and scroll to zoom. Press Space to play. Drag the gutter above the chart to change its height.', target: () => document.querySelector('[data-tour="gantt"]') as HTMLElement, placement: 'top' },
           ],
         }}
@@ -294,7 +304,7 @@ function TemporalInfo(props: TemporalInfoProps) {
           </div>
           <div className={styles.controls}>
             <Button type="primary" shape="circle" size="small" icon={playing ? <PauseCircleFilled /> : <PlayCircleFilled />} onClick={() => setPlaying((p) => !p)} title="Play / pause (space)" />
-            <Button size="small" shape="circle" icon={muted ? <AudioMutedOutlined /> : <SoundOutlined />} onClick={() => setMuted((m) => !m)} title={muted ? "Unmute" : "Mute"} aria-label={muted ? "Unmute" : "Mute"} />
+            <Button size="small" shape="circle" icon={muted ? <MutedOutlined /> : <SoundOutlined />} onClick={() => setMuted((m) => !m)} title={muted ? "Unmute" : "Mute"} aria-label={muted ? "Unmute" : "Mute"} />
             <Tag className={styles.time} title="Player time · time relative to the race start">
               {formatClock(currentTime, 2)}
               {currentVideo && <Text type="secondary" style={{ marginLeft: 6, fontSize: 11 }}>race {currentTime - currentVideo.startMoment < 0 ? '−' : '+'}{Math.abs(currentTime - currentVideo.startMoment).toFixed(2)} s</Text>}

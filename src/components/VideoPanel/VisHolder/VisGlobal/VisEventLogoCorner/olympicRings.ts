@@ -6,3 +6,10 @@ export const OLYMPIC_RINGS_SVG = `
 <path d="M15.5011 13.3386C17.3947 13.3386 18.9299 11.8034 18.9299 9.90975C18.9299 8.01608 17.3947 6.48096 15.5011 6.48096C13.6074 6.48096 12.0723 8.01608 12.0723 9.90975C12.0723 11.8034 13.6074 13.3386 15.5011 13.3386Z" stroke="white" stroke-width="0.661392"/>
 <path d="M23.6475 13.3386C25.5412 13.3386 27.0763 11.8034 27.0763 9.90975C27.0763 8.01608 25.5412 6.48096 23.6475 6.48096C21.7539 6.48096 20.2188 8.01608 20.2188 9.90975C20.2188 11.8034 21.7539 13.3386 23.6475 13.3386Z" stroke="white" stroke-width="0.661392"/>
 `
+
+// Complete svg document of the default badge, offered in the code editor
+// as a starting point for a custom event logo.
+export const OLYMPIC_RINGS_FULL_SVG = `<svg width="40" height="16" viewBox="0 0 40 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="40" height="16" fill="#0A1222"/>
+${OLYMPIC_RINGS_SVG}
+</svg>`

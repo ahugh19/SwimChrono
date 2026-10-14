@@ -42,7 +42,7 @@ export type VisType = {
   cameraShot: string[],
   // Key Events
   keyEvent: string,
-  // Temporal Relation (visualizaiton shows [relation] event)
+  // Temporal Relation (visualization shows [relation] event)
   temporalRelation: string[],
   // Narrative Connection
   narrativeConnection?: string,

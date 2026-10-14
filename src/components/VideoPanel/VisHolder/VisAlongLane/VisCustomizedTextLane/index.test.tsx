@@ -7,8 +7,8 @@ import { EditableElementType, LayerType } from "../../../../../types"
 // Regression test for previous bug: VisCustomizedTextLane referenced
 // editableElementInVisConfig.currentSpeedTextLane[0].id (cosmetic copy/paste).
 // After fix it should look up the entry via VALUE_customizedTextIndividual
-// — but since both happen to use id="text-1", the user-visible behaviour
-// is the same. This test pins behaviour against the customized text id.
+// — but since both happen to use id="text-1", the user-visible behavior
+// is the same. This test pins behavior against the customized text id.
 describe("VisCustomizedTextLane", () => {
   it("applies text-1 fill/fontSize from editable element list", () => {
     const elements: EditableElementType[] = [

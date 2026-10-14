@@ -43,7 +43,7 @@ function renderAtFrame(frameIndex: number, els = baseElements) {
 }
 
 describe("VisRankingChangeTextLane", () => {
-  it("renders down arrow with shape-arrow-down editable colour when ranking drops", () => {
+  it("renders down arrow with shape-arrow-down editable color when ranking drops", () => {
     const { container } = renderAtFrame(1)
     const path = container.querySelector("path")
     expect(path).toBeTruthy()

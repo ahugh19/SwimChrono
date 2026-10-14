@@ -161,9 +161,9 @@ export function ThemedAntdProvider({ children }: { children: ReactNode }) {
   const { mode } = useTheme()
   const algorithm = mode === "dark" ? antdTheme.darkAlgorithm : antdTheme.defaultAlgorithm
 
-  // themeJson hard-codes \`colorTextBase: "#dedede"\` (light grey, only
+  // themeJson hard-codes \`colorTextBase: "#dedede"\` (light gray, only
   // makes sense over a dark surface). Strip it in light mode so antd's
-  // defaultAlgorithm can derive a readable dark-on-white text colour.
+  // defaultAlgorithm can derive a readable dark-on-white text color.
   const baseTokens = themeJson.token ?? {}
   const tokenForMode = mode === "dark"
     ? baseTokens

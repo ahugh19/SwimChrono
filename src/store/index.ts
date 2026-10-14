@@ -255,27 +255,37 @@ export class Store {
     this.layerList = [...this.layerList]
   }
 
-  updateCurrentLayerVisSvgContent = (svgContent: string) => {
-    if (this.selectedLayerIndex === null) return;
+  // Returns the selected layer's customizedIcon record, creating it when
+  // the vis had none yet (built-in badges such as the event logo can be
+  // replaced by a custom svg).
+  private ensureCustomizedIcon() {
+    if (this.selectedLayerIndex === null) return null;
     const selectedLayer = this.layerList[this.selectedLayerIndex];
-    if (selectedLayer.embeddedVis === null || selectedLayer.embeddedVis.customizedIcon === undefined) return;
-    selectedLayer.embeddedVis.customizedIcon.svgContent = svgContent
+    if (!selectedLayer || selectedLayer.embeddedVis === null) return null;
+    if (selectedLayer.embeddedVis.customizedIcon === undefined) {
+      selectedLayer.embeddedVis.customizedIcon = { svgContent: undefined, size: 1, visible: true }
+    }
+    return selectedLayer.embeddedVis.customizedIcon
+  }
+
+  updateCurrentLayerVisSvgContent = (svgContent: string) => {
+    const icon = this.ensureCustomizedIcon()
+    if (!icon) return
+    icon.svgContent = svgContent
     this.layerList = [...this.layerList]
   }
 
   updateCurrentLayerCustomizedVisIconSize = (size: number) => {
-    if (this.selectedLayerIndex === null) return;
-    const selectedLayer = this.layerList[this.selectedLayerIndex];
-    if (selectedLayer.embeddedVis === null || selectedLayer.embeddedVis.customizedIcon === undefined) return;
-    selectedLayer.embeddedVis.customizedIcon.size = size;
+    const icon = this.ensureCustomizedIcon()
+    if (!icon) return
+    icon.size = size;
     this.layerList = [...this.layerList]
   }
 
   updateCurrentLayerCustomizedVisIconVisibility = (visible: boolean) => {
-    if (this.selectedLayerIndex === null) return;
-    const selectedLayer = this.layerList[this.selectedLayerIndex];
-    if (selectedLayer.embeddedVis === null || selectedLayer.embeddedVis.customizedIcon === undefined) return;
-    selectedLayer.embeddedVis.customizedIcon.visible = visible;
+    const icon = this.ensureCustomizedIcon()
+    if (!icon) return
+    icon.visible = visible;
     this.layerList = [...this.layerList]
   }
 
@@ -541,7 +551,7 @@ export class Store {
           this.cameraShotList = this.mergeList([...this.cameraShotList], [...response.cameraShotList])
           this.urlList = this.mergeList([...this.urlList], [...response.urlList])
         })
-        message.success(`Get ${response.urlList.length} URLs from backend.`)
+        message.success(`Loaded ${response.urlList.length} video URLs.`)
       })
       .catch((error) => {
         console.error("get_existing_data failed", error)
@@ -693,7 +703,7 @@ export class Store {
     if (this.selectedVideoRecord?.key === video.key) {
       this.setSelectedVideoRecord(null)
     }
-    message.success(`Successfully delete ${video.key}.`)
+    message.success(`Deleted ${video.key}.`)
     // this.log()
     this.saveData()
   }
@@ -733,7 +743,7 @@ export class Store {
     if (this.selectedVisRecord?.key === vis.key) {
       this.setSelectedVisRecord(null)
     }
-    message.success(`Successfully delete ${vis.key}.`)
+    message.success(`Deleted ${vis.key}.`)
     this.saveData()
   }
 
@@ -774,7 +784,7 @@ export class Store {
     if (this.selectedEventRecord?.key === event.key) {
       this.setSelectedEventRecord(null)
     }
-    message.success(`Successfully delete ${event.key}.`)
+    message.success(`Deleted ${event.key}.`)
     this.saveData()
   }
 
@@ -814,7 +824,7 @@ export class Store {
     if (this.selectedCameraShotRecord?.key === cameraShot.key) {
       this.setSelectedCameraShotRecord(null)
     }
-    message.success(`Successfully delete ${cameraShot.key}.`)
+    message.success(`Deleted ${cameraShot.key}.`)
     this.saveData()
   }
 
@@ -875,7 +885,7 @@ export class Store {
           this.processedVisData = [...visGroupList]
           this.processedVideoData = [...videoList]
         })
-        message.success(`Get processed data.`)
+        message.success(`Review results loaded.`)
       })
       .catch((error) => {
         console.error("get_processed_data failed", error)

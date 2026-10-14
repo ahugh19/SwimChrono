@@ -11,7 +11,9 @@ import { inject, observer } from "mobx-react"
 import { IComponentPropsWithStore, Store } from "../../store"
 import { useEffect, useState, forwardRef, useImperativeHandle, useRef } from "react"
 import { EditableElementType, EmbeddedVisType, LayerType } from "../../types"
-import { embeddedVisTypeComposeType_GLOBAL, embeddedVisTypeComposeType_INDIVIDUAL, editableElementInVisConfig, VALUE_customizedIconGlobal, VALUE_customizedIconIndividual } from "../../utils/values"
+import { embeddedVisTypeComposeType_GLOBAL, embeddedVisTypeComposeType_INDIVIDUAL, editableElementInVisConfig, VALUE_customizedIconGlobal, VALUE_customizedIconIndividual, VALUE_eventLogoCorner } from "../../utils/values"
+import { OLYMPIC_RINGS_FULL_SVG } from "../VideoPanel/VisHolder/VisGlobal/VisEventLogoCorner/olympicRings"
+import { isOlympic } from "../../utils/raceInfo"
 import LaneController from "./LaneController"
 import { Row, Typography, Divider } from "antd"
 import GlobalController from "./GlobalController"
@@ -228,7 +230,7 @@ const ControllerPanel = forwardRef((props: ControllerPanelProps, ref) => {
               onVisSelect={onVisSelect} />
 
             {
-              currentLayer.embeddedVis?.visName === VALUE_customizedIconGlobal || currentLayer.embeddedVis?.visName === VALUE_customizedIconIndividual
+              currentLayer.embeddedVis?.visName === VALUE_customizedIconGlobal || currentLayer.embeddedVis?.visName === VALUE_customizedIconIndividual || currentLayer.embeddedVis?.visName === VALUE_eventLogoCorner
                 ?
                 <>
                   <CustomizedIconController
@@ -237,6 +239,8 @@ const ControllerPanel = forwardRef((props: ControllerPanelProps, ref) => {
                     onCustomizedIconVisibilityChange={onCustomizedIconVisibilityChange}
                     defaultSize={currentLayer.embeddedVis?.customizedIcon?.size}
                     currentLayer={currentLayer}
+                    builtInSvg={currentLayer.embeddedVis?.visName === VALUE_eventLogoCorner && isOlympic(store?.currentVideoMetaData) ? OLYMPIC_RINGS_FULL_SVG : undefined}
+                    builtInHint={currentLayer.embeddedVis?.visName === VALUE_eventLogoCorner ? (isOlympic(store?.currentVideoMetaData) ? "Built-in Olympic rings. Edit the code to replace them." : "Built-in badge with the competition name. Write code to replace it with your own logo.") : undefined}
                   />
                   <Divider style={{ margin: "14px 0" }} />
                 </>

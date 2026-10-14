@@ -17,9 +17,9 @@ const VisSelectionPanel = forwardRef((props: VisSelectionPanelProps, ref) => {
   const { mode } = useTheme();
   const refChooseVis = useRef(null)
 
-  // The visIcon PNGs are pale-grey line drawings designed to read on a
+  // The visIcon PNGs are pale-gray line drawings designed to read on a
   // dark button. In light mode the button surface is also pale, so the
-  // unselected icons disappear. Use a muted mid-grey backdrop — dark
+  // unselected icons disappear. Use a muted mid-gray backdrop — dark
   // enough for the pale glyphs to register but quiet enough that it
   // doesn't outshout the selected (primary blue) button.
   const unselectedBgFix = mode === 'light' ? { background: '#8a8a8a', borderColor: '#8a8a8a' } : {}

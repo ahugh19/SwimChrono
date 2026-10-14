@@ -40,7 +40,7 @@ export const rectColorAlong = "#999999"
 
 export const textColor = "#B0B0B0"
 export const uiTextLight = "#dedede" // light text on dark backgrounds (result/legend)
-export const uiHighlightStar = "#FFC125" // highlighted-case star colour
+export const uiHighlightStar = "#FFC125" // highlighted-case star color
 export const uiWarningOrange = "#F4A460" // warning indicator (forms)
 export const strokeColor = "#DDDDDD"
 export const strokeWidth = 1.5

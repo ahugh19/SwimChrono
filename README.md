@@ -143,7 +143,7 @@ src/
 │   │   └── VisGlobal/          # screen-corner / global visualizations
 │   ├── LayerPanel/             # Konva timeline, layer list, TriggerDrawer + AIChat
 │   ├── ControllerPanel/        # data / vis / position / element editors
-│   ├── VideoLabel/             # labelling tool (vis / event / camera shot)
+│   ├── VideoLabel/             # labeling tool (vis / event / camera shot)
 │   └── ResultVisualization/    # cross-race statistics gantt
 ├── store/           # MobX root store
 ├── tool/            # CanvasSelect (rect / polygon / point / line / circle annotator)
@@ -173,7 +173,7 @@ exposes editors based on the element's `type` (`text` / `shape` / `icon` /
 Result charts (`/visualization`)
 * One video at a time by default, with a switch to stack all 31 videos (optionally on a common time scale); the gantt is a scrubbable navigator under the player with a ticked time axis, playhead, zoom (ctrl/⌘ + wheel or slider) and hover tooltips.
 * Side panel with two tabs: the annotations active at the current moment, and the full table. Column filters in the table dim the non-matching bars in the gantt and the bbox overlay; clicking a bar, a card or a table row selects the annotation and seeks the player.
-* The player stays at 640×360 so the stored bounding boxes (labelled on 1280×720) map 1:2 without any transform.
+* The player stays at 640×360 so the stored bounding boxes (labeled on 1280×720) map 1:2 without any transform.
 * Layout is computed by a pure, tested module instead of per-group Konva effects; bars are memoised so hovering doesn't repaint the whole chart.
 
 Authoring page
@@ -195,7 +195,9 @@ Visualizations driven by the video metadata
 * The race-name corner reads gender, distance, stroke and round from the video's metadata instead of a fixed string; lane count, pool length and lap length come from the metadata too (27 components, climbing unchanged).
 * New "Event logo" corner (data: race name): the Olympic rings for an Olympic race, otherwise the competition name and year. The Olympic Style example uses it in place of the hand-made rings icon. The record corner reads "OR" at the Olympics and "CR" elsewhere.
 * Customized SVG icon: the controller shows a preview of the current icon and opens a code window to copy or edit the SVG markup; tighter spacing in the controller panel.
-* About dialog links carry the page icons; the results page is titled "Labelling results".
+* About dialog links carry the page icons; the results page is titled "Labeling results".
+* The event logo can be replaced by a custom svg: selecting its layer shows the built-in badge in the SVG icon panel, ready to copy or edit.
+* User-facing text uses American spelling throughout (labeling, color, gray); a few notices were reworded ("Video data loaded.", "Deleted …", "URL").
 
 ### 1.3.0
 
@@ -211,7 +213,7 @@ Authoring
 
 Appearance
 * Blue-tinted dark and light palettes with consistent contrast; layer-row icons stay readable on selected rows; a global font stack so text outside antd widgets no longer falls back to a serif.
-* Header regrouped with labelled controls, GitHub link and an About dialog that names the paper version.
+* Header regrouped with labeled controls, GitHub link and an About dialog that names the paper version.
 
 ### 1.2.0
 

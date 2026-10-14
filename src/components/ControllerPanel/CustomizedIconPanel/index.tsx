@@ -12,16 +12,21 @@ interface ICustomizedIconControllerProps {
   onCustomizedIconVisibilityChange: (visible: boolean) => void;
   defaultSize: number | undefined;
   currentLayer: LayerType
+  // For built-in badges: the svg they draw by default (editable copy) and a hint.
+  builtInSvg?: string
+  builtInHint?: string
 }
 
 function CustomizedIconController(props: ICustomizedIconControllerProps) {
-  const { onSvgContentChange, onCustomizedIconSizeChange, onCustomizedIconVisibilityChange, defaultSize, currentLayer } = props;
+  const { onSvgContentChange, onCustomizedIconSizeChange, onCustomizedIconVisibilityChange, defaultSize, currentLayer, builtInSvg, builtInHint } = props;
 
   const [fileName, setFileName] = useState<string | null>(null)
   const fileInputRef = useRef<HTMLInputElement | null>(null)
   const [editorOpen, setEditorOpen] = useState(false)
   const [draft, setDraft] = useState("")
-  const svgContent = currentLayer.embeddedVis?.customizedIcon?.svgContent ?? ""
+  const customSvg = currentLayer.embeddedVis?.customizedIcon?.svgContent ?? ""
+  // What the layer currently draws: the custom svg, else the built-in one.
+  const svgContent = customSvg || builtInSvg || ""
 
   // Stored as percent (UI units); the parent expects a fraction so we divide on commit.
   const [sizePercent, setSizePercent] = useState<number>(
@@ -111,8 +116,11 @@ function CustomizedIconController(props: ICustomizedIconControllerProps) {
       <div className={styles.preview} title={svgContent ? "Current icon" : "No icon yet"}>
         {svgContent
           ? <div className={styles.previewSvg} dangerouslySetInnerHTML={{ __html: svgContent }} />
-          : <Typography.Text type="secondary">No SVG yet. Upload a file or write the code.</Typography.Text>}
+          : <Typography.Text type="secondary">{builtInHint ?? "No SVG yet. Upload a file or write the code."}</Typography.Text>}
       </div>
+      {builtInHint && svgContent && !customSvg && (
+        <Typography.Text type="secondary" style={{ fontSize: 11 }}>{builtInHint}</Typography.Text>
+      )}
 
       <Flex style={{ marginTop: "8px" }} gap={"small"} justify={"flex-start"} align={"center"} wrap>
         <Button type="default" size="small" onClick={triggerFileInput}>
@@ -142,7 +150,7 @@ function CustomizedIconController(props: ICustomizedIconControllerProps) {
           icon={fileName ? <FileImageOutlined /> : <FileExcelOutlined />}
           color={fileName ? "success" : "default"}
         >
-          {fileName ? fileName : svgContent ? "icon from the configuration" : "No file uploaded."}</Tag>
+          {fileName ? fileName : customSvg ? "icon from the configuration" : builtInSvg ? "built-in icon" : "No file uploaded."}</Tag>
       </Row>
 
       <input

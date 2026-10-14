@@ -8,7 +8,7 @@ interface LegendProps {
   presentKeys: Set<string> // only groups that occur in the shown data
 }
 
-// HTML legend for the gantt colours (one chip per group) plus the
+// HTML legend for the gantt colors (one chip per group) plus the
 // "dashed outline = moving" hint used in the placement view.
 function Legend(props: LegendProps) {
   const { groupType, presentKeys } = props

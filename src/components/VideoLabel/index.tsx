@@ -319,7 +319,7 @@ function VideoLabel(props: VideoLabelProps) {
             <Button type="link" size="small" title={"next 10 frames"} onClick={next10Frame} icon={<ForwardFilled />}>10 f</Button>
           </Space>
           <Space className={styles.urlBtnGroup} size={"middle"}>
-            <Tag>Url Index {urlIndex}/{store.urlList.length > 0 ? store.urlList.length - 1 : null}</Tag>
+            <Tag>URL {urlIndex}/{store.urlList.length > 0 ? store.urlList.length - 1 : null}</Tag>
             <Button type="default" size="small" onClick={lastUrlIndex} icon={<CaretLeftFilled />}>last url</Button>
             <Button type="default" size="small" onClick={nextUrlIndex} icon={<CaretRightFilled />}>next url</Button>
             <Tag color="volcano">{url}</Tag>

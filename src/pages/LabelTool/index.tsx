@@ -8,7 +8,7 @@ interface LabelToolProps {
 
 function LabelTool(props: LabelToolProps) {
   const { labelType } = props;
-  // Warn before a reload while labelling; removed again when navigating
+  // Warn before a reload while labeling; removed again when navigating
   // back to the authoring page so it doesn't linger there.
   useEffect(() => {
     const handler = (e: BeforeUnloadEvent) => {
@@ -19,9 +19,9 @@ function LabelTool(props: LabelToolProps) {
     return () => window.removeEventListener("beforeunload", handler)
   }, [])
   const titles: Record<string, string> = {
-    vis: "Visualization labelling",
-    event: "Event labelling",
-    camera: "Camera-shot labelling",
+    vis: "Visualization labeling",
+    event: "Event labeling",
+    camera: "Camera-shot labeling",
   }
   const what: Record<string, string> = {
     vis: "the embedded visualizations: what is shown, where it sits, how it moves and animates",
@@ -31,7 +31,7 @@ function LabelTool(props: LabelToolProps) {
   return (
     <>
       <PageHeader
-        title={titles[labelType] ?? "Labelling"}
+        title={titles[labelType] ?? "Labeling"}
         tour={{
           storageKey: `swimchrono.tourSeen.label-${labelType}`,
           steps: [

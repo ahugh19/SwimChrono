@@ -14,10 +14,10 @@ export interface AppPage {
 // Single source of truth for the pages of the app and their order.
 export const APP_PAGES: AppPage[] = [
   { path: '/', label: 'Authoring tool', short: 'Authoring', icon: <HomeOutlined /> },
-  { path: '/label-vis', label: 'Visualization labelling', short: 'Vis labels', icon: <EditOutlined /> },
-  { path: '/label-event', label: 'Event labelling', short: 'Event labels', icon: <ProjectOutlined /> },
-  { path: '/label-camera', label: 'Camera-shot labelling', short: 'Camera labels', icon: <VideoCameraOutlined /> },
-  { path: '/visualization', label: 'Labelling results', short: 'Results', icon: <BuildOutlined /> },
+  { path: '/label-vis', label: 'Visualization labeling', short: 'Vis labels', icon: <EditOutlined /> },
+  { path: '/label-event', label: 'Event labeling', short: 'Event labels', icon: <ProjectOutlined /> },
+  { path: '/label-camera', label: 'Camera-shot labeling', short: 'Camera labels', icon: <VideoCameraOutlined /> },
+  { path: '/visualization', label: 'Labeling results', short: 'Results', icon: <BuildOutlined /> },
 ]
 
 function normalize(pathname: string) {

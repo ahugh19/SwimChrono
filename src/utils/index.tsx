@@ -68,7 +68,7 @@ export const testVisItem: VisType = {
   cameraShot: ["others"],
   // Key Events
   keyEvent: "Race Start",
-  // Temporal Relation (visualizaiton shows [relation] event)
+  // Temporal Relation (visualization shows [relation] event)
   temporalRelation: ["before"],
   // Narrative Connection
   narrativeConnection: "none",
@@ -532,11 +532,11 @@ export function lerp(start: number, end: number, t: number) {
 
 export function getGradientColor(percentage: number, colorA: string, colorB: string) {
   const t = percentage / 100;
-  // Parse colour A and colour B.
+  // Parse color A and color B.
   const { r: rA, g: gA, b: bA } = hexToRgb(colorA);
   const { r: rB, g: gB, b: bB } = hexToRgb(colorB);
 
-  // Compute the interpolated colour.
+  // Compute the interpolated color.
   const r = Math.round(lerp(rA, rB, t));
   const g = Math.round(lerp(gA, gB, t));
   const b = Math.round(lerp(bA, bB, t));

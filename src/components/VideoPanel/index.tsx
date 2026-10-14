@@ -54,7 +54,7 @@ const VideoPanel = forwardRef((props: VideoPanelProps, ref) => {
         if (controller.signal.aborted) return
         store.setCurrentSwimmerVideo(rows)
         if (rows.length > 0) {
-          message.success("Successfully load video data.")
+          message.success("Video data loaded.")
         }
         setIsDataLoading(false)
       })

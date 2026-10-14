@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { SwimmerVideoDataType, EditableElementType, VideoMetaDataType } from "../../../../../types";
+import { SwimmerVideoDataType, EditableElementType, VideoMetaDataType, CustomizedIconType } from "../../../../../types";
 import { editableElementInVisConfig } from "../../../../../utils/values";
 import { eventLabel, isOlympic } from "../../../../../utils/raceInfo";
 import { OLYMPIC_RINGS_SVG } from "./olympicRings";
@@ -15,12 +15,15 @@ interface VisEventLogoCornerProps {
   visibility: boolean,
   videoMetaData?: VideoMetaDataType | null,
   svgWidth?: number,
+  // Optional custom svg replacing the built-in badge.
+  customizedIcon?: CustomizedIconType,
 }
 
 // Event badge: the Olympic rings for an Olympic race, otherwise the name
 // and year of the competition from the video's metadata.
 function VisEventLogoCorner(props: VisEventLogoCornerProps) {
-  const { currentSwimmerVideo, currentFrameIndex, x, y, r, s, editableElementList, visibility, videoMetaData, svgWidth } = props;
+  const { currentSwimmerVideo, currentFrameIndex, x, y, r, s, editableElementList, visibility, videoMetaData, svgWidth, customizedIcon } = props;
+  const customSvg = customizedIcon?.svgContent
   const [opacity, setOpacity] = useState<number>(0)
   const [bgStyle, setBgStyle] = useState<EditableElementType | undefined>()
   const [textStyle, setTextStyle] = useState<EditableElementType | undefined>()
@@ -43,6 +46,18 @@ function VisEventLogoCorner(props: VisEventLogoCornerProps) {
   // wider, grow it to the left so it stays inside the video.
   const overflow = svgWidth ? Math.max(0, x + width * (s / 100) - svgWidth) : 0
   const shiftX = overflow > 0 ? -Math.min(width - 40, overflow / (s / 100)) : 0
+
+  if (customSvg) {
+    return (
+      <g
+        opacity={opacity}
+        transform={`translate(${x}, ${y}) scale(${s / 100}) scale(${customizedIcon?.size ?? 1}) rotate(${r})`}
+        visibility={visibility && customizedIcon?.visible !== false ? "visible" : "hidden"}
+      >
+        <g dangerouslySetInnerHTML={{ __html: customSvg }} />
+      </g>
+    )
+  }
 
   return (
     <g

@@ -635,7 +635,7 @@ function VisList(props: VisListProps) {
       <Space className={styles.visTextBox}>
         <Button className={styles.cancelSelectionBtn} type="default" size="small" onClick={cancelSelection}>cancel selection</Button>
         {` ${issueNumber}${issueNumber > 1 ? " records have" : " record has"} issues.`}
-        {selectedVis ? `Select a visualizaiton during ${selectedVis.startMoment.toFixed(2)}-${selectedVis.endMoment.toFixed(2)}s. Switch to editing mode to see the bbox.` : `No vis is selected.`}
+        {selectedVis ? `Select a visualization during ${selectedVis.startMoment.toFixed(2)}-${selectedVis.endMoment.toFixed(2)}s. Switch to editing mode to see the bbox.` : `No vis is selected.`}
       </Space>
       <Table
         className={styles.visTable}
