@@ -88,7 +88,7 @@ const Header = forwardRef((props: HeaderProps, ref) => {
             <Select
               showSearch
               allowClear
-              style={{ width: "200px" }}
+              className={styles.select}
               placeholder="choose a video"
               defaultValue={videoMetaDataList[0].name}
               optionFilterProp="children"
@@ -115,7 +115,7 @@ const Header = forwardRef((props: HeaderProps, ref) => {
             <Select
               placeholder="choose an example"
               onChange={handleExampleClick}
-              style={{ width: "200px" }}
+              className={styles.select}
               defaultValue={"none"}
               // options={exampleList.map((e) => {
               //   return { value: e.exampleName, label: e.exampleName, disabled: e.exampleName !== "100m comic style" }

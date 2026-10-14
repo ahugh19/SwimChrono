@@ -41,14 +41,19 @@
     font-weight: 400;
   }
 
+  // Shrinks on narrow viewports (~1100px) so the header doesn't overflow.
+  .select {
+    width: clamp(140px, 13vw, 200px);
+  }
+
   .btnGroupLeft {
     .text;
-    margin-left: 30px;
+    margin-left: clamp(12px, 2vw, 30px);
   }
 
   .btnGroupRight {
     .text;
-    margin-left: 30px;
+    margin-left: clamp(12px, 2vw, 30px);
     right: 4px;
 
     .logoContainer {
