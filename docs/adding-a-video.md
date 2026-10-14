@@ -13,7 +13,11 @@ The first entry of `videoMetaDataList` is the default race loaded on start.
 
 ## 1. Drop the video in `public/video/`
 
-Use a compressed mp4 (the shipped `zip-*.mp4` files are compressed versions).
+Use a compressed mp4 (the shipped `zip-*.mp4` files are compressed versions), and make sure the `moov` atom is at the start of the file so the browser can start playing before the whole file is downloaded:
+
+```bash
+ffmpeg -i my-race.mp4 -c copy -movflags +faststart public/video/my-race.mp4
+```
 If you plan to commit it, keep it **under GitHub's 100 MB per-file limit**.
 
 ## 2. Add the per-frame CSV in `public/csv/`
