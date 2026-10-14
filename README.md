@@ -188,6 +188,8 @@ Onboarding & appearance
 * Guided tours on the result charts and on each label tool (? button in the header), shown once on first visit; the authoring tour gained steps for the timeline, click-to-select on the video, resizable panels and the Pages menu.
 * The label tools use a two-column flow layout instead of fixed absolute offsets, so nothing overlaps any more.
 * Light mode uses a deeper accent blue (#1a8fc7) and firmer selection tints; the accent is theme-aware in the timeline and chart canvases.
+* Every page header ends with the same button group: Pages menu, GitHub, About and the help tour. The tours of the label tools and the result charts open only from that button.
+* Result player: the video is cued at the race start without playing (no more pre-roll on page load), seeking while paused stays paused, and a mute button was added.
 
 ### 1.3.0
 

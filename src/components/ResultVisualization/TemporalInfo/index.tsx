@@ -4,7 +4,7 @@ import { IComponentPropsWithStore, Store } from "../../../store";
 import { Button, Space, Tag, Switch, Tooltip, Select, Segmented, Tabs, Typography, Empty, Spin, Slider, Badge } from 'antd'
 import ReactPlayer from 'react-player'
 import { OnProgressProps } from 'react-player/base'
-import { PlayCircleFilled, PauseCircleFilled, LeftOutlined, RightOutlined, StarTwoTone } from '@ant-design/icons'
+import { PlayCircleFilled, PauseCircleFilled, LeftOutlined, RightOutlined, StarTwoTone, SoundOutlined, AudioMutedOutlined } from '@ant-design/icons'
 import styles from "./index.module.less"
 import { VideoType, VisType } from '../../../types'
 import VisTable from './VisTable'
@@ -28,6 +28,20 @@ const PLAYER_HEIGHT = 360
 
 interface TemporalInfoProps extends IComponentPropsWithStore { }
 
+function isYouTubeUrl(url: string) {
+  return /youtube\.com|youtu\.be/.test(url)
+}
+
+// YouTube starts playing as soon as seekTo() is called on a video that has
+// only been cued, which is what used to trigger the pre-roll ad on page
+// load. Passing the start time in the url cues the player at that moment
+// without playing it.
+function urlWithStart(url: string, startSeconds: number) {
+  if (!isYouTubeUrl(url)) return url
+  const base = url.replace(/[?&](t|start)=[^&]*/g, "")
+  return `${base}${base.includes("?") ? "&" : "?"}t=${Math.max(0, Math.floor(startSeconds))}`
+}
+
 function videoLabel(video: VideoType) {
   return `${video.year} · ${video.gender} ${video.distance} m ${video.style} · ${video.level}`
 }
@@ -46,6 +60,9 @@ function TemporalInfo(props: TemporalInfoProps) {
   const [filteredKeys, setFilteredKeys] = useState<Set<string> | null>(null)
   const [currentTime, setCurrentTime] = useState(0)
   const [playing, setPlaying] = useState(false)
+  const [muted, setMuted] = useState(false)
+  // Moment the player is cued at when a video is (re)loaded.
+  const [playerStart, setPlayerStart] = useState(0)
   // Off by default so the overlay never gets in the way of watching the video.
   const [bboxVisible, setBboxVisible] = useState(false)
   const [sideTab, setSideTab] = useState<'now' | 'table'>('now')
@@ -71,7 +88,9 @@ function TemporalInfo(props: TemporalInfoProps) {
   useEffect(() => {
     if (currentVideoKey === null && videos.length > 0) {
       setCurrentVideoKey(videos[0].key)
-      pendingSeek.current = videos[0].startMoment
+      setPlayerStart(videos[0].startMoment)
+      setCurrentTime(videos[0].startMoment)
+      pendingSeek.current = isYouTubeUrl(videos[0].url) ? null : videos[0].startMoment
     }
   }, [videos.length])
 
@@ -99,22 +118,34 @@ function TemporalInfo(props: TemporalInfoProps) {
 
   // ---- player plumbing
   const seek = useCallback((seconds: number) => {
-    playerRef.current?.seekTo(seconds, 'seconds')
+    const player = playerRef.current
+    if (!player) return
+    player.seekTo(seconds, 'seconds')
     setCurrentTime(seconds)
-  }, [])
+    if (!playing) {
+      // Seeking a cued YouTube video starts it; pause straight away so a
+      // seek while paused stays a seek.
+      const internal = player.getInternalPlayer?.()
+      if (internal && typeof internal.pauseVideo === 'function') internal.pauseVideo()
+      else if (internal && typeof internal.pause === 'function') internal.pause()
+    }
+  }, [playing])
 
   function selectVideo(key: string, thenSeek?: number) {
     const video = videos.find((v) => v.key === key)
     if (!video) return
-    pendingSeek.current = thenSeek ?? video.startMoment
+    const start = thenSeek ?? video.startMoment
+    setPlayerStart(start)
+    pendingSeek.current = isYouTubeUrl(video.url) ? null : start
     setCurrentVideoKey(key)
     setSelectedVisKey(null)
     setFilteredKeys(null)
     setPlaying(false)
-    setCurrentTime(pendingSeek.current)
+    setCurrentTime(start)
   }
 
   function onPlayerReady() {
+    // File players don't autoplay on seek, so cue them here.
     if (pendingSeek.current !== null) {
       seek(pendingSeek.current)
       pendingSeek.current = null
@@ -202,6 +233,7 @@ function TemporalInfo(props: TemporalInfoProps) {
 
   const loading = videos.length === 0
   const url = currentVideo?.url ?? ''
+  const playerUrl = useMemo(() => (url ? urlWithStart(url, playerStart) : ''), [url, playerStart])
   const urlName = store.urlList.find((u) => u.key === url)?.urlVideoName ?? ''
   const annotationCount = visLists.reduce((n, l) => n + l.length, 0)
 
@@ -244,10 +276,12 @@ function TemporalInfo(props: TemporalInfoProps) {
             {url && (
               <ReactPlayer
                 ref={playerRef}
-                url={url}
+                url={playerUrl}
                 width={PLAYER_WIDTH}
                 height={PLAYER_HEIGHT}
                 playing={playing}
+                muted={muted}
+                volume={muted ? 0 : 1}
                 controls={true}
                 onReady={onPlayerReady}
                 onPlay={() => setPlaying(true)}
@@ -260,6 +294,7 @@ function TemporalInfo(props: TemporalInfoProps) {
           </div>
           <div className={styles.controls}>
             <Button type="primary" shape="circle" size="small" icon={playing ? <PauseCircleFilled /> : <PlayCircleFilled />} onClick={() => setPlaying((p) => !p)} title="Play / pause (space)" />
+            <Button size="small" shape="circle" icon={muted ? <AudioMutedOutlined /> : <SoundOutlined />} onClick={() => setMuted((m) => !m)} title={muted ? "Unmute" : "Mute"} aria-label={muted ? "Unmute" : "Mute"} />
             <Tag className={styles.time} title="Player time · time relative to the race start">
               {formatClock(currentTime, 2)}
               {currentVideo && <Text type="secondary" style={{ marginLeft: 6, fontSize: 11 }}>race {currentTime - currentVideo.startMoment < 0 ? '−' : '+'}{Math.abs(currentTime - currentVideo.startMoment).toFixed(2)} s</Text>}

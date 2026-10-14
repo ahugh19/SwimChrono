@@ -6,7 +6,7 @@ import VideoPanel from '../../components/VideoPanel';
 import styles from "./index.module.less"
 import { inject, observer } from "mobx-react"
 import { IComponentPropsWithStore, Store } from "../../store"
-import { Button, Divider, Space, Tour, FloatButton } from 'antd';
+import { Tour } from 'antd';
 import { QuestionCircleOutlined, FieldTimeOutlined, EyeOutlined, CopyOutlined, ArrowUpOutlined, ArrowDownOutlined, DeleteOutlined, RollbackOutlined, AppstoreOutlined } from "@ant-design/icons";
 import type { TourProps } from 'antd';
 import ResizeHandle, { readStoredSize, writeStoredSize } from '../../components/ResizeHandle';
@@ -50,7 +50,7 @@ function Home(props: IComponentPropsWithStore) {
   const childVideoPanelRef = useRef<any>(null);
   const childLayerPanelRef = useRef<any>(null);
   const childControllerPanelRef = useRef<any>(null);
-  const tourOpenBtnRef = useRef(null);
+  const controllerGutterRef = useRef<HTMLDivElement | null>(null);
 
   const [currentVideoTime, setCurrentVideoTime] = useState<number>(0);
 
@@ -128,7 +128,6 @@ function Home(props: IComponentPropsWithStore) {
           <li>Space plays and pauses. The arrow keys step one frame, or one second with Shift. Home jumps to the race start.</li>
           <li>Hold Ctrl (or ⌘) and scroll to zoom the timeline.</li>
         </ul>
-        <p>You can also drag the gutters between the panels to resize them. Double-click a gutter to reset it. ↔️</p>
       </div>,
       target: () => childLayerPanelRef.current?.layerPanelComponent,
       placement: "top"
@@ -143,6 +142,16 @@ function Home(props: IComponentPropsWithStore) {
       title: '⚙️ Controller Panel',
       description: 'Customize visualization details in this panel. 🎛️',
       target: () => childControllerPanelRef.current?.controllerPanelComponent,
+      placement: "left"
+    },
+    {
+      title: '↔️ Resize the Panels',
+      description: <div>
+        <p>Drag this gutter to change the width of the controller panel.</p>
+        <p>The gutter above the layer panel changes its height in the same way.</p>
+        <p>Double-click a gutter to go back to the default size. The sizes are remembered for your next visit.</p>
+      </div>,
+      target: () => controllerGutterRef.current as HTMLElement,
       placement: "left"
     },
     {
@@ -183,9 +192,9 @@ function Home(props: IComponentPropsWithStore) {
     },
     {
       title: '🔄 Restart the Tour',
-      description: 'Need a refresher? Click this button to start the tour again!',
-      target: () => tourOpenBtnRef.current,
-      placement: "left"
+      description: 'Need a refresher? Click this button to start the tour again.',
+      target: () => childHeaderRef.current?.help,
+      placement: "bottomRight"
     }
   ];
 
@@ -195,7 +204,8 @@ function Home(props: IComponentPropsWithStore) {
       <div className={styles.header}>
         <Header
           ref={childHeaderRef}
-          fileInputRef={fileInputRef} />
+          fileInputRef={fileInputRef}
+          onHelpClick={() => { setTourCurrent(0); setTourOpen(true) }} />
       </div>
       <div className={styles.videoPanel}>
         <VideoPanel
@@ -215,7 +225,7 @@ function Home(props: IComponentPropsWithStore) {
       <div className={styles.controllerPanel} ref={controllerDivRef}>
         <ControllerPanel ref={childControllerPanelRef} />
       </div>
-      <div className={styles.controllerGutter}>
+      <div className={styles.controllerGutter} ref={controllerGutterRef}>
         <ResizeHandle
           direction="col"
           invert
@@ -240,14 +250,6 @@ function Home(props: IComponentPropsWithStore) {
         />
       </div>
       <input type="file" onChange={(e) => onFileInput(e)} style={{ display: 'none' }} ref={fileInputRef} />
-      <FloatButton
-        ref={tourOpenBtnRef}
-        icon={<QuestionCircleOutlined />}
-        description="HELP TOUR"
-        shape="square"
-        style={{ insetInlineEnd: 50, right: 40, bottom: 20 }}
-        onClick={() => setTourOpen(true)}
-      />
       <Tour
         open={tourOpen}
         onClose={(current) => { setTourOpen(false); setTourCurrent(current); markTourSeen() }}

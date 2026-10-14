@@ -1,9 +1,8 @@
 import { useState, type ReactNode } from 'react'
-import { Button, Tooltip, Tour, Typography } from 'antd'
+import { Tour, Typography } from 'antd'
 import type { TourProps } from 'antd'
-import { QuestionCircleOutlined } from '@ant-design/icons'
 import Brand from '../Brand'
-import AppNav from '../AppNav'
+import HeaderActions from '../HeaderActions'
 import styles from './index.module.less'
 
 export interface PageTourConfig {
@@ -19,13 +18,10 @@ interface PageHeaderProps {
   children?: ReactNode
   // Right-aligned content.
   extra?: ReactNode
-  // Optional guided tour: opens on the first visit, and from the ? button.
+  // Optional guided tour, opened from the ? button. It never opens by itself.
   tour?: PageTourConfig
 }
 
-function readSeen(key: string) {
-  try { return window.localStorage.getItem(key) === "1" } catch { return false }
-}
 function markSeen(key: string) {
   try { window.localStorage.setItem(key, "1") } catch { /* ignore */ }
 }
@@ -33,19 +29,18 @@ function markSeen(key: string) {
 // Slim header for the secondary pages (label tools, result charts): brand,
 // page navigation, then whatever the page needs in the same row.
 function PageHeader({ title, children, extra, tour }: PageHeaderProps) {
-  const [tourOpen, setTourOpen] = useState<boolean>(() => (tour ? !readSeen(tour.storageKey) : false))
+  const [tourOpen, setTourOpen] = useState<boolean>(false)
   const [tourStep, setTourStep] = useState(0)
 
   const pagesStep: NonNullable<TourProps['steps']>[number] = {
     title: '🧭 Pages',
-    description: 'Use these tabs to switch between the authoring tool, the three labelling tools and the result charts. The authoring page has the same menu in its top-right corner.',
+    description: 'This menu switches between the authoring tool, the three labelling tools and the result charts. Every page has it in the same place.',
     target: () => document.querySelector('[data-tour="pages"]') as HTMLElement,
   }
 
   return (
     <div className={styles.header}>
       <Brand size="compact" />
-      <span data-tour="pages"><AppNav /></span>
       {title && <>
         <span className={styles.divider} />
         <Typography.Text strong className={styles.title}>{title}</Typography.Text>
@@ -56,10 +51,8 @@ function PageHeader({ title, children, extra, tour }: PageHeaderProps) {
       </>}
       <span className={styles.spacer} />
       {extra}
+      <HeaderActions onHelpClick={tour ? () => { setTourStep(0); setTourOpen(true) } : undefined} />
       {tour && <>
-        <Tooltip title="Show the guided tour of this page">
-          <Button type="text" size="small" icon={<QuestionCircleOutlined />} aria-label="Help tour" onClick={() => { setTourStep(0); setTourOpen(true) }} />
-        </Tooltip>
         <Tour
           open={tourOpen}
           current={tourStep}

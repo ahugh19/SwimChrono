@@ -1,47 +1,35 @@
-import { useState, useRef, useImperativeHandle, forwardRef } from 'react';
-import { Button, Select, Modal, Tooltip } from 'antd';
-import { BulbFilled, BulbOutlined, DownloadOutlined, GithubOutlined, InfoCircleOutlined, UploadOutlined } from '@ant-design/icons';
+import { useRef, useImperativeHandle, forwardRef } from 'react';
+import { Button, Select, Tooltip } from 'antd';
+import { BulbFilled, BulbOutlined, DownloadOutlined, UploadOutlined } from '@ant-design/icons';
 import { inject, observer } from "mobx-react"
 import { IComponentPropsWithStore } from "../../store"
 import styles from "./index.module.less"
 import { exampleList, videoMetaDataList } from '../../utils/values';
-import AboutModal from './AboutModal'
 import { useTheme } from '../../utils/theme'
 import Brand from '../Brand'
-import AppNav from '../AppNav'
+import HeaderActions from '../HeaderActions'
 
 interface HeaderProps extends IComponentPropsWithStore {
   fileInputRef: React.RefObject<HTMLInputElement | null>
+  onHelpClick?: () => void
 }
 
 const Header = forwardRef((props: HeaderProps, ref) => {
-  const { store, fileInputRef } = props;
+  const { store, fileInputRef, onHelpClick } = props;
   const { mode, toggle } = useTheme();
 
   const refVideoSelection = useRef(null)
   const refImportExport = useRef(null)
   const refExampleSelection = useRef(null)
-  const refPages = useRef(null)
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleModalOk = () => {
-    setIsModalOpen(false);
-  };
-
-  const handleModalCancel = () => {
-    setIsModalOpen(false);
-  };
+  const refPages = useRef<HTMLSpanElement>(null)
+  const refHelp = useRef<HTMLButtonElement>(null)
 
   useImperativeHandle(ref, () => ({
     videoSelection: refVideoSelection.current,
     importExport: refImportExport.current,
     exampleSelection: refExampleSelection.current,
     pages: refPages.current,
+    help: refHelp.current,
   }))
 
   function handleVideoChange(value: string) {
@@ -111,33 +99,23 @@ const Header = forwardRef((props: HeaderProps, ref) => {
           <Button icon={<DownloadOutlined />} onClick={handleExportClick}>Export</Button>
         </div>
 
-        <div className={styles.right}>
-          <span ref={refPages}><AppNav mode="menu" /></span>
-          <Tooltip title={mode === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}>
-            <Button
-              type='text'
-              aria-label={mode === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}
-              icon={mode === 'dark' ? <BulbOutlined /> : <BulbFilled />}
-              onClick={toggle}
-            />
-          </Tooltip>
-          <Tooltip title="Source code on GitHub">
-            <Button
-              type='text'
-              aria-label="Source code on GitHub"
-              icon={<GithubOutlined />}
-              href="https://github.com/ahugh19/SwimChrono"
-              target="_blank"
-              rel="noreferrer"
-            />
-          </Tooltip>
-          <Button type='text' icon={<InfoCircleOutlined />} onClick={showModal}>About</Button>
-        </div>
+        <HeaderActions
+          pagesRef={refPages}
+          helpRef={refHelp}
+          onHelpClick={onHelpClick}
+          leading={
+            <Tooltip title={mode === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}>
+              <Button
+                type='text'
+                aria-label={mode === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}
+                icon={mode === 'dark' ? <BulbOutlined /> : <BulbFilled />}
+                onClick={toggle}
+              />
+            </Tooltip>
+          }
+        />
       </div>
 
-      <Modal title="About SwimChrono" open={isModalOpen} onOk={handleModalOk} onCancel={handleModalCancel} footer={null}>
-        <AboutModal />
-      </Modal>
     </>
   )
 });
