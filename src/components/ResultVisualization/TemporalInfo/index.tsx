@@ -12,6 +12,7 @@ import Legend from './Legend'
 import GanttChart, { GanttBlock } from './GanttChart'
 import { GroupType, layoutGantt } from '../ganttLayout'
 import ResizeHandle, { readStoredSize, writeStoredSize } from '../../ResizeHandle'
+import PageHeader from '../../PageHeader'
 import { formatClock } from '../../../utils'
 import { uiBlue, uiHighlightStar } from '../../../utils/values'
 
@@ -43,7 +44,8 @@ function TemporalInfo(props: TemporalInfoProps) {
   const [filteredKeys, setFilteredKeys] = useState<Set<string> | null>(null)
   const [currentTime, setCurrentTime] = useState(0)
   const [playing, setPlaying] = useState(false)
-  const [bboxVisible, setBboxVisible] = useState(true)
+  // Off by default so the overlay never gets in the way of watching the video.
+  const [bboxVisible, setBboxVisible] = useState(false)
   const [sideTab, setSideTab] = useState<'now' | 'table'>('now')
   const [ganttHeight, setGanttHeight] = useState<number>(() => readStoredSize(GANTT_HEIGHT_KEY) ?? 260)
   const [ganttWidth, setGanttWidth] = useState(800)
@@ -203,7 +205,7 @@ function TemporalInfo(props: TemporalInfoProps) {
 
   return (
     <div className={styles.page} onKeyDown={onKeyDown}>
-      <div className={styles.toolbar}>
+      <PageHeader title="Results" extra={<Tag bordered={false}>{videos.length} videos · {annotationCount} annotations</Tag>}>
         <Space size={6}>
           <Text className={styles.label}>Video</Text>
           <Button size="small" icon={<LeftOutlined />} disabled={currentIndex <= 0} onClick={() => selectVideo(videos[currentIndex - 1].key)} title="Previous video" />
@@ -219,9 +221,7 @@ function TemporalInfo(props: TemporalInfoProps) {
           />
           <Button size="small" icon={<RightOutlined />} disabled={currentIndex < 0 || currentIndex >= videos.length - 1} onClick={() => selectVideo(videos[currentIndex + 1].key)} title="Next video" />
         </Space>
-        <span className={styles.spacer} />
-        <Tag bordered={false}>{videos.length} videos · {annotationCount} annotations</Tag>
-      </div>
+      </PageHeader>
 
       <div className={styles.upper}>
         <div className={styles.playerArea}>

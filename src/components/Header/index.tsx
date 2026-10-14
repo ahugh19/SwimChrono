@@ -5,10 +5,10 @@ import { inject, observer } from "mobx-react"
 import { IComponentPropsWithStore } from "../../store"
 import styles from "./index.module.less"
 import { exampleList, videoMetaDataList } from '../../utils/values';
-import SwimChronoLogo from '/SwimChronoLogo.svg'
 import AboutModal from './AboutModal'
 import { useTheme } from '../../utils/theme'
-import { APP_VERSION } from '../../utils/version'
+import Brand from '../Brand'
+import AppNav from '../AppNav'
 
 interface HeaderProps extends IComponentPropsWithStore {
   fileInputRef: React.RefObject<HTMLInputElement | null>
@@ -70,19 +70,7 @@ const Header = forwardRef((props: HeaderProps, ref) => {
   return (
     <>
       <div className={styles.headerContainer}>
-        <a className={styles.brand} href="." title="SwimChrono">
-          <img className={styles.logoSvg} src={SwimChronoLogo} alt="" />
-          <span className={styles.title}>
-            SwimChr<span className={styles.highlight}>o</span>n<span className={styles.highlight}>o</span>
-          </span>
-        </a>
-        <a
-          className={styles.version}
-          href="https://github.com/ahugh19/SwimChrono#changelog"
-          target="_blank"
-          rel="noreferrer"
-          title={`SwimChrono version ${APP_VERSION} — open the changelog`}
-        >v{APP_VERSION}</a>
+        <Brand />
 
         <span className={styles.divider} />
 
@@ -122,6 +110,7 @@ const Header = forwardRef((props: HeaderProps, ref) => {
         </div>
 
         <div className={styles.right}>
+          <AppNav mode="menu" />
           <Tooltip title={mode === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}>
             <Button
               type='text'

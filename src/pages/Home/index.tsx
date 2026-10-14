@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import NavBtns from "../../components/NavBtns"
 import Header from '../../components/Header';
 import LayerPanel from '../../components/LayerPanel';
 import ControllerPanel from '../../components/ControllerPanel';
@@ -213,7 +212,6 @@ function Home(props: IComponentPropsWithStore) {
         />
       </div>
       <input type="file" onChange={(e) => onFileInput(e)} style={{ display: 'none' }} ref={fileInputRef} />
-      <NavBtns />
       <FloatButton
         ref={tourOpenBtnRef}
         icon={<QuestionCircleOutlined />}

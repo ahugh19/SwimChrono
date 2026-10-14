@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import VideoLabel from '../../components/VideoLabel'
-import NavBtns from "../../components/NavBtns"
+import PageHeader from '../../components/PageHeader'
 
 interface LabelToolProps {
   labelType: string
@@ -18,10 +18,15 @@ function LabelTool(props: LabelToolProps) {
     window.addEventListener("beforeunload", handler)
     return () => window.removeEventListener("beforeunload", handler)
   }, [])
+  const titles: Record<string, string> = {
+    vis: "Visualization labelling",
+    event: "Event labelling",
+    camera: "Camera-shot labelling",
+  }
   return (
     <>
+      <PageHeader title={titles[labelType] ?? "Labelling"} />
       <VideoLabel labelType={labelType} />
-      <NavBtns />
     </>
   )
 }

@@ -1,0 +1,49 @@
+.strip {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px;
+  border-radius: 6px;
+  background: var(--background-color-elevated);
+  border: 1px solid var(--border-color-soft);
+}
+
+.tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 24px;
+  padding: 0 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  color: var(--text-color);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 0.12s ease, color 0.12s ease;
+
+  &:hover {
+    color: var(--text-color-bright);
+    background: var(--row-bg-hover);
+  }
+
+  &.active {
+    color: #ffffff;
+    background: var(--my-theme-color);
+  }
+
+  .icon {
+    display: inline-flex;
+    font-size: 13px;
+  }
+}
+
+// On narrow headers hide the labels and keep the icons.
+@media (max-width: 1280px) {
+  .text {
+    display: none;
+  }
+
+  .tab {
+    padding: 0 8px;
+  }
+}

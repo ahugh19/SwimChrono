@@ -16,6 +16,7 @@ import {
   Divider,
   Typography,
 } from "antd";
+import { Link as RouterLink } from "react-router-dom";
 import { APP_VERSION } from "../../../utils/version";
 
 const { Title, Paragraph, Text, Link } = Typography;
@@ -40,18 +41,10 @@ function AboutModal() {
 
       <Paragraph>
         <ul>
-          <li>
-            <Link href="label-vis">Visualization Labeling Tool</Link>
-          </li>
-          <li>
-            <Link href="label-event">Event Labeling Tool</Link>
-          </li>
-          <li>
-            <Link href="label-camera">Camera Shot Labeling Tool</Link>
-          </li>
-          <li>
-            <Link href="visualization">Result Gantt Charts</Link>
-          </li>
+          <li><RouterLink to="/label-vis">Visualization Labeling Tool</RouterLink></li>
+          <li><RouterLink to="/label-event">Event Labeling Tool</RouterLink></li>
+          <li><RouterLink to="/label-camera">Camera Shot Labeling Tool</RouterLink></li>
+          <li><RouterLink to="/visualization">Result Gantt Charts</RouterLink></li>
         </ul>
       </Paragraph>
 
