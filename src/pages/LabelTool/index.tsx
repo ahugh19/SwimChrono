@@ -23,9 +23,25 @@ function LabelTool(props: LabelToolProps) {
     event: "Event labelling",
     camera: "Camera-shot labelling",
   }
+  const what: Record<string, string> = {
+    vis: "embedded visualizations (what is shown, where, how it moves and animates)",
+    event: "race events (start, turns, finish …) as intervals or points",
+    camera: "camera shots and how they connect",
+  }
   return (
     <>
-      <PageHeader title={titles[labelType] ?? "Labelling"} />
+      <PageHeader
+        title={titles[labelType] ?? "Labelling"}
+        tour={{
+          storageKey: `swimchrono.tourSeen.label-${labelType}`,
+          steps: [
+            { title: '📺 Player & bbox', description: `This tool was used in the systematic review to label ${what[labelType] ?? "annotations"}. Switch "edit" on to draw a bounding box on the current frame (the player controls are disabled while editing).`, target: () => document.querySelector('[data-tour="label-player"]') as HTMLElement },
+            { title: '⏱ Transport', description: 'Step through the video by seconds or single frames, and move to the previous / next URL of the review corpus.', target: () => document.querySelector('[data-tour="label-transport"]') as HTMLElement },
+            { title: '🎬 Race segments', description: 'Register the race segment(s) of this URL: start / end moments and metadata, then select one in the table — annotations below belong to the selected segment.', target: () => document.querySelector('[data-tour="label-video"]') as HTMLElement },
+            { title: '📝 Annotations', description: 'Add, edit and review the annotations of the selected segment. Rows with issues are flagged. This public demo has no backend, so changes are kept only for the session.', target: () => document.querySelector('[data-tour="label-list"]') as HTMLElement, placement: 'left' },
+          ],
+        }}
+      />
       <VideoLabel labelType={labelType} />
     </>
   )

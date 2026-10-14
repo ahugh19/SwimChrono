@@ -14,7 +14,8 @@ import { GroupType, layoutGantt } from '../ganttLayout'
 import ResizeHandle, { readStoredSize, writeStoredSize } from '../../ResizeHandle'
 import PageHeader from '../../PageHeader'
 import { formatClock } from '../../../utils'
-import { uiBlue, uiHighlightStar } from '../../../utils/values'
+import { uiHighlightStar } from '../../../utils/values'
+import { useThemeColors } from '../../../utils/theme'
 
 const { Text } = Typography
 
@@ -33,6 +34,7 @@ function videoLabel(video: VideoType) {
 
 function TemporalInfo(props: TemporalInfoProps) {
   const store = props.store as Store
+  const palette = useThemeColors()
 
   const [groupType, setGroupType] = useState<GroupType>('placement')
   const [showAll, setShowAll] = useState(false)
@@ -189,7 +191,7 @@ function TemporalInfo(props: TemporalInfoProps) {
     }
     activeVis.forEach((v) => { if (v.key !== selectedVisKey) draw(v, 'rgba(255, 165, 0, 0.9)', 1.5) })
     if (hovered && hovered.vis.videoKey === currentVideoKey) draw(hovered.vis, 'rgba(255,255,255,0.9)', 1.5, undefined, [4, 3])
-    if (selectedVis) draw(selectedVis, uiBlue, 2.5, 'rgba(43, 171, 234, 0.15)')
+    if (selectedVis) draw(selectedVis, palette.accent, 2.5, palette.accentSoft)
   }, [activeVis, selectedVis, hovered, bboxVisible, currentVideoKey])
 
   function onKeyDown(e: React.KeyboardEvent<HTMLDivElement>) {
@@ -205,8 +207,21 @@ function TemporalInfo(props: TemporalInfoProps) {
 
   return (
     <div className={styles.page} onKeyDown={onKeyDown}>
-      <PageHeader title="Results" extra={<Tag bordered={false}>{videos.length} videos · {annotationCount} annotations</Tag>}>
-        <Space size={6}>
+      <PageHeader
+        title="Results"
+        extra={<Tag bordered={false}>{videos.length} videos · {annotationCount} annotations</Tag>}
+        tour={{
+          storageKey: "swimchrono.tourSeen.results",
+          steps: [
+            { title: '🎥 Pick a video', description: 'The 31 reviewed race videos. Use ‹ › to step through them; the list is searchable.', target: () => document.querySelector('[data-tour="video-select"]') as HTMLElement },
+            { title: '📺 Player', description: 'Plays the chosen video. Switch "bbox" on to outline the annotations that are visible at the current moment (orange), the selected one (blue) and the hovered one (dashed).', target: () => document.querySelector('[data-tour="player"]') as HTMLElement },
+            { title: '🗂 Annotations', description: '"At this moment" lists what is on screen right now — click a card to select it. "Table" has every annotation of the video with column filters; filtering dims the non-matching bars in the chart and hides their bboxes.', target: () => document.querySelector('[data-tour="side"]') as HTMLElement, placement: 'left' },
+            { title: '🎛 Chart controls', description: 'Group the bars by placement or movement, show all videos at once (optionally on one time scale), zoom, and read the colour legend.', target: () => document.querySelector('[data-tour="gantt-bar"]') as HTMLElement, placement: 'top' },
+            { title: '📊 Gantt chart', description: 'Each bar is an annotation. Click one to select it and seek the player, drag on the chart to scrub, ctrl/⌘ + wheel to zoom, Space to play. Drag the gutter above the chart to change its height.', target: () => document.querySelector('[data-tour="gantt"]') as HTMLElement, placement: 'top' },
+          ],
+        }}
+      >
+        <Space size={6} data-tour="video-select">
           <Text className={styles.label}>Video</Text>
           <Button size="small" icon={<LeftOutlined />} disabled={currentIndex <= 0} onClick={() => selectVideo(videos[currentIndex - 1].key)} title="Previous video" />
           <Select
@@ -224,7 +239,7 @@ function TemporalInfo(props: TemporalInfoProps) {
       </PageHeader>
 
       <div className={styles.upper}>
-        <div className={styles.playerArea}>
+        <div className={styles.playerArea} data-tour="player">
           <div className={styles.playerBox}>
             {url && (
               <ReactPlayer
@@ -257,7 +272,7 @@ function TemporalInfo(props: TemporalInfoProps) {
           </div>
         </div>
 
-        <div className={styles.side}>
+        <div className={styles.side} data-tour="side">
           <Tabs
             size="small"
             className={styles.sideTabs}
@@ -266,7 +281,7 @@ function TemporalInfo(props: TemporalInfoProps) {
             items={[
               {
                 key: 'now',
-                label: <Badge size="small" count={activeVis.length} offset={[10, 0]} color={uiBlue} showZero={false}>At this moment</Badge>,
+                label: <Badge size="small" count={activeVis.length} offset={[10, 0]} color={palette.accent} showZero={false}>At this moment</Badge>,
                 children: (
                   <div className={styles.nowList}>
                     {activeVis.length === 0
@@ -320,7 +335,7 @@ function TemporalInfo(props: TemporalInfoProps) {
 
       <ResizeHandle direction="row" value={ganttHeight} min={120} max={Math.max(200, window.innerHeight - 320)} invert onChange={setGanttHeight} onDoubleClick={() => setGanttHeight(260)} />
 
-      <div className={styles.ganttBar}>
+      <div className={styles.ganttBar} data-tour="gantt-bar">
         <Space size={6}>
           <Text className={styles.label}>Group by</Text>
           <Segmented size="small" value={groupType} onChange={(v) => setGroupType(v as GroupType)} options={[{ label: 'placement', value: 'placement' }, { label: 'movement', value: 'movement' }]} />
@@ -344,7 +359,7 @@ function TemporalInfo(props: TemporalInfoProps) {
         <span className={styles.spacer} />
         <Legend groupType={groupType} presentKeys={presentKeys} />
       </div>
-      <div className={styles.gantt} style={{ height: ganttHeight }} ref={ganttScrollRef} tabIndex={0}>
+      <div className={styles.gantt} style={{ height: ganttHeight }} ref={ganttScrollRef} tabIndex={0} data-tour="gantt">
         {loading
           ? <div className={styles.loading}><Spin /> <Text type="secondary">Loading annotations…</Text></div>
           : <GanttChart

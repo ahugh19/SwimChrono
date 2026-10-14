@@ -62,9 +62,10 @@ html, body {
   --row-bg-invisible: #1e242b;
   --row-bg-selected: #1c3b53;
   --row-bg-selected-invisible: #182b3b;
-  /* Brand teal-blue, matches antd colorPrimary. Stays the same in
-     both modes so the SwimChrOnO highlights keep their identity. */
+  /* Brand blue, matches antd colorPrimary of the mode (deeper in light
+     mode, where #2babea is too pale on white). */
   --my-theme-color: #2babea;
+  --my-theme-color-soft: rgba(43, 171, 234, 0.18);
   accent-color: var(--accent-color);
 }
 
@@ -80,10 +81,12 @@ html, body {
   --border-color: #00000012;
   --border-color-soft: #d5dde5;
   --accent-color: #1a8fc7;
+  --my-theme-color: #1a8fc7;
+  --my-theme-color-soft: rgba(26, 143, 199, 0.16);
   --row-bg-hover: #eef3f7;
   --row-bg-invisible: #f3f6f9;
-  --row-bg-selected: #d9ecf9;
-  --row-bg-selected-invisible: #ebf4fa;
+  --row-bg-selected: #cfe4f5;
+  --row-bg-selected-invisible: #e4f0f9;
 }
 
 .hidden > * {

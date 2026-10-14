@@ -163,7 +163,16 @@ function Home(props: IComponentPropsWithStore) {
     },
     {
       title: <div><AppstoreOutlined /> Other Pages</div>,
-      description: 'The labelling tools and the result gantt charts of the systematic review live under this menu. The About dialog lists the paper and the changelog.',
+      description: <div>
+        <p>This <b>Pages</b> menu is the entrance to the other tools of the project:</p>
+        <ul style={{ paddingLeft: 18, margin: "4px 0" }}>
+          <li><b>Vis labels</b> — label embedded visualizations in race videos (bbox, data, placement, animation).</li>
+          <li><b>Event labels</b> — label race events (start, turns, finish …).</li>
+          <li><b>Camera labels</b> — label camera shots.</li>
+          <li><b>Results</b> — gantt charts of all 1544 annotations of the systematic review, per video or all at once.</li>
+        </ul>
+        <p>Each page has its own short tour behind the <QuestionCircleOutlined /> button in its header. The About dialog lists the paper and the changelog.</p>
+      </div>,
       target: () => childHeaderRef.current?.pages,
       placement: "bottomRight"
     },

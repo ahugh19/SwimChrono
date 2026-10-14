@@ -6,14 +6,14 @@
   transition: filter 0.12s ease;
 
   &:hover {
-    filter: drop-shadow(0 0 2px rgba(43, 171, 234, 0.9));
+    filter: drop-shadow(0 0 2px var(--my-theme-color));
   }
 }
 
 .selected {
-  filter: drop-shadow(0 0 1.5px #2babea) drop-shadow(0 0 5px rgba(43, 171, 234, 0.8));
+  filter: drop-shadow(0 0 1.5px var(--my-theme-color)) drop-shadow(0 0 5px var(--my-theme-color));
 
   &:hover {
-    filter: drop-shadow(0 0 1.5px #2babea) drop-shadow(0 0 6px rgba(43, 171, 234, 0.95));
+    filter: drop-shadow(0 0 1.5px var(--my-theme-color)) drop-shadow(0 0 6px var(--my-theme-color));
   }
 }

@@ -258,7 +258,7 @@ function VideoLabel(props: VideoLabelProps) {
   return (
       <div className={styles.labelPage}>
         <div className={styles.videoPart}>
-          <div className={styles.playerBox}>
+          <div className={styles.playerBox} data-tour="label-player">
             <ReactPlayer
               className={styles.videoMajor}
               ref={videoMajorPlayerRef}
@@ -299,7 +299,7 @@ function VideoLabel(props: VideoLabelProps) {
               }
             </div>
           </Space>
-          <Space className={styles.playBtnGroup} size={"middle"}>
+          <Space className={styles.playBtnGroup} size={"middle"} data-tour="label-transport">
             <Button type="primary" shape='circle' size="small" icon={playFlag ? <PauseCircleFilled /> : <PlayCircleFilled />} onClick={updatePlayFlag}></Button>
             {/* <span title="current time">{formatTime(currentTime)}</span> */}
             <Tag style={{ width: "90px" }} title="current time">{currentTime ? currentTime.toFixed(4) : 0} s</Tag>

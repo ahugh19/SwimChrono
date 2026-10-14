@@ -1,5 +1,4 @@
 import { Line, Shape } from 'react-konva';
-import { uiBlue } from '../../../../../utils/values';
 import { useThemeColors } from '../../../../../utils/theme';
 
 interface PlayingLineProps {
@@ -18,7 +17,7 @@ function PlayingLine(props: PlayingLineProps) {
         key={`playingLine`}
         points={[playingLineX, playingLineY1, playingLineX, Math.max(playingLineY2, playingLineY1)]}
         listening={false}
-        stroke={uiBlue}
+        stroke={palette.accent}
         strokeWidth={1}
         lineCap='round'
         lineJoin='round'
@@ -33,8 +32,8 @@ function PlayingLine(props: PlayingLineProps) {
           // (!) Konva specific method, it is very important
           context.fillStrokeShape(shape);
         }}
-        fill={uiBlue}
-        stroke={uiBlue}
+        fill={palette.accent}
+        stroke={palette.accent}
         strokeWidth={2}
         listening={false}
       />

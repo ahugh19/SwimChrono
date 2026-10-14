@@ -6,7 +6,7 @@ import Konva from 'konva';
 import { KonvaEventObject } from 'konva/lib/Node';
 import styles from "./index.module.less"
 import { VisIntervalType, LayerType } from '../../../types';
-import { durationRectHeight, durationRectMarginY, durationRectLineStroke, MIN_INTERVAL_SECONDS, uiBlue } from '../../../utils/values'
+import { durationRectHeight, durationRectMarginY, durationRectLineStroke, MIN_INTERVAL_SECONDS } from '../../../utils/values'
 import { useThemeColors } from '../../../utils/theme'
 import TemporalInfoItem, { IntervalDraft } from './TemporalInfoItem';
 import { IntervalEdge } from './TemporalInfoItem/DurationRect';
@@ -223,7 +223,7 @@ function TemporalInfo(props: TemporalInfoProps) {
           />
           {tooltip && (
             <Label x={Math.min(tooltip.x, canvasWidth - 220)} y={tooltip.y} listening={false}>
-              <Tag fill={palette.legendOverlayBg} stroke={uiBlue} strokeWidth={1} cornerRadius={4} shadowBlur={6} shadowOpacity={0.25} />
+              <Tag fill={palette.legendOverlayBg} stroke={palette.accent} strokeWidth={1} cornerRadius={4} shadowBlur={6} shadowOpacity={0.25} />
               <Text text={tooltip.text} fontSize={11} padding={6} fill={palette.textBright} lineHeight={1.3} />
             </Label>
           )}

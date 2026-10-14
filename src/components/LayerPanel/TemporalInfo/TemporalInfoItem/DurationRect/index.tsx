@@ -1,7 +1,7 @@
 import { Group, Rect, Line, Text } from 'react-konva';
 import Konva from 'konva';
 import { KonvaEventObject } from 'konva/lib/Node';
-import { TRIGGER_COMP_START_END, rectBorderRadius, triggerEndBorderColor, triggerStartBorderColor, triggerEndDurationBorderColor, triggerStartBorderColorInvisible, triggerEndBorderColorInvisible, triggerEndDurationBorderColorInvisible, durationRectHandleWidth, uiBlue } from '../../../../../utils/values';
+import { TRIGGER_COMP_START_END, rectBorderRadius, triggerEndBorderColor, triggerStartBorderColor, triggerEndDurationBorderColor, triggerStartBorderColorInvisible, triggerEndBorderColorInvisible, triggerEndDurationBorderColorInvisible, durationRectHandleWidth } from '../../../../../utils/values';
 import { useThemeColors } from '../../../../../utils/theme';
 
 export type IntervalEdge = 'start' | 'end' | 'move'
@@ -48,7 +48,7 @@ function DurationRect(props: DurationRectProps) {
         height={h - 4}
         fill={color}
         cornerRadius={rectBorderRadius + 2}
-        stroke={edited ? uiBlue : undefined}
+        stroke={edited ? palette.accent : undefined}
         strokeWidth={edited ? 1 : 0}
         dash={edited ? [4, 3] : undefined}
         onMouseDown={(e) => onPointerDown('move', e)}
@@ -80,7 +80,7 @@ function DurationRect(props: DurationRectProps) {
         y={y}
         width={handleW}
         height={h}
-        fill={uiBlue}
+        fill={palette.accent}
         opacity={showHandles ? 0.9 : 0}
         cornerRadius={2}
         onMouseDown={(e) => onPointerDown('start', e)}
@@ -92,7 +92,7 @@ function DurationRect(props: DurationRectProps) {
         y={y}
         width={handleW}
         height={h}
-        fill={uiBlue}
+        fill={palette.accent}
         opacity={showHandles ? 0.9 : 0}
         cornerRadius={2}
         onMouseDown={(e) => onPointerDown('end', e)}

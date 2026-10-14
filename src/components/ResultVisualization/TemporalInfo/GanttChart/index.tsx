@@ -5,7 +5,6 @@ import { KonvaEventObject } from 'konva/lib/Node'
 import { VideoType, VisType } from '../../../../types'
 import { GANTT, GanttLayout, blockHeight, isMoving, relativeEnd, relativeStart } from '../../ganttLayout'
 import { useThemeColors } from '../../../../utils/theme'
-import { uiBlue } from '../../../../utils/values'
 import { formatClock } from '../../../../utils'
 import { pickTickStep } from '../../../LayerPanel/TimelineAxis'
 
@@ -39,6 +38,7 @@ interface VisRectProps {
   color: string
   state: 'normal' | 'hover' | 'selected' | 'dimmed'
   outline: string
+  accent: string
   onEnter: (vis: VisType, e: KonvaEventObject<MouseEvent>) => void
   onMove: (vis: VisType, e: KonvaEventObject<MouseEvent>) => void
   onLeave: (e: KonvaEventObject<MouseEvent>) => void
@@ -48,7 +48,7 @@ interface VisRectProps {
 // One annotation bar. Memoised so hovering one bar doesn't re-render the
 // other ~1500 bars of the "all videos" view.
 const VisRect = memo(function VisRect(props: VisRectProps) {
-  const { vis, x, y, w, h, color, state, outline, onEnter, onMove, onLeave, onClick } = props
+  const { vis, x, y, w, h, color, state, outline, accent, onEnter, onMove, onLeave, onClick } = props
   const moving = isMoving(vis)
   return (
     <Rect
@@ -60,7 +60,7 @@ const VisRect = memo(function VisRect(props: VisRectProps) {
       fill={color}
       opacity={state === 'dimmed' ? 0.12 : state === 'normal' ? 0.92 : 1}
       listening={state !== 'dimmed'}
-      stroke={state === 'selected' ? uiBlue : state === 'hover' ? outline : moving ? outline : undefined}
+      stroke={state === 'selected' ? accent : state === 'hover' ? outline : moving ? outline : undefined}
       strokeWidth={state === 'selected' ? 2 : state === 'hover' ? 1.5 : moving ? 1 : 0}
       dash={moving && state === 'normal' ? [3, 2] : undefined}
       cornerRadius={2}
@@ -173,7 +173,7 @@ function GanttChart(props: GanttChartProps) {
                 <Rect x={0} y={top} width={stageWidth} height={block.height} fill={isCurrent ? palette.layerRowSelectedInvisible : 'transparent'} cornerRadius={4} listening={false} />
               )}
               {showTitles && (
-                <Text x={GANTT.padding} y={top + 5} text={`${title}   ·   ${layout.itemCount} annotations`} fontSize={12} fontStyle={isCurrent ? 'bold' : 'normal'} fill={isCurrent ? uiBlue : palette.textBright} listening={false} />
+                <Text x={GANTT.padding} y={top + 5} text={`${title}   ·   ${layout.itemCount} annotations`} fontSize={12} fontStyle={isCurrent ? 'bold' : 'normal'} fill={isCurrent ? palette.accent : palette.textBright} listening={false} />
               )}
               {/* time axis */}
               <Line points={[chartX0, axisY, chartX0 + chartW, axisY]} stroke={palette.borderSoft} strokeWidth={1} listening={false} />
@@ -199,7 +199,7 @@ function GanttChart(props: GanttChartProps) {
                     const w = sx(relativeEnd(vis)) - x
                     const dimmed = filteredKeys !== null && !filteredKeys.has(vis.key)
                     const state = vis.key === selectedVisKey ? 'selected' : dimmed ? 'dimmed' : vis.key === hoveredVisKey ? 'hover' : 'normal'
-                    return <VisRect key={vis.key} vis={vis} x={x} y={y} w={w} h={GANTT.rowHeight} color={group.color} state={state} outline={palette.textBright} onEnter={handleEnter} onMove={handleMove} onLeave={handleLeave} onClick={handleClick} />
+                    return <VisRect key={vis.key} vis={vis} x={x} y={y} w={w} h={GANTT.rowHeight} color={group.color} state={state} outline={palette.textBright} accent={palette.accent} onEnter={handleEnter} onMove={handleMove} onLeave={handleLeave} onClick={handleClick} />
                   })
                 })
                 rowY += groupH + GANTT.groupGap
@@ -215,7 +215,7 @@ function GanttChart(props: GanttChartProps) {
               {/* playhead for the video in the player */}
               {isCurrent && currentTime >= video.startMoment && (
                 <Group listening={false}>
-                  <Line points={[sx(Math.min(max, currentTime - video.startMoment)), axisY - 6, sx(Math.min(max, currentTime - video.startMoment)), top + block.height - GANTT.padding]} stroke={uiBlue} strokeWidth={1.5} />
+                  <Line points={[sx(Math.min(max, currentTime - video.startMoment)), axisY - 6, sx(Math.min(max, currentTime - video.startMoment)), top + block.height - GANTT.padding]} stroke={palette.accent} strokeWidth={1.5} />
                 </Group>
               )}
             </Group>

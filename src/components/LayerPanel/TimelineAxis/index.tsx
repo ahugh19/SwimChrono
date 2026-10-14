@@ -2,7 +2,6 @@ import { useEffect, useRef } from 'react';
 import { Group, Line, Rect, Text, Label, Tag } from 'react-konva';
 import Konva from 'konva';
 import { useThemeColors } from '../../../utils/theme';
-import { uiBlue } from '../../../utils/values';
 import { formatClock } from '../../../utils';
 
 interface TimelineAxisProps {
@@ -128,9 +127,9 @@ function TimelineAxis(props: TimelineAxisProps) {
         </Group>
       )}
       {/* playhead marker + time badge */}
-      <Line points={[playheadX, axisY - 10, playheadX, axisY]} stroke={uiBlue} strokeWidth={2} listening={false} />
+      <Line points={[playheadX, axisY - 10, playheadX, axisY]} stroke={palette.accent} strokeWidth={2} listening={false} />
       <Label x={badgeX} y={0} listening={false}>
-        <Tag fill={uiBlue} cornerRadius={3} pointerDirection="none" />
+        <Tag fill={palette.accent} cornerRadius={3} pointerDirection="none" />
         <Text text={badgeText} fontSize={labelFont} padding={2} fill="#ffffff" />
       </Label>
     </Group>

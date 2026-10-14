@@ -120,6 +120,9 @@ export const themePalette = {
     layerRowSelected: "#1c3b53",
     layerRowSelectedInvisible: "#182b3b",
     rowHover: "#222a33",
+    // Accent used for playheads, handles and selection strokes.
+    accent: "#2babea",
+    accentSoft: "rgba(43, 171, 234, 0.18)",
   },
   light: {
     background: "#ffffff",
@@ -134,9 +137,12 @@ export const themePalette = {
     // Per-layer timeline bar.
     layerBarFill: "#a9b8c6",
     layerBarFillInvisible: "#dfe6ec",
-    layerRowSelected: "#d9ecf9",
-    layerRowSelectedInvisible: "#ebf4fa",
+    // Light mode needs a deeper blue: #2babea is too pale on white.
+    layerRowSelected: "#cfe4f5",
+    layerRowSelectedInvisible: "#e4f0f9",
     rowHover: "#eef3f7",
+    accent: "#1a8fc7",
+    accentSoft: "rgba(26, 143, 199, 0.16)",
   },
 } as const
 
@@ -194,6 +200,7 @@ export function ThemedAntdProvider({ children }: { children: ReactNode }) {
         colorBgElevated: themePalette.dark.backgroundElevated,
         colorBorder: themePalette.dark.borderSoft,
         colorBorderSecondary: themePalette.dark.borderSoft,
+        colorPrimary: "#2babea",
         colorLink: "#4fc0f0",
         colorLinkHover: "#9adcf8",
         colorLinkActive: "#2babea",
@@ -205,9 +212,11 @@ export function ThemedAntdProvider({ children }: { children: ReactNode }) {
         colorBorder: themePalette.light.borderSoft,
         colorBorderSecondary: themePalette.light.borderSoft,
         colorTextBase: themePalette.light.textBright,
+        colorPrimary: "#1a8fc7",
+        colorInfo: "#1a8fc7",
         colorLink: "#1a8fc7",
         colorLinkHover: "#0d6fa0",
-        colorLinkActive: "#2babea",
+        colorLinkActive: "#136f9c",
       }
   const tokenWithFontSize = { fontSize: 13, ...tokenForMode, ...modeTokens }
 
