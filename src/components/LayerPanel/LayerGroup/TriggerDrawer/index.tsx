@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { PlusOutlined, CloseOutlined } from '@ant-design/icons';
 import { Button, Col, DatePicker, Drawer, Form, Input, Row, Select, Space, Typography, InputNumber, Card } from 'antd';
 import { LayerType, TriggerCompType, TriggerFormProps } from '../../../../types';
-import { optionsTriggerType, optionsCompare, TRIGGER_COMP_START_DURATION, optionsSubjectNoDuration, optionsSubjectDuration, SUBJECT_DURATION, COMPARE_EQUAL, optionsCompareOnlyEqual, optionsEvent } from '../../../../utils/values';
-import { getNumberUnit } from '../../../../utils';
+import { optionsTriggerType, optionsCompare, TRIGGER_COMP_START_DURATION, optionsSubjectNoDuration, optionsSubjectDuration, SUBJECT_DURATION, SUBJECT_event, COMPARE_EQUAL, optionsCompareOnlyEqual, optionsEvent } from '../../../../utils/values';
+import { getNumberUnit, getNumberStep } from '../../../../utils';
 import AIChat from './AIChat';
 
 const { Text, Title, Paragraph } = Typography
@@ -206,30 +206,43 @@ function TriggerDrawer(props: TriggerDrawerProps) {
                     <Select
                       size="small"
                       placeholder="Please select compare"
-                      options={subjectStartValue === "event" ? optionsCompareOnlyEqual.map((t) => ({ label: t, value: t })) : optionsCompare.map((t) => ({ label: t, value: t }))}
+                      options={form.getFieldValue([triggerFormListName, field.name, 'subjectStart']) === SUBJECT_event ? optionsCompareOnlyEqual.map((t) => ({ label: t, value: t })) : optionsCompare.map((t) => ({ label: t, value: t }))}
                     />
                   </Form.Item>
 
                   <Form.Item
-                    name={[field.name, 'valueStart']}
-                    label="Value"
-                    rules={[{ required: true, message: 'Please select the value for start trigger.' }]}
+                    noStyle
+                    shouldUpdate={(prev, cur) =>
+                      prev?.[triggerFormListName]?.[field.name]?.subjectStart !== cur?.[triggerFormListName]?.[field.name]?.subjectStart}
                   >
-                    {
-                      subjectStartValue === "event" ?
-                        <Select
-                          size="small"
-                          placeholder="Please select event"
-                          options={optionsEvent.map((t) => ({ label: t, value: t }))}
-                        /> :
-                        <InputNumber
-                          size="small"
-                          min={-400}
-                          max={400}
-                          changeOnWheel={true}
-                          addonAfter={getNumberUnit(subjectStartValue)}
-                        />
-                    }
+                    {() => {
+                      const subject = form.getFieldValue([triggerFormListName, field.name, 'subjectStart'])
+                      return (
+                        <Form.Item
+                          name={[field.name, 'valueStart']}
+                          label="Value"
+                          rules={[{ required: true, message: 'Please select the value for start trigger.' }]}
+                        >
+                          {
+                            subject === SUBJECT_event ?
+                              <Select
+                                size="small"
+                                placeholder="Please select event"
+                                options={optionsEvent.map((t) => ({ label: t, value: t }))}
+                              /> :
+                              <InputNumber
+                                size="small"
+                                min={-400}
+                                max={400}
+                                step={getNumberStep(subject)}
+                                changeOnWheel={true}
+                                addonAfter={getNumberUnit(subject) || undefined}
+                                placeholder={subject ? `value in ${getNumberUnit(subject) || "units"}` : "select a subject first"}
+                              />
+                          }
+                        </Form.Item>
+                      )
+                    }}
                   </Form.Item>
 
                   <Form.Item>
@@ -264,25 +277,40 @@ function TriggerDrawer(props: TriggerDrawerProps) {
                   </Form.Item>
 
                   <Form.Item
-                    name={[field.name, 'valueEnd']}
-                    label="Value"
-                    rules={[{ required: true, message: 'Please select the value for end trigger.' }]}
+                    noStyle
+                    shouldUpdate={(prev, cur) =>
+                      prev?.[triggerFormListName]?.[field.name]?.subjectEnd !== cur?.[triggerFormListName]?.[field.name]?.subjectEnd ||
+                      prev?.[triggerFormListName]?.[field.name]?.triggerType !== cur?.[triggerFormListName]?.[field.name]?.triggerType}
                   >
-                    {
-                      subjectEndValue === "event" ?
-                        <Select
-                          size="small"
-                          placeholder="Please select event"
-                          options={optionsEvent.map((t) => ({ label: t, value: t }))}
-                        /> :
-                        <InputNumber
-                          size="small"
-                          min={isStartDuration[field.name] ? 0 : -400}
-                          max={isStartDuration[field.name] ? 50 : 400}
-                          changeOnWheel={true}
-                          addonAfter={getNumberUnit(subjectEndValue)}
-                        />
-                    }
+                    {() => {
+                      const subject = form.getFieldValue([triggerFormListName, field.name, 'subjectEnd'])
+                      const isDuration = form.getFieldValue([triggerFormListName, field.name, 'triggerType']) === TRIGGER_COMP_START_DURATION
+                      return (
+                        <Form.Item
+                          name={[field.name, 'valueEnd']}
+                          label={isDuration ? "Duration" : "Value"}
+                          rules={[{ required: true, message: 'Please select the value for end trigger.' }]}
+                        >
+                          {
+                            subject === SUBJECT_event ?
+                              <Select
+                                size="small"
+                                placeholder="Please select event"
+                                options={optionsEvent.map((t) => ({ label: t, value: t }))}
+                              /> :
+                              <InputNumber
+                                size="small"
+                                min={isDuration ? 0 : -400}
+                                max={isDuration ? 50 : 400}
+                                step={getNumberStep(isDuration ? SUBJECT_DURATION : subject)}
+                                changeOnWheel={true}
+                                addonAfter={getNumberUnit(isDuration ? SUBJECT_DURATION : subject) || undefined}
+                                placeholder={isDuration ? "seconds" : subject ? `value in ${getNumberUnit(subject) || "units"}` : "select a subject first"}
+                              />
+                          }
+                        </Form.Item>
+                      )
+                    }}
                   </Form.Item>
                 </Card>
               ))}
