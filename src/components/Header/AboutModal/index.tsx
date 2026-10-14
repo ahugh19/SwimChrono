@@ -24,11 +24,18 @@ function AboutModal() {
   return (
     <>
       <Paragraph>
-        <Text strong>SwimChrono</Text> <Text type="secondary">v{APP_VERSION}</Text>
+        <Text strong>SwimChrono</Text> <Text type="secondary">v{APP_VERSION}</Text> — an authoring tool for
+        embedded visualizations in swimming-race videos, from the paper{" "}
+        <Link href="https://doi.org/10.1109/TVCG.2026.3689361" target="_blank" rel="noreferrer">
+          Diving Deep into Time: Temporal Arrangements for Embedded Visualization in Swimming Videos
+        </Link>{" "}
+        (IEEE TVCG 2026). The code used for the paper is tagged <Text code>v1.0.0</Text>; later versions
+        improve the tool beyond the paper (see the{" "}
+        <Link href="https://github.com/ahugh19/SwimChrono#changelog" target="_blank" rel="noreferrer">changelog</Link>).
       </Paragraph>
 
       <Paragraph>
-        We provide following demo links of labeling tools used in our systematic review.
+        Demo links of the labeling tools used in our systematic review:
       </Paragraph>
 
       <Paragraph>

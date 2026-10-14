@@ -1,6 +1,6 @@
 import { useState, useRef, useImperativeHandle, forwardRef } from 'react';
-import { Button, Space, Select, Modal, Typography } from 'antd';
-import { BulbFilled, BulbOutlined } from '@ant-design/icons';
+import { Button, Select, Modal, Tooltip } from 'antd';
+import { BulbFilled, BulbOutlined, DownloadOutlined, GithubOutlined, InfoCircleOutlined, UploadOutlined } from '@ant-design/icons';
 import { inject, observer } from "mobx-react"
 import { IComponentPropsWithStore } from "../../store"
 import styles from "./index.module.less"
@@ -9,8 +9,6 @@ import SwimChronoLogo from '/SwimChronoLogo.svg'
 import AboutModal from './AboutModal'
 import { useTheme } from '../../utils/theme'
 import { APP_VERSION } from '../../utils/version'
-
-const { Title, Paragraph, Text, Link } = Typography;
 
 interface HeaderProps extends IComponentPropsWithStore {
   fileInputRef: React.RefObject<HTMLInputElement | null>
@@ -72,87 +70,81 @@ const Header = forwardRef((props: HeaderProps, ref) => {
   return (
     <>
       <div className={styles.headerContainer}>
-        <Space align="center">
-          <div className={styles.logo}>
-            <img className={styles.logoSvg} src={SwimChronoLogo}></img>
-          </div>
-          <div className={styles.title} style={{ display: "inline" }}>
-            SwimChr
-            <span className={styles.highlight}>o</span>
-            n
-            <span className={styles.highlight}>o</span>
-          </div>
-          <a
-            className={styles.version}
-            href="https://github.com/ahugh19/SwimChrono#changelog"
-            target="_blank"
-            rel="noreferrer"
-            title={`SwimChrono version ${APP_VERSION} — open the changelog`}
-          >v{APP_VERSION}</a>
-          <div className={styles.btnGroupLeft} ref={refVideoSelection}>
-            <div className={styles.text}>Video </div>
-            <Select
-              showSearch
-              allowClear
-              className={styles.select}
-              placeholder="choose a video"
-              defaultValue={videoMetaDataList[0].name}
-              optionFilterProp="children"
-              filterOption={(input, option) => (option?.label ?? '').toLowerCase().includes(input.toLowerCase())}
-              filterSort={(optionA, optionB) =>
-                (optionA?.label ?? '').toLowerCase().localeCompare((optionB?.label ?? '').toLowerCase())
-              }
-              options={videoMetaDataList.map((vmd) => {
-                return {
-                  value: vmd.name,
-                  label: vmd.name,
-                  // disabled: vmd.name === "test" ? false : true
-                }
-              })}
-              onChange={handleVideoChange} />
-          </div>
-          <div className={styles.btnGroupLeft} ref={refImportExport}>
-            <div className={styles.text}>Config </div>
-            <Button onClick={handleImportClick}>Import</Button>
-            <Button onClick={handleExportClick}>Export</Button>
-          </div>
-          <div className={styles.btnGroupLeft} ref={refExampleSelection}>
-            <div className={styles.text}>Example </div>
-            <Select
-              placeholder="choose an example"
-              onChange={handleExampleClick}
-              className={styles.select}
-              defaultValue={"none"}
-              // options={exampleList.map((e) => {
-              //   return { value: e.exampleName, label: e.exampleName, disabled: e.exampleName !== "100m comic style" }
-              // }).concat({ value: "none", label: "none", disabled: false })}
-              options={exampleList.map((e) => {
-                return { value: e.exampleName, label: e.exampleName, disabled: false }
-              }).concat({ value: "none", label: "none", disabled: false })}
-              />
-          </div>
-          <div className={styles.btnGroupRight}>
+        <a className={styles.brand} href="." title="SwimChrono">
+          <img className={styles.logoSvg} src={SwimChronoLogo} alt="" />
+          <span className={styles.title}>
+            SwimChr<span className={styles.highlight}>o</span>n<span className={styles.highlight}>o</span>
+          </span>
+        </a>
+        <a
+          className={styles.version}
+          href="https://github.com/ahugh19/SwimChrono#changelog"
+          target="_blank"
+          rel="noreferrer"
+          title={`SwimChrono version ${APP_VERSION} — open the changelog`}
+        >v{APP_VERSION}</a>
+
+        <span className={styles.divider} />
+
+        <div className={styles.group} ref={refVideoSelection}>
+          <span className={styles.label}>Video</span>
+          <Select
+            showSearch
+            className={styles.select}
+            placeholder="choose a video"
+            defaultValue={videoMetaDataList[0].name}
+            optionFilterProp="label"
+            filterOption={(input, option) => (option?.label ?? '').toLowerCase().includes(input.toLowerCase())}
+            filterSort={(optionA, optionB) =>
+              (optionA?.label ?? '').toLowerCase().localeCompare((optionB?.label ?? '').toLowerCase())
+            }
+            options={videoMetaDataList.map((vmd) => ({ value: vmd.name, label: vmd.name }))}
+            onChange={handleVideoChange} />
+        </div>
+
+        <div className={styles.group} ref={refExampleSelection}>
+          <span className={styles.label}>Example</span>
+          <Select
+            className={styles.select}
+            placeholder="choose an example"
+            defaultValue={"none"}
+            onChange={handleExampleClick}
+            options={exampleList
+              .map((e) => ({ value: e.exampleName, label: e.exampleName }))
+              .concat({ value: "none", label: "none" })}
+          />
+        </div>
+
+        <div className={styles.group} ref={refImportExport}>
+          <span className={styles.label}>Config</span>
+          <Button icon={<UploadOutlined />} onClick={handleImportClick}>Import</Button>
+          <Button icon={<DownloadOutlined />} onClick={handleExportClick}>Export</Button>
+        </div>
+
+        <div className={styles.right}>
+          <Tooltip title={mode === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}>
             <Button
               type='text'
+              aria-label={mode === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}
               icon={mode === 'dark' ? <BulbOutlined /> : <BulbFilled />}
-              title={mode === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}
               onClick={toggle}
             />
-            {/* <Button type='text' disabled>Supplementary Materials</Button> */}
-            <Button type='text' onClick={showModal}>Supplementary</Button>
-            {/* <div className={styles.logoContainer}>
-              <img className={styles.logo} src="img/logo/cnrs.png" />
-              <img className={styles.logo} src="img/logo/inria.png" />
-              <img className={styles.logo} src="img/logo/ups.png" />
-              <img className={styles.logo} src="img/logo/zju.png" />
-              <img className={styles.logo} src="img/logo/xjlu.png" />
-              <img className={styles.logo} src="img/logo/ecly.png" />
-            </div> */}
-          </div>
-        </Space>
+          </Tooltip>
+          <Tooltip title="Source code on GitHub">
+            <Button
+              type='text'
+              aria-label="Source code on GitHub"
+              icon={<GithubOutlined />}
+              href="https://github.com/ahugh19/SwimChrono"
+              target="_blank"
+              rel="noreferrer"
+            />
+          </Tooltip>
+          <Button type='text' icon={<InfoCircleOutlined />} onClick={showModal}>About</Button>
+        </div>
       </div>
 
-      <Modal title="Supplementary" open={isModalOpen} onOk={handleModalOk} onCancel={handleModalCancel}>
+      <Modal title="About SwimChrono" open={isModalOpen} onOk={handleModalOk} onCancel={handleModalCancel} footer={null}>
         <AboutModal />
       </Modal>
     </>
