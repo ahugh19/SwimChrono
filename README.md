@@ -52,6 +52,16 @@ yarn run build
 ```
 The built files are in `./dist`.
 
+### Hosting the large assets elsewhere (optional)
+
+The race videos (`public/video/`, ~135 MB) and frame CSVs (`public/csv/`, ~48 MB)
+are served from `public/` by default. To serve them from a CDN or object
+storage instead, set `VITE_ASSET_BASE_URL` in `.env` (see `.env.example`);
+every `video/…`, `csv/…`, `configuration/…` and `labelTool/…` path is then
+resolved against that base. New mp4s should be remuxed with
+`-movflags +faststart` so playback can start before the whole file is
+downloaded (see [Adding a new video](./docs/adding-a-video.md)).
+
 ## Configure the AI Assistant (optional)
 
 The TriggerDrawer's "AI Interpret" button calls a chat-completion API to
@@ -116,6 +126,7 @@ src/
 ├── components/
 │   ├── Header/                 # video selection, import/export, examples
 │   ├── VideoPanel/VisHolder/   # SVG layers driven by frame data:
+│   │   ├── visRegistry.ts      # visName -> component map (add new vis here)
 │   │   ├── VisAlongLane/       # per-lane visualizations
 │   │   └── VisGlobal/          # screen-corner / global visualizations
 │   ├── LayerPanel/             # Konva timeline, layer list, TriggerDrawer + AIChat
@@ -126,6 +137,9 @@ src/
 ├── tool/            # CanvasSelect (rect / polygon / point / line / circle annotator)
 ├── types/           # shared types + zod schema for imported configurations
 ├── utils/           # values, prompts, flag SVGs, helpers
+│   ├── assets.ts        # VITE_ASSET_BASE_URL resolution
+│   ├── frameData.ts     # CSV download with progress + parsing
+│   └── feedback.ts      # theme-aware antd message wrapper
 └── test/            # vitest setup + shared fixtures
 ```
 
@@ -139,6 +153,39 @@ exposes editors based on the element's `type` (`text` / `shape` / `icon` /
 `fontFillColor` / `shapeFillColor` / `shapeStrokeColor` / `shapeStrokeWidth`
 / `iconSize` to its rendered SVG. Regression tests in
 `src/components/.../*.test.tsx` pin this contract.
+
+## Changelog
+
+### 1.2.0
+
+Loading & network
+* mp4s are remuxed with `faststart` so the browser starts playing before the whole file is downloaded.
+* Frame CSVs are downloaded with a progress overlay on the video panel; switching video aborts the previous download.
+* The frame table is built in a single pass and kept out of MobX's deep proxy, which makes per-frame rendering cheaper.
+* `VITE_ASSET_BASE_URL` lets the videos / CSVs / configurations be served from a CDN instead of `public/`.
+* Route-level code splitting (label tools and result charts load on demand), vendor chunks for react / antd / konva, the `openai` SDK is loaded only when the AI assistant is used, and `console.log` is stripped from production bundles.
+
+Architecture
+* `VisHolder/visRegistry.ts` maps `visName` to its component; the two 500-line switch statements are gone.
+* Store: one generic `updateEditingElement(patch)` behind the per-property setters; trigger intervals are recomputed whenever a different race is loaded.
+* Exported configurations are wrapped in a versioned envelope (`format`, `appVersion`, `video`, `layers`) and named `swimchrono-<video>-v<version>.json`; the legacy bare array (used by the shipped examples) still imports, and a mismatch between the exported and the loaded video is reported.
+
+UI
+* Header fits viewports down to ~1100 px; the video search is case-insensitive; the version badge next to the logo links to this changelog.
+* antd messages follow the dark / light theme; the permanent "loading may take a while" notification is gone.
+* The label tools no longer leave a `beforeunload` prompt behind when returning to the authoring page.
+
+Tests
+* New unit tests for trigger interval computation, CSV parsing, asset URL resolution and configuration import (57 tests).
+
+### 1.1.0
+
+* App version shown in the header and the Supplementary modal.
+* Documentation: step-by-step instructions to replicate Figures 4–6 of the paper.
+
+### 1.0.0
+
+* Initial public release: authoring interface, paper examples (Olympic Style, Pac-man, Acceleration), speed-climbing case, GitHub Pages deployment.
 
 ## License
 

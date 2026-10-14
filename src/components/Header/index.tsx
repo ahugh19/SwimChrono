@@ -82,7 +82,13 @@ const Header = forwardRef((props: HeaderProps, ref) => {
             n
             <span className={styles.highlight}>o</span>
           </div>
-          <div className={styles.version} title={`SwimChrono version ${APP_VERSION}`}>v{APP_VERSION}</div>
+          <a
+            className={styles.version}
+            href="https://github.com/ahugh19/SwimChrono#changelog"
+            target="_blank"
+            rel="noreferrer"
+            title={`SwimChrono version ${APP_VERSION} — open the changelog`}
+          >v{APP_VERSION}</a>
           <div className={styles.btnGroupLeft} ref={refVideoSelection}>
             <div className={styles.text}>Video </div>
             <Select
