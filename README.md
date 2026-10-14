@@ -168,6 +168,21 @@ exposes editors based on the element's `type` (`text` / `shape` / `icon` /
 
 ## Changelog
 
+### 1.3.0
+
+Timeline
+* Ruler with time ticks, a playhead badge and a race-start marker; drag on the ruler or the rows to seek; ctrl/⌘ + wheel zooms around the cursor, shift + wheel pans.
+* Interval bars can be reshaped by dragging their edges or moved by dragging the bar; hand-edited layers show a dashed outline and a ↺ button restores the trigger result. Edits are kept in exported configurations and recomputed from the triggers when a different video is loaded.
+* Keyboard: space plays/pauses, ←/→ step one frame (shift: 1 s), Home jumps to the race start.
+
+Authoring
+* Hovering a visualization on the video highlights it; clicking it selects its layer.
+* Trigger panel: the value input shows the unit of the selected subject (m, s, m/s, m/s²) per trigger card.
+
+Appearance
+* Blue-tinted dark and light palettes with consistent contrast; layer-row icons stay readable on selected rows; a global font stack so text outside antd widgets no longer falls back to a serif.
+* Header regrouped with labelled controls, GitHub link and an About dialog that names the paper version.
+
 ### 1.2.0
 
 Loading & network
