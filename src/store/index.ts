@@ -2,12 +2,13 @@ import { makeAutoObservable, runInAction, action, observable } from "mobx";
 import { PropsWithChildren } from "react";
 import { initVideoData, initVisData, initPos, initUrlList, initCameraShotList, initEventList, initVisTriggerData, initVideoMetaData, generateUUID, readFile, downloadJson, calIntervalByTrigger, initGlobalSetting } from "../utils";
 import { VisBboxType, UrlType, VideoType, VisType, dataType, VisTriggerType, EventType, CameraShotType, VideoMetaDataType, VideoFrameDataType, SwimmerVideoDataType, SwimmerVideoFrameType, LayerType, EmbeddedVisType, VideoObjType, VisIntervalType, EditableElementType, TriggerFormProps, TriggerCompType, GlobalSettingType } from "../types";
-import { validateConfiguration } from "../types/validation";
 import { toJS } from 'mobx';
 import { message } from "antd";
 import _, { min } from "lodash";
 import { backendApiUrl } from "../utils/aiConfig";
 import { assetUrl } from "../utils/assets";
+import { APP_VERSION } from "../utils/version";
+import { normalizeConfiguration, CONFIG_FORMAT_VERSION } from "../types/validation";
 
 export class Store {
   constructor() {
@@ -83,65 +84,27 @@ export class Store {
     this.editingElementId = elementId
   }
 
-  updateCurrentLayerVisShapeFillColor = (hex: string) => {
+  // Apply a partial style update to the element currently being edited
+  // (identified by editingElementId) in the selected layer. The element is
+  // mutated in place so controllers holding a reference see the new values.
+  updateEditingElement = (patch: Partial<EditableElementType>) => {
     if (this.selectedLayerIndex === null) return;
     const selectedLayer = this.layerList[this.selectedLayerIndex];
-    if (selectedLayer.embeddedVis === null) return;
-    selectedLayer.embeddedVis.editableElementList.forEach((e) => {
-      if (e.id === this.editingElementId) {
-        e.shapeFillColor = hex
-        return
-      }
-    })
+    if (!selectedLayer || selectedLayer.embeddedVis === null) return;
+    const target = selectedLayer.embeddedVis.editableElementList.find((e) => e.id === this.editingElementId)
+    if (!target) return;
+    Object.assign(target, patch)
     selectedLayer.embeddedVis.editableElementList = [...selectedLayer.embeddedVis.editableElementList]
     this.layerList = [...this.layerList]
-    this.log()
   }
 
-  updateCurrentLayerVisShapeStrokeColor = (hex: string) => {
-    if (this.selectedLayerIndex === null) return;
-    const selectedLayer = this.layerList[this.selectedLayerIndex];
-    if (selectedLayer.embeddedVis === null) return;
-    selectedLayer.embeddedVis.editableElementList.forEach((e) => {
-      if (e.id === this.editingElementId) {
-        e.shapeStrokeColor = hex
-        return
-      }
-    })
-    selectedLayer.embeddedVis.editableElementList = [...selectedLayer.embeddedVis.editableElementList]
-    this.layerList = [...this.layerList]
-    this.log()
-  }
+  updateCurrentLayerVisShapeFillColor = (hex: string) => this.updateEditingElement({ shapeFillColor: hex })
 
-  updateCurrentLayerVisShapeStrokeWidth = (width: number) => {
-    if (this.selectedLayerIndex === null) return;
-    const selectedLayer = this.layerList[this.selectedLayerIndex];
-    if (selectedLayer.embeddedVis === null) return;
-    selectedLayer.embeddedVis.editableElementList.forEach((e) => {
-      if (e.id === this.editingElementId) {
-        e.shapeStrokeWidth = width
-        return
-      }
-    })
-    selectedLayer.embeddedVis.editableElementList = [...selectedLayer.embeddedVis.editableElementList]
-    this.layerList = [...this.layerList]
-    this.log()
-  }
+  updateCurrentLayerVisShapeStrokeColor = (hex: string) => this.updateEditingElement({ shapeStrokeColor: hex })
 
-    updateCurrentLayerVisShapeVisibility = (visible: boolean) => {
-    if (this.selectedLayerIndex === null) return;
-    const selectedLayer = this.layerList[this.selectedLayerIndex];
-    if (selectedLayer.embeddedVis === null) return;
-    selectedLayer.embeddedVis.editableElementList.forEach((e) => {
-      if (e.id === this.editingElementId) {
-        e.visible = visible
-        return
-      }
-    })
-    selectedLayer.embeddedVis.editableElementList = [...selectedLayer.embeddedVis.editableElementList]
-    this.layerList = [...this.layerList]
-    this.log()
-  }
+  updateCurrentLayerVisShapeStrokeWidth = (width: number) => this.updateEditingElement({ shapeStrokeWidth: width })
+
+  updateCurrentLayerVisShapeVisibility = (visible: boolean) => this.updateEditingElement({ visible })
 
 
   updateCurrentLayerLanes = (values: number[]) => {
@@ -154,35 +117,9 @@ export class Store {
     this.log()
   }
 
-  updateCurrentLayerVisFontFillColor = (hex: string) => {
-    if (this.selectedLayerIndex === null) return;
-    const selectedLayer = this.layerList[this.selectedLayerIndex];
-    if (selectedLayer.embeddedVis === null) return;
-    selectedLayer.embeddedVis.editableElementList.forEach((e) => {
-      if (e.id === this.editingElementId) {
-        e.fontFillColor = hex
-        return
-      }
-    })
-    selectedLayer.embeddedVis.editableElementList = [...selectedLayer.embeddedVis.editableElementList]
-    this.layerList = [...this.layerList]
-    this.log()
-  }
+  updateCurrentLayerVisFontFillColor = (hex: string) => this.updateEditingElement({ fontFillColor: hex })
 
-  updateCurrentLayerVisFontSize = (size: number) => {
-    if (this.selectedLayerIndex === null) return;
-    const selectedLayer = this.layerList[this.selectedLayerIndex];
-    if (selectedLayer.embeddedVis === null) return;
-    selectedLayer.embeddedVis.editableElementList.forEach((e) => {
-      if (e.id === this.editingElementId) {
-        e.fontSize = size
-        return
-      }
-    })
-    selectedLayer.embeddedVis.editableElementList = [...selectedLayer.embeddedVis.editableElementList]
-    this.layerList = [...this.layerList]
-    this.log()
-  }
+  updateCurrentLayerVisFontSize = (size: number) => this.updateEditingElement({ fontSize: size })
 
   updateCurrentLayerVisFontTextContent = (content: string) => {
     if (this.selectedLayerIndex === null) return;
@@ -192,80 +129,15 @@ export class Store {
     this.layerList = [...this.layerList]
   }
 
-    updateCurrentLayerVisFontVisibility = (visible: boolean) => {
-    if (this.selectedLayerIndex === null) return;
-    const selectedLayer = this.layerList[this.selectedLayerIndex];
-    if (selectedLayer.embeddedVis === null) return;
-    selectedLayer.embeddedVis.editableElementList.forEach((e) => {
-      if (e.id === this.editingElementId) {
-        e.visible = visible
-        return
-      }
-    })
-    selectedLayer.embeddedVis.editableElementList = [...selectedLayer.embeddedVis.editableElementList]
-    this.layerList = [...this.layerList]
-    this.log()
-  }
+  updateCurrentLayerVisFontVisibility = (visible: boolean) => this.updateEditingElement({ visible })
 
-  updateCurrentLayerVisFontX = (v: number) => {
-    if (this.selectedLayerIndex === null) return;
-    const selectedLayer = this.layerList[this.selectedLayerIndex];
-    if (selectedLayer.embeddedVis === null) return;
-    selectedLayer.embeddedVis.editableElementList.forEach((e) => {
-      if (e.id === this.editingElementId) {
-        e.x = v
-        return
-      }
-    })
-    selectedLayer.embeddedVis.editableElementList = [...selectedLayer.embeddedVis.editableElementList]
-    this.layerList = [...this.layerList]
-    this.log()
-  }
+  updateCurrentLayerVisFontX = (v: number) => this.updateEditingElement({ x: v })
 
-  updateCurrentLayerVisFontY = (v: number) => {
-    if (this.selectedLayerIndex === null) return;
-    const selectedLayer = this.layerList[this.selectedLayerIndex];
-    if (selectedLayer.embeddedVis === null) return;
-    selectedLayer.embeddedVis.editableElementList.forEach((e) => {
-      if (e.id === this.editingElementId) {
-        e.y = v
-        return
-      }
-    })
-    selectedLayer.embeddedVis.editableElementList = [...selectedLayer.embeddedVis.editableElementList]
-    this.layerList = [...this.layerList]
-    this.log()
-  }
+  updateCurrentLayerVisFontY = (v: number) => this.updateEditingElement({ y: v })
 
-  updateCurrentLayerVisIconSize = (size: number) => {
-    if (this.selectedLayerIndex === null) return;
-    const selectedLayer = this.layerList[this.selectedLayerIndex];
-    if (selectedLayer.embeddedVis === null) return;
-    selectedLayer.embeddedVis.editableElementList.forEach((e) => {
-      if (e.id === this.editingElementId) {
-        e.iconSize = size
-        return
-      }
-    })
-    selectedLayer.embeddedVis.editableElementList = [...selectedLayer.embeddedVis.editableElementList]
-    this.layerList = [...this.layerList]
-    this.log()
-  }
+  updateCurrentLayerVisIconSize = (size: number) => this.updateEditingElement({ iconSize: size })
 
-  updateCurrentLayerVisIconVisibility = (visible: boolean) => {
-    if (this.selectedLayerIndex === null) return;
-    const selectedLayer = this.layerList[this.selectedLayerIndex];
-    if (selectedLayer.embeddedVis === null) return;
-    selectedLayer.embeddedVis.editableElementList.forEach((e) => {
-      if (e.id === this.editingElementId) {
-        e.visible = visible
-        return
-      }
-    })
-    selectedLayer.embeddedVis.editableElementList = [...selectedLayer.embeddedVis.editableElementList]
-    this.layerList = [...this.layerList]
-    this.log()
-  }
+  updateCurrentLayerVisIconVisibility = (visible: boolean) => this.updateEditingElement({ visible })
 
   updateCurrentLayerVisIntervals = (visIntervals: VisIntervalType[] | null, triggerCompList: TriggerCompType[] | null) => {
     if (this.selectedLayerIndex === null) return;
@@ -444,14 +316,23 @@ export class Store {
   importConfig = async (e: any) => {
     // console.log(e);
     const text = await readFile(e.target.files[0])
-    const newLayerList = JSON.parse(text as string)
-
-    if (validateConfiguration(newLayerList)) {
-      message.success("JSON file is valid.");
-    } else {
+    let parsedJson: unknown
+    try {
+      parsedJson = JSON.parse(text as string)
+    } catch {
+      message.error("The file is not valid JSON.")
+      return
+    }
+    const normalized = normalizeConfiguration(parsedJson)
+    if (!normalized) {
       message.error("JSON is invalid!");
       return
     }
+    message.success("JSON file is valid.");
+    if (normalized.video && this.currentVideoMetaData && normalized.video !== this.currentVideoMetaData.name) {
+      message.warning(`This configuration was exported for "${normalized.video}", but "${this.currentVideoMetaData.name}" is loaded.`)
+    }
+    const newLayerList = normalized.layers
 
     const _this = this
     runInAction(() => {
@@ -474,8 +355,8 @@ export class Store {
   };
 
   exportConfig = () => {
-    // console.log(JSON.stringify(this.layerList))
-    downloadJson('SwimFlow2-layers.json', JSON.stringify(this.layerList.map((l) => {
+    const videoName = this.currentVideoMetaData?.name ?? "unknown-video"
+    const layers = this.layerList.map((l) => {
       return {
         uuid: l.uuid,
         name: l.name,
@@ -485,7 +366,16 @@ export class Store {
         embeddedVis: l.embeddedVis,
         isSelected: false,
       }
-    })))
+    })
+    // Versioned envelope; `importConfig` still accepts the legacy bare array.
+    const envelope = {
+      format: CONFIG_FORMAT_VERSION,
+      appVersion: APP_VERSION,
+      video: videoName,
+      exportedAt: new Date().toISOString(),
+      layers,
+    }
+    downloadJson(`swimchrono-${videoName}-v${APP_VERSION}.json`, JSON.stringify(envelope, null, 2))
   }
 
   setLayerList = (newLayerList: LayerType[]) => {
@@ -697,6 +587,24 @@ export class Store {
       (newSwimmerVideo[d.frameId] as SwimmerVideoFrameType)[d.swimmerId as number] = d
     }
     this.currentSwimmerVideo = newSwimmerVideo
+    this.recalculateIntervals()
+  }
+
+  // Trigger intervals depend on the frame data; recompute them whenever a
+  // different race is loaded so layers keep matching the video on screen.
+  recalculateIntervals = () => {
+    if (!this.currentVideoMetaData || !this.currentSwimmerVideo) return
+    let changed = false
+    this.layerList.forEach((layer) => {
+      if (!layer.triggerCompList || layer.triggerCompList.length === 0) return
+      layer.intervalList = calIntervalByTrigger(
+        this.currentVideoMetaData as VideoMetaDataType,
+        this.currentSwimmerVideo as SwimmerVideoDataType,
+        { triggerCompList: layer.triggerCompList },
+      )
+      changed = true
+    })
+    if (changed) this.layerList = [...this.layerList]
   }
 
   updateVideo = (video: VideoType) => {
