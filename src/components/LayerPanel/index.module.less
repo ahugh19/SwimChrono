@@ -1,7 +1,22 @@
 .swimflowTimelineContainer {
+  position: relative;
   overflow: hidden;
   transition: 0.5s ease;
   outline: none;
+
+  // Drag gutter between the layer list and the gantt chart.
+  .columnGutter {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: calc(var(--layer-part-width, 250px) - 3px);
+    z-index: 6;
+    display: flex;
+
+    > * {
+      height: 100%;
+    }
+  }
 
   &:focus-visible {
     box-shadow: inset 0 0 0 1px var(--my-theme-color);
@@ -13,7 +28,7 @@
     .topLeftPart {
       border-bottom: 1px solid var(--border-color-soft);
       .ioBtnContainer {
-        width: 250px;
+        width: var(--layer-part-width, 250px);
       }
     }
 
@@ -34,12 +49,12 @@
 
     .layerWrapper {
       min-height: calc(var(--height-layer-panel) - var(--padding) - var(--padding) - 60px);
-      width: 250px;
-      min-width: 250px;
+      width: var(--layer-part-width, 250px);
+      min-width: var(--layer-part-width, 250px);
       overflow: hidden;
       .layerContainer {
         height: calc(var(--height-layer-panel) - var(--padding) - var(--padding) - 60px);
-        min-width: 250px;
+        min-width: var(--layer-part-width, 250px);
         z-index: 10;
         background-color: var(--background-color);
         display: block;

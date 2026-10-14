@@ -1,7 +1,7 @@
 .layerItemContainer {
   display: flex;
   align-items: center;
-  width: 248px;
+  width: calc(var(--layer-part-width, 250px) - 2px);
   justify-content: flex-start;
   height: 24px;
   border-bottom: 1px solid var(--border-color-soft);
@@ -37,7 +37,8 @@
 
   .layerName {
     margin: 0 4px;
-    width: 118px;
+    flex: 1;
+    min-width: 40px;
     border: none;
     background: transparent;
   }

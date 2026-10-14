@@ -186,6 +186,7 @@ Headers, tours and polish
 * Every page header ends with the same button group: Pages menu, GitHub, About (with page icons on its links) and the help tour. The tours of the label tools and the result charts open only from that button; the authoring tour gained a "Resize the panels" step and its help button moved into the header.
 * Timeline ruler: tick labels yield to the race-start label and the playhead badge; interval tooltips flip to stay inside the visible chart.
 * Controller panel: tighter spacing, "Global settings" styled like the other sections, and the video file name shown under the player instead of above it.
+* Layer panel: the divider between the layer list and the timeline can be dragged to change the list's width (double-click to reset); the size is remembered.
 * User-facing text uses American spelling throughout; a few notices were reworded.
 
 ### 1.4.0

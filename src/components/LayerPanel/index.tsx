@@ -10,6 +10,7 @@ import { inject, observer } from "mobx-react"
 import { IComponentPropsWithStore } from "../../store"
 import TimelineAxis from './TimelineAxis';
 import { chromeScrollBarWidth, durationRectHeight, layerPartWidth } from '../../utils/values';
+import ResizeHandle, { readStoredSize, writeStoredSize } from '../ResizeHandle';
 import styles from "./index.module.less"
 import LayerGroup from "./LayerGroup"
 import { formatTime, formatClock, downloadJson, readFile } from '../../utils';
@@ -44,6 +45,10 @@ const LayerPanel = forwardRef((props: LayerPanelProps, ref) => {
   // Visible window of the timeline in percent of the video; drives both
   // the range slider and the canvas zoom (ctrl/cmd + wheel).
   const [zoomRange, setZoomRange] = useState<[number, number]>([0, 100])
+  // Width of the layer-list column (buttons + name); the gantt takes the rest.
+  const LAYER_COLUMN_KEY = "swimchrono.layout.layerColumnWidth"
+  const [layerColumnWidth, setLayerColumnWidth] = useState<number>(() => readStoredSize(LAYER_COLUMN_KEY) ?? layerPartWidth)
+  useEffect(() => { writeStoredSize(LAYER_COLUMN_KEY, layerColumnWidth) }, [layerColumnWidth])
   const axisScrollRef = useRef<HTMLDivElement | null>(null)
 
   // from js
@@ -116,8 +121,8 @@ const LayerPanel = forwardRef((props: LayerPanelProps, ref) => {
   }, [])
 
   useEffect(() => {
-    setGanttAreaWidth(timelineDivWidth - layerPartWidth - chromeScrollBarWidth - canvasContentPadding)
-  }, [timelineDivWidth])
+    setGanttAreaWidth(timelineDivWidth - layerColumnWidth - chromeScrollBarWidth - canvasContentPadding)
+  }, [timelineDivWidth, layerColumnWidth])
 
   useEffect(() => {
     setSliderWidth(ganttAreaWidth + canvasContentPadding * 2)
@@ -263,7 +268,24 @@ const LayerPanel = forwardRef((props: LayerPanelProps, ref) => {
   }
 
   return (
-      <div className={styles.swimflowTimelineContainer} ref={timelineDivRef} tabIndex={0} onKeyDown={onKeyDown}>
+      <div
+        className={styles.swimflowTimelineContainer}
+        ref={timelineDivRef}
+        tabIndex={0}
+        onKeyDown={onKeyDown}
+        style={{ "--layer-part-width": `${layerColumnWidth}px` } as React.CSSProperties}
+      >
+        <div className={styles.columnGutter}>
+          <ResizeHandle
+            direction="col"
+            value={layerColumnWidth}
+            min={170}
+            max={Math.max(260, timelineDivWidth - 300)}
+            onChange={setLayerColumnWidth}
+            onDoubleClick={() => setLayerColumnWidth(layerPartWidth)}
+            title="Drag to resize the layer list. Double-click to reset."
+          />
+        </div>
         <div className={styles.topPart}>
           <div className={styles.topLeftPart}>
             <div className={styles.ioBtnContainer} ref={refAddLayerBtn}>
