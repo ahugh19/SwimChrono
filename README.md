@@ -168,6 +168,18 @@ exposes editors based on the element's `type` (`text` / `shape` / `icon` /
 
 ## Changelog
 
+### 1.4.0
+
+Result charts (`/visualization`)
+* One video at a time by default, with a switch to stack all 31 videos (optionally on a common time scale); the gantt is a scrubbable navigator under the player with a ticked time axis, playhead, zoom (ctrl/⌘ + wheel or slider) and hover tooltips.
+* Side panel with two tabs: the annotations active at the current moment, and the full table. Column filters in the table dim the non-matching bars in the gantt and the bbox overlay; clicking a bar, a card or a table row selects the annotation and seeks the player.
+* The player stays at 640×360 so the stored bounding boxes (labelled on 1280×720) map 1:2 without any transform.
+* Layout is computed by a pure, tested module instead of per-group Konva effects; bars are memoised so hovering doesn't repaint the whole chart.
+
+Authoring page
+* The controller panel width and the layer panel height can be dragged (double-click a gutter to reset); sizes are remembered.
+* Copying a layer now assigns it a new id.
+
 ### 1.3.0
 
 Timeline
