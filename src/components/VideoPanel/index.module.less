@@ -1,4 +1,5 @@
 .videoPanelContainer {
+  position: relative; // positioning context for the loading overlay
   display: flex;
   justify-content: center;
   align-items: center;
@@ -34,47 +35,47 @@
       pointer-events: none; // don't block video interactions
     }
 
-    .loadingOverlay {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 3;
-      pointer-events: none;
-    }
-
-    .loadingBox {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      min-width: 240px;
-      padding: 10px 14px;
-      border-radius: 6px;
-      border: 1px solid var(--border-color-soft);
-      background-color: var(--background-color-elevated);
-      color: var(--text-color);
-      font-size: 12px;
-      opacity: 0.95;
-    }
-
-    .loadingRow {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      min-height: 22px;
-    }
-
-    .loadingDone {
-      color: var(--my-theme-color);
-    }
-
     .videoBtn {
       position: absolute;
       left: 50%;
       transform: translateX(-50%);
       z-index: 2;
     }
+  }
+
+  .loadingOverlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+    pointer-events: none;
+  }
+
+  .loadingBox {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 240px;
+    padding: 10px 14px;
+    border-radius: 6px;
+    border: 1px solid var(--border-color-soft);
+    background-color: var(--background-color-elevated);
+    color: var(--text-color);
+    font-size: 12px;
+    opacity: 0.95;
+  }
+
+  .loadingRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    min-height: 22px;
+  }
+
+  .loadingDone {
+    color: var(--my-theme-color);
   }
 }

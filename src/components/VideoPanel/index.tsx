@@ -192,27 +192,6 @@ const VideoPanel = forwardRef((props: VideoPanelProps, ref) => {
       </Row>
       <div className={styles.videoWrapper} style={{ width: size.width, height: size.height }}>
         <video ref={videoRef} src={videoSrc} onLoadedData={handleLoadedData} crossOrigin="anonymous" muted></video>
-        {
-          (isVideoLoading || isDataLoading) &&
-          <div className={styles.loadingOverlay}>
-            <div className={styles.loadingBox}>
-              <div className={styles.loadingRow}>
-                <span>Race data</span>
-                {
-                  isDataLoading
-                    ? (dataProgress === null
-                      ? <Spin size="small" />
-                      : <Progress percent={dataProgress} size="small" showInfo={true} style={{ width: 160, margin: 0 }} />)
-                    : <span className={styles.loadingDone}>ready</span>
-                }
-              </div>
-              <div className={styles.loadingRow}>
-                <span>Video</span>
-                {isVideoLoading ? <Spin size="small" /> : <span className={styles.loadingDone}>ready</span>}
-              </div>
-            </div>
-          </div>
-        }
         <div className={styles.visHolder} style={{ width: size.width, height: size.height }}>
           <VisHolder
             svgHeight={size.height}
@@ -232,6 +211,27 @@ const VideoPanel = forwardRef((props: VideoPanelProps, ref) => {
           />
         </div>
       </div>
+      {
+        (isVideoLoading || isDataLoading) &&
+        <div className={styles.loadingOverlay}>
+          <div className={styles.loadingBox}>
+            <div className={styles.loadingRow}>
+              <span>Race data</span>
+              {
+                isDataLoading
+                  ? (dataProgress === null
+                    ? <Spin size="small" />
+                    : <Progress percent={dataProgress} size="small" showInfo={true} style={{ width: 160, margin: 0 }} />)
+                  : <span className={styles.loadingDone}>ready</span>
+              }
+            </div>
+            <div className={styles.loadingRow}>
+              <span>Video</span>
+              {isVideoLoading ? <Spin size="small" /> : <span className={styles.loadingDone}>ready</span>}
+            </div>
+          </div>
+        </div>
+      }
       {/* <DataPanel />
         <PreferencePanel /> */}
     </div >

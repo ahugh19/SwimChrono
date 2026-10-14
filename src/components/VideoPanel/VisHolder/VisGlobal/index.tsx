@@ -1,20 +1,6 @@
-import { LayerType, SwimmerVideoDataType, SwimmerVideoFrameType, VideoFrameDataType, VisIntervalType } from "../../../../types"
-import { embeddedVisTypeComposeType_GLOBAL, VALUE_customizedIconGlobal, VALUE_customizedTextGlobal, VALUE_distanceSwumTextCorner, VALUE_elapsedTimeCorner, VALUE_lapDistanceCorner, VALUE_olympicRecordCorner, VALUE_raceNameCorner, VALUE_rankingBarCorner, VALUE_worldRecordCorner, VALUE_worldRecordLine, VALUE_worldRecordSplitCorner, VALUE_worldRecordSplitDiffCorner, VALUE_leaderLaneNumberTextCorner, VALUE_distanceSwumBarCorner, VALUE_climbLine } from "../../../../utils/values";
-import VisCustomizedIcon from "./VisCustomizedIcon";
-import VisElapsedTimeCorner from "./VisElapsedTimeCorner";
-import VisCustomizedText from "./VisCustomizedText";
-import VisRankingBarCorner from "./VisRankingBarCorner";
-import VisWorldRecordLine from "./VisWorldRecordLine";
-import VisWorldRecordSplitCorner from "./VisWorldRecordSplitCorner";
-import VisWorldRecordSplitDiffCorner from "./VisWorldRecordSplitDiffCorner";
-import VisWorldRecordCorner from "./VisWorldRecordCorner";
-import VisOlympicRecordCorner from "./VisOlympicRecordCorner";
-import VisLapDistanceCorner from "./VisLapDistanceCorner";
-import VisRaceNameCorner from "./VisRaceNameCorner";
-import VisDistanceSwumTextCorner from "./VisDistanceSwumTextCorner";
-import VisLeaderLaneNumberTextCorner from "./VisLeaderLaneNumberTextCorner";
-import VisDistanceSwumBarCorner from "./VisDistanceSwumBarCorner";
-import VisClimbLine from "./VisClimbLine";
+import { LayerType, SwimmerVideoDataType } from "../../../../types"
+import { embeddedVisTypeComposeType_GLOBAL } from "../../../../utils/values"
+import { globalVisRegistry, isFrameInIntervals, resolveS, resolveX, resolveY } from "../visRegistry"
 
 interface VisGlobalProps {
   layerList: LayerType[]
@@ -24,218 +10,35 @@ interface VisGlobalProps {
   svgHeight: number | undefined
 }
 
+// Renders each screen-anchored layer whose trigger interval contains the
+// current frame.
 function VisGlobal(props: VisGlobalProps) {
-
   const { layerList, currentSwimmerVideo, currentFrameIndex, svgWidth, svgHeight } = props;
-
-  function isCurrentFrameInIntervalList(intervalList: VisIntervalType[] | null) {
-    if (!intervalList) return true // whole video duration
-    for (const interval of intervalList) {
-      if (currentFrameIndex >= interval.startFrame && currentFrameIndex <= interval.endFrame) {
-        return true;
-      }
-    }
-    return false;
-  }
+  if (!currentSwimmerVideo) return null
 
   return (
     <>
       {layerList.map((layer, i) => {
         const embeddedVis = layer.embeddedVis
-        if (!embeddedVis || embeddedVis.composeType !== embeddedVisTypeComposeType_GLOBAL || !currentSwimmerVideo || !isCurrentFrameInIntervalList(layer.intervalList)) return
-        // console.log(embeddedVis.customizedText)
-        switch (embeddedVis.visName) {
-          case VALUE_customizedIconGlobal:
-            return <VisCustomizedIcon
-              key={`${layer.uuid}-layer-${i}`}
-              visibility={layer.visibility}
-              x={embeddedVis.positionXAndWidthRatio && svgWidth? embeddedVis.positionXAndWidthRatio * svgWidth :  embeddedVis.positionX}
-              y={embeddedVis.positionYAndHeightRatio && svgHeight ? embeddedVis.positionYAndHeightRatio * svgHeight : embeddedVis.positionY}
-              r={embeddedVis.positionR}
-              s={embeddedVis.positionSRatio && svgWidth? embeddedVis.positionSRatio * svgWidth : embeddedVis.positionS}
-              customizedIcon={embeddedVis.customizedIcon}
-              currentSwimmerVideo={currentSwimmerVideo}
-              currentFrameIndex={currentFrameIndex} />
-          case VALUE_customizedTextGlobal:
-            return <VisCustomizedText
-              key={`${layer.uuid}-layer-${i}`}
-              visibility={layer.visibility}
-              x={embeddedVis.positionXAndWidthRatio && svgWidth? embeddedVis.positionXAndWidthRatio * svgWidth :  embeddedVis.positionX}
-              y={embeddedVis.positionYAndHeightRatio && svgHeight ? embeddedVis.positionYAndHeightRatio * svgHeight : embeddedVis.positionY}
-              r={embeddedVis.positionR}
-              s={embeddedVis.positionSRatio && svgWidth? embeddedVis.positionSRatio * svgWidth : embeddedVis.positionS}
-              customizedText={embeddedVis.customizedText}
-              editableElementList={embeddedVis.editableElementList}
-              currentSwimmerVideo={currentSwimmerVideo}
-              currentFrameIndex={currentFrameIndex} />
-          case VALUE_distanceSwumTextCorner:
-            return <VisDistanceSwumTextCorner
-              key={`${layer.uuid}-layer-${i}`}
-              visibility={layer.visibility}
-              x={embeddedVis.positionXAndWidthRatio && svgWidth? embeddedVis.positionXAndWidthRatio * svgWidth :  embeddedVis.positionX}
-              y={embeddedVis.positionYAndHeightRatio && svgHeight ? embeddedVis.positionYAndHeightRatio * svgHeight : embeddedVis.positionY}
-              r={embeddedVis.positionR}
-              s={embeddedVis.positionSRatio && svgWidth? embeddedVis.positionSRatio * svgWidth : embeddedVis.positionS}
-              editableElementList={embeddedVis.editableElementList}
-              currentSwimmerVideo={currentSwimmerVideo}
-              currentFrameIndex={currentFrameIndex}
-              svgWidth={svgWidth}
-              svgHeight={svgHeight} />
-          case VALUE_distanceSwumBarCorner:
-            return <VisDistanceSwumBarCorner
-              key={`${layer.uuid}-layer-${i}`}
-              visibility={layer.visibility}
-              x={embeddedVis.positionXAndWidthRatio && svgWidth? embeddedVis.positionXAndWidthRatio * svgWidth :  embeddedVis.positionX}
-              y={embeddedVis.positionYAndHeightRatio && svgHeight ? embeddedVis.positionYAndHeightRatio * svgHeight : embeddedVis.positionY}
-              r={embeddedVis.positionR}
-              s={embeddedVis.positionSRatio && svgWidth? embeddedVis.positionSRatio * svgWidth : embeddedVis.positionS}
-              editableElementList={embeddedVis.editableElementList}
-              currentSwimmerVideo={currentSwimmerVideo}
-              currentFrameIndex={currentFrameIndex}
-              svgWidth={svgWidth}
-              svgHeight={svgHeight} />
-          case VALUE_elapsedTimeCorner:
-            return <VisElapsedTimeCorner
-              key={`${layer.uuid}-layer-${i}`}
-              visibility={layer.visibility}
-              x={embeddedVis.positionXAndWidthRatio && svgWidth? embeddedVis.positionXAndWidthRatio * svgWidth :  embeddedVis.positionX}
-              y={embeddedVis.positionYAndHeightRatio && svgHeight ? embeddedVis.positionYAndHeightRatio * svgHeight : embeddedVis.positionY}
-              r={embeddedVis.positionR}
-              s={embeddedVis.positionSRatio && svgWidth? embeddedVis.positionSRatio * svgWidth : embeddedVis.positionS}
-              editableElementList={embeddedVis.editableElementList}
-              currentSwimmerVideo={currentSwimmerVideo}
-              currentFrameIndex={currentFrameIndex} />
-          case VALUE_lapDistanceCorner:
-            return <VisLapDistanceCorner
-              key={`${layer.uuid}-layer-${i}`}
-              visibility={layer.visibility}
-              x={embeddedVis.positionXAndWidthRatio && svgWidth? embeddedVis.positionXAndWidthRatio * svgWidth :  embeddedVis.positionX}
-              y={embeddedVis.positionYAndHeightRatio && svgHeight ? embeddedVis.positionYAndHeightRatio * svgHeight : embeddedVis.positionY}
-              r={embeddedVis.positionR}
-              s={embeddedVis.positionSRatio && svgWidth? embeddedVis.positionSRatio * svgWidth : embeddedVis.positionS}
-              editableElementList={embeddedVis.editableElementList}
-              currentSwimmerVideo={currentSwimmerVideo}
-              currentFrameIndex={currentFrameIndex}
-              svgWidth={svgWidth}
-              svgHeight={svgHeight} />
-          case VALUE_leaderLaneNumberTextCorner:
-            return <VisLeaderLaneNumberTextCorner
-              key={`${layer.uuid}-layer-${i}`}
-              visibility={layer.visibility}
-              x={embeddedVis.positionXAndWidthRatio && svgWidth? embeddedVis.positionXAndWidthRatio * svgWidth :  embeddedVis.positionX}
-              y={embeddedVis.positionYAndHeightRatio && svgHeight ? embeddedVis.positionYAndHeightRatio * svgHeight : embeddedVis.positionY}
-              r={embeddedVis.positionR}
-              s={embeddedVis.positionSRatio && svgWidth? embeddedVis.positionSRatio * svgWidth : embeddedVis.positionS}
-              editableElementList={embeddedVis.editableElementList}
-              currentSwimmerVideo={currentSwimmerVideo}
-              currentFrameIndex={currentFrameIndex}
-              svgWidth={svgWidth}
-              svgHeight={svgHeight} />
-          case VALUE_olympicRecordCorner:
-            return <VisOlympicRecordCorner
-              key={`${layer.uuid}-layer-${i}`}
-              visibility={layer.visibility}
-              x={embeddedVis.positionXAndWidthRatio && svgWidth? embeddedVis.positionXAndWidthRatio * svgWidth :  embeddedVis.positionX}
-              y={embeddedVis.positionYAndHeightRatio && svgHeight ? embeddedVis.positionYAndHeightRatio * svgHeight : embeddedVis.positionY}
-              r={embeddedVis.positionR}
-              s={embeddedVis.positionSRatio && svgWidth? embeddedVis.positionSRatio * svgWidth : embeddedVis.positionS}
-              editableElementList={embeddedVis.editableElementList}
-              currentSwimmerVideo={currentSwimmerVideo}
-              currentFrameIndex={currentFrameIndex}
-              svgWidth={svgWidth}
-              svgHeight={svgHeight} />
-          case VALUE_raceNameCorner:
-            return <VisRaceNameCorner
-              key={`${layer.uuid}-layer-${i}`}
-              visibility={layer.visibility}
-              x={embeddedVis.positionXAndWidthRatio && svgWidth? embeddedVis.positionXAndWidthRatio * svgWidth :  embeddedVis.positionX}
-              y={embeddedVis.positionYAndHeightRatio && svgHeight ? embeddedVis.positionYAndHeightRatio * svgHeight : embeddedVis.positionY}
-              r={embeddedVis.positionR}
-              s={embeddedVis.positionSRatio && svgWidth? embeddedVis.positionSRatio * svgWidth : embeddedVis.positionS}
-              editableElementList={embeddedVis.editableElementList}
-              currentSwimmerVideo={currentSwimmerVideo}
-              currentFrameIndex={currentFrameIndex}
-              svgWidth={svgWidth}
-              svgHeight={svgHeight} />
-          case VALUE_rankingBarCorner:
-            return <VisRankingBarCorner
-              key={`${layer.uuid}-layer-${i}`}
-              visibility={layer.visibility}
-              x={embeddedVis.positionXAndWidthRatio && svgWidth? embeddedVis.positionXAndWidthRatio * svgWidth :  embeddedVis.positionX}
-              y={embeddedVis.positionYAndHeightRatio && svgHeight ? embeddedVis.positionYAndHeightRatio * svgHeight : embeddedVis.positionY}
-              r={embeddedVis.positionR}
-              s={embeddedVis.positionSRatio && svgWidth? embeddedVis.positionSRatio * svgWidth : embeddedVis.positionS}
-              editableElementList={embeddedVis.editableElementList}
-              currentSwimmerVideo={currentSwimmerVideo}
-              currentFrameIndex={currentFrameIndex} />
-          case VALUE_worldRecordCorner:
-            return <VisWorldRecordCorner
-              key={`${layer.uuid}-layer-${i}`}
-              visibility={layer.visibility}
-              x={embeddedVis.positionXAndWidthRatio && svgWidth? embeddedVis.positionXAndWidthRatio * svgWidth :  embeddedVis.positionX}
-              y={embeddedVis.positionYAndHeightRatio && svgHeight ? embeddedVis.positionYAndHeightRatio * svgHeight : embeddedVis.positionY}
-              r={embeddedVis.positionR}
-              s={embeddedVis.positionSRatio && svgWidth? embeddedVis.positionSRatio * svgWidth : embeddedVis.positionS}
-              editableElementList={embeddedVis.editableElementList}
-              currentSwimmerVideo={currentSwimmerVideo}
-              currentFrameIndex={currentFrameIndex}
-              svgWidth={svgWidth}
-              svgHeight={svgHeight} />
-          case VALUE_worldRecordSplitCorner:
-            return <VisWorldRecordSplitCorner
-              key={`${layer.uuid}-layer-${i}`}
-              visibility={layer.visibility}
-              x={embeddedVis.positionXAndWidthRatio && svgWidth? embeddedVis.positionXAndWidthRatio * svgWidth :  embeddedVis.positionX}
-              y={embeddedVis.positionYAndHeightRatio && svgHeight ? embeddedVis.positionYAndHeightRatio * svgHeight : embeddedVis.positionY}
-              r={embeddedVis.positionR}
-              s={embeddedVis.positionSRatio && svgWidth? embeddedVis.positionSRatio * svgWidth : embeddedVis.positionS}
-              editableElementList={embeddedVis.editableElementList}
-              currentSwimmerVideo={currentSwimmerVideo}
-              currentFrameIndex={currentFrameIndex}
-              svgWidth={svgWidth}
-              svgHeight={svgHeight} />
-          case VALUE_worldRecordSplitDiffCorner:
-            return <VisWorldRecordSplitDiffCorner
-              key={`${layer.uuid}-layer-${i}`}
-              visibility={layer.visibility}
-              x={embeddedVis.positionXAndWidthRatio && svgWidth? embeddedVis.positionXAndWidthRatio * svgWidth :  embeddedVis.positionX}
-              y={embeddedVis.positionYAndHeightRatio && svgHeight ? embeddedVis.positionYAndHeightRatio * svgHeight : embeddedVis.positionY}
-              r={embeddedVis.positionR}
-              s={embeddedVis.positionSRatio && svgWidth? embeddedVis.positionSRatio * svgWidth : embeddedVis.positionS}
-              editableElementList={embeddedVis.editableElementList}
-              currentSwimmerVideo={currentSwimmerVideo}
-              currentFrameIndex={currentFrameIndex}
-              svgWidth={svgWidth}
-              svgHeight={svgHeight} />
-          case VALUE_worldRecordLine:
-            return <VisWorldRecordLine
-              key={`${layer.uuid}-layer-${i}`}
-              visibility={layer.visibility}
-              x={embeddedVis.positionXAndWidthRatio && svgWidth? embeddedVis.positionXAndWidthRatio * svgWidth :  embeddedVis.positionX}
-              y={embeddedVis.positionYAndHeightRatio && svgHeight ? embeddedVis.positionYAndHeightRatio * svgHeight : embeddedVis.positionY}
-              r={embeddedVis.positionR}
-              s={embeddedVis.positionSRatio && svgWidth? embeddedVis.positionSRatio * svgWidth : embeddedVis.positionS}
-              editableElementList={embeddedVis.editableElementList}
-              currentSwimmerVideo={currentSwimmerVideo}
-              currentFrameIndex={currentFrameIndex}
-              svgWidth={svgWidth}
-              svgHeight={svgHeight} />
-          case VALUE_climbLine:
-            return <VisClimbLine
-              key={`${layer.uuid}-layer-${i}`}
-              visibility={layer.visibility}
-              x={embeddedVis.positionXAndWidthRatio && svgWidth? embeddedVis.positionXAndWidthRatio * svgWidth :  embeddedVis.positionX}
-              y={embeddedVis.positionYAndHeightRatio && svgHeight ? embeddedVis.positionYAndHeightRatio * svgHeight : embeddedVis.positionY}
-              r={embeddedVis.positionR}
-              s={embeddedVis.positionSRatio && svgWidth? embeddedVis.positionSRatio * svgWidth : embeddedVis.positionS}
-              editableElementList={embeddedVis.editableElementList}
-              currentSwimmerVideo={currentSwimmerVideo}
-              currentFrameIndex={currentFrameIndex}
-              svgWidth={svgWidth}
-              svgHeight={svgHeight} />
-          default:
-            return null
-        }
+        if (!embeddedVis || embeddedVis.composeType !== embeddedVisTypeComposeType_GLOBAL) return null
+        if (!isFrameInIntervals(currentFrameIndex, layer.intervalList)) return null
+        const Vis = globalVisRegistry[embeddedVis.visName]
+        if (!Vis) return null
+        return <Vis
+          key={`${layer.uuid}-layer-${i}`}
+          visibility={layer.visibility}
+          x={resolveX(embeddedVis, svgWidth)}
+          y={resolveY(embeddedVis, svgHeight)}
+          r={embeddedVis.positionR}
+          s={resolveS(embeddedVis, svgWidth)}
+          editableElementList={embeddedVis.editableElementList}
+          customizedIcon={embeddedVis.customizedIcon}
+          customizedText={embeddedVis.customizedText}
+          currentSwimmerVideo={currentSwimmerVideo}
+          currentFrameIndex={currentFrameIndex}
+          svgWidth={svgWidth}
+          svgHeight={svgHeight}
+        />
       })}
     </>
   )
