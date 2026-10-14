@@ -2,7 +2,7 @@ import { VisBboxType, UrlType, VideoType, VisType, EventType, CameraShotType, Vi
 import _ from "lodash";
 import { COMPARE_EQUAL, COMPARE_GREATER, COMPARE_GREATER_AND_EQUAL, COMPARE_SMALLER, COMPARE_SMALLER_AND_EQUAL, TRIGGER_COMP_START_END, TRIGGER_COMP_START_DURATION, subjectListUnitMeter, subjectListUnitSecond, subjectListUnitMeterPerSquareSecond, videoMetaDataList, DEFAULTSwimFlow2GLOBAL_blur, DEFAULTSwimFlow2GLOBAL_minDuration } from "./values";
 import { useEffect, useRef } from 'react';
-import { message } from "antd";
+import { message } from "./feedback"
 import { flagBE, flagGB, flagCA, flagCH, flagESP, flagFR, flagIT, flagNL, flagRSA, flagUS, flagGRE, flagCHN, flagJPN } from "./flag";
 
 export function formatTimeNumber(v: number) {

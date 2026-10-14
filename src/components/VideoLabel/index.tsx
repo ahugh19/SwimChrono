@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { inject, observer } from "mobx-react";
 import ReactPlayer from 'react-player'
-import { Button, Space, Tag, Switch, message, Tooltip } from 'antd'
+import { Button, Space, Tag, Switch, Tooltip } from "antd"
+import { message } from "../../utils/feedback"
 import { PlayCircleFilled, PauseCircleFilled, CaretLeftFilled, CaretRightFilled, ForwardFilled, BackwardFilled, LeftCircleFilled, RightCircleFilled, FastBackwardFilled, FastForwardFilled } from '@ant-design/icons';
 import '../../App.css'
 import { OnProgressProps } from 'react-player/base';

@@ -1,9 +1,10 @@
 import { lazy, Suspense } from "react";
 import Home from "./pages/Home";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { Spin } from "antd";
+import { App as AntdApp, Spin } from "antd";
 import "./App.css";
 import { ThemeProvider, ThemedAntdProvider } from "./utils/theme";
+import { FeedbackBridge } from "./utils/FeedbackBridge";
 
 // The label tools and the result charts are rarely visited; keep them
 // out of the main bundle so the authoring page loads faster.
@@ -23,6 +24,8 @@ function App() {
     <Router basename="/SwimChrono">
       <ThemeProvider>
         <ThemedAntdProvider>
+          <AntdApp component={false}>
+          <FeedbackBridge />
           <Suspense fallback={<RouteFallback />}>
             <Routes>
               <Route path="/" element={<Home />} />
@@ -32,6 +35,7 @@ function App() {
               <Route path="visualization" element={<Visualization />} />
             </Routes>
           </Suspense>
+          </AntdApp>
         </ThemedAntdProvider>
       </ThemeProvider>
     </Router>

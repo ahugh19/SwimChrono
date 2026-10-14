@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect, forwardRef, useImperativeHandle } from "react";
-import { Button, Spin, Row, message, Tag, Progress } from "antd"
+import { Button, Spin, Row, Tag, Progress } from "antd"
+import { message } from "../../utils/feedback"
 import { PlayCircleOutlined, PauseCircleOutlined, VideoCameraFilled } from '@ant-design/icons';
 import DataPanel from "./DataPanel"
 import PreferencePanel from "./PreferencePanel"

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { inject, observer } from "mobx-react";
-import { Button, Space, Row, Popover, Table, message, Tag, Tooltip, Checkbox, Divider } from 'antd'
+import { Button, Space, Row, Popover, Table, Tag, Tooltip, Checkbox, Divider } from "antd"
+import { message } from "../../../../utils/feedback"
 import { CheckCircleOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import { cameraShotOptionsCopiedOther, defaultCameraShotOptionsCopiedOther } from '../../../../utils/values';
 import '../../../../App.css'

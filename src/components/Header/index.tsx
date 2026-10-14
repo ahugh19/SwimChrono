@@ -92,7 +92,7 @@ const Header = forwardRef((props: HeaderProps, ref) => {
               placeholder="choose a video"
               defaultValue={videoMetaDataList[0].name}
               optionFilterProp="children"
-              filterOption={(input, option) => (option?.label ?? '').includes(input)}
+              filterOption={(input, option) => (option?.label ?? '').toLowerCase().includes(input.toLowerCase())}
               filterSort={(optionA, optionB) =>
                 (optionA?.label ?? '').toLowerCase().localeCompare((optionB?.label ?? '').toLowerCase())
               }

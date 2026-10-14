@@ -1,7 +1,8 @@
 import { useEffect, useState, forwardRef, useImperativeHandle, useRef } from 'react'
 import { VideoObjType, TriggerFormProps, VisIntervalType, LayerType } from '../../../types'
 import styles from './index.module.less'
-import { Button, Input, message } from 'antd'
+import { Button, Input } from "antd"
+import { message } from "../../../utils/feedback"
 import { EyeOutlined, EyeInvisibleOutlined, FieldTimeOutlined, CopyOutlined, DeleteOutlined, ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';
 import TriggerDrawer from './TriggerDrawer'
 import { useThemeColors } from "../../../utils/theme"

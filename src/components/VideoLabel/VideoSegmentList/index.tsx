@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { inject, observer } from "mobx-react";
-import { Button, Space, Row, Table, Tag, message, Tooltip } from 'antd'
+import { Button, Space, Row, Table, Tag, Tooltip } from "antd"
+import { message } from "../../../utils/feedback"
 import type { ColumnsType } from 'antd/es/table'
 import { FileAddFilled, CaretRightOutlined, CheckCircleTwoTone, WarningTwoTone, ExclamationCircleOutlined, CheckCircleOutlined } from '@ant-design/icons';
 import '../../../App.css'

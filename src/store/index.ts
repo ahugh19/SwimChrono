@@ -3,7 +3,7 @@ import { PropsWithChildren } from "react";
 import { initVideoData, initVisData, initPos, initUrlList, initCameraShotList, initEventList, initVisTriggerData, initVideoMetaData, generateUUID, readFile, downloadJson, calIntervalByTrigger, initGlobalSetting } from "../utils";
 import { VisBboxType, UrlType, VideoType, VisType, dataType, VisTriggerType, EventType, CameraShotType, VideoMetaDataType, VideoFrameDataType, SwimmerVideoDataType, SwimmerVideoFrameType, LayerType, EmbeddedVisType, VideoObjType, VisIntervalType, EditableElementType, TriggerFormProps, TriggerCompType, GlobalSettingType } from "../types";
 import { toJS } from 'mobx';
-import { message } from "antd";
+import { message } from "../utils/feedback"
 import _, { min } from "lodash";
 import { backendApiUrl } from "../utils/aiConfig";
 import { assetUrl } from "../utils/assets";

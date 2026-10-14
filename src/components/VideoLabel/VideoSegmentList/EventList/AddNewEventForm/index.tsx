@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { inject, observer } from "mobx-react";
-import { Button, Form, Input, Row, Col, Radio, Select, Space, message, Popover, Tooltip } from 'antd'
+import { Button, Form, Input, Row, Col, Radio, Select, Space, Popover, Tooltip } from "antd"
+import { message } from "../../../../../utils/feedback"
 import { ClockCircleTwoTone, WarningTwoTone } from '@ant-design/icons';
 import { ProForm } from '@ant-design/pro-components';
 import '../../../../../App.css'

@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { inject, observer } from "mobx-react";
-import { Button, Space, Row, Collapse, theme, Popover, Table, message, Tag, Badge, Tooltip, Checkbox, Divider, Radio } from 'antd'
+import { Button, Space, Row, Collapse, theme, Popover, Table, Tag, Badge, Tooltip, Checkbox, Divider, Radio } from "antd"
+import { message } from "../../../../utils/feedback"
 import { FileAddFilled, CaretRightOutlined, WarningTwoTone, CheckCircleTwoTone, WarningOutlined, CheckCircleOutlined, ExclamationCircleOutlined, HeartTwoTone, StarTwoTone, InfoCircleOutlined } from '@ant-design/icons';
 import { visOptionsCopiedBbox, defaultVisOptionsCopiedBbox, visOptionsCopiedMoment, defaultVisOptionsCopiedMoment, visOptionsCopiedOther, defaultVisOptionsCopiedOther, dataOptions, dataOptionsStringList, visTypeOptions, movementOptions, placementOptionsStringList, temporalRelationOptions, uiHighlightStar } from '../../../../utils/values';
 import '../../../../App.css'

@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Input, Button, Card, Spin, message, Row, Descriptions, Typography } from "antd";
+import { Input, Button, Card, Spin, Row, Descriptions, Typography } from "antd"
+import { message } from "../../../../../utils/feedback"
 import { aiConfig } from "../../../../../utils/aiConfig";
 import { TriggerCompType } from "../../../../../types";
 import { promptDraftEn } from "../../../../../utils/prompt";
