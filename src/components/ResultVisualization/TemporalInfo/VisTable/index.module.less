@@ -1,0 +1,13 @@
+.visTable {
+  :global(.ant-table-row) td {
+    transition: background-color 0.12s ease;
+  }
+}
+
+.selectedRow td {
+  background-color: var(--row-bg-selected) !important;
+}
+
+.activeRow td:first-child {
+  box-shadow: inset 3px 0 0 var(--my-theme-color);
+}

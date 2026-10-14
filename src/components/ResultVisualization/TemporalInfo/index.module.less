@@ -1,56 +1,250 @@
-.temporalInfoContainer{
-  background: var(--background-color);
-  color: var(--text-color-bright);
+.page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
   width: 100vw;
-  height: 15600px;
-  .controlerContainer {
-    position: absolute;
-    top: 0px;
-    left: 700px;
-  }
-  .canvasContainer {
-    position: absolute;
-    top: 0px;
-    left: 700px;
-    overflow-x: scroll;
-  }
-  .videoPart {
-    position: fixed;
-    left: 0;
-    font-size: 14px;
-  
-    .videoMajor {
-      position: absolute;
-      left: 10px;
-    }
-  
-    .labelPreview {
-      z-index: 100;
-      position: absolute;
-      left: 10px;
-      pointer-events: none;
-    }
-  
-    .editBtnGroup {
-      position: absolute;
-      top: 370px;
-      left: 10px;
-      .bboxText {
-        width: 380px;
-      }
-    }
-  
-    .playBtnGroup {
-      position: absolute;
-      top: 410px;
-      left: 10px;
-    }
+  overflow: hidden;
+  background: var(--background-color);
+  color: var(--text-color);
+}
 
-    .visTableContainer {
-      width: 640px;
-      left: 10px;
-      position: absolute;
-      top: 445px;
-    }
+.toolbar {
+  flex: none;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 6px 12px;
+  border-bottom: 1px solid var(--border-color-soft);
+  min-height: 40px;
+}
+
+.label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-color-faint);
+  user-select: none;
+}
+
+.divider {
+  width: 1px;
+  height: 20px;
+  background: var(--border-color-soft);
+}
+
+.spacer {
+  flex: 1;
+}
+
+.videoSelect {
+  width: clamp(240px, 26vw, 420px);
+}
+
+.zoom {
+  min-width: 140px;
+}
+
+.upper {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+// The player is fixed at 640px, so the left column only takes that much;
+// the side panel (annotations / table) gets the remaining width.
+.playerArea {
+  flex: none;
+  width: 664px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 10px 12px 6px;
+  min-height: 0;
+  overflow: auto;
+}
+
+// Fixed 640x360: the stored bboxes map 1:2 onto it (see TemporalInfo).
+.playerBox {
+  position: relative;
+  flex: none;
+  width: 640px;
+  height: 360px;
+  margin: 0 auto;
+  background: #000;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.bboxCanvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.controls {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-top: 8px;
+  width: 640px;
+  margin: 0 auto;
+}
+
+.time {
+  font-variant-numeric: tabular-nums;
+  margin: 0;
+}
+
+.urlName {
+  max-width: 320px;
+  font-size: 11px;
+}
+
+.side {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  min-width: 320px;
+  border-left: 1px solid var(--border-color-soft);
+}
+
+.sideTabs {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+
+  :global(.ant-tabs-nav) {
+    margin: 0;
+    padding: 0 10px;
   }
+
+  :global(.ant-tabs-content-holder),
+  :global(.ant-tabs-content),
+  :global(.ant-tabs-tabpane) {
+    height: 100%;
+    min-height: 0;
+  }
+}
+
+.nowList {
+  height: 100%;
+  overflow: auto;
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.nowCard {
+  border: 1px solid var(--border-color-soft);
+  border-left: 3px solid var(--border-color-soft);
+  border-radius: 4px;
+  padding: 6px 8px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  transition: background-color 0.12s ease, border-color 0.12s ease;
+
+  &:hover {
+    background: var(--row-bg-hover);
+  }
+
+  &.selected {
+    border-left-color: var(--my-theme-color);
+    background: var(--row-bg-selected-invisible);
+  }
+}
+
+.nowHead {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-variant-numeric: tabular-nums;
+}
+
+.nowRow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px;
+
+  > :first-child {
+    font-size: 11px;
+    width: 30px;
+  }
+}
+
+.note {
+  font-size: 11px;
+  white-space: pre-wrap;
+}
+
+.tableWrap {
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  padding: 0 6px;
+}
+
+.ganttBar {
+  flex: none;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 4px 12px;
+  border-top: 1px solid var(--border-color-soft);
+  background: var(--background-color-elevated);
+}
+
+.hint {
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.gantt {
+  flex: none;
+  position: relative;
+  overflow: auto;
+  outline: none;
+  border-top: 1px solid var(--border-color-soft);
+
+  &:focus-visible {
+    box-shadow: inset 0 0 0 1px var(--my-theme-color);
+  }
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 20px;
+}
+
+.tooltip {
+  position: fixed;
+  z-index: 1000;
+  pointer-events: none;
+  max-width: 320px;
+  padding: 6px 8px;
+  font-size: 11px;
+  line-height: 1.4;
+  color: var(--text-color-bright);
+  background: var(--background-color-elevated);
+  border: 1px solid var(--my-theme-color);
+  border-radius: 4px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.tooltipHint {
+  margin-top: 4px;
+  color: var(--text-color-faint);
 }

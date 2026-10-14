@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { inject, observer } from "mobx-react";
 import { Button, Space, Popover, Table, Tag, Badge, Tooltip, ConfigProvider } from 'antd'
 import { StarTwoTone, InfoCircleOutlined } from '@ant-design/icons';
@@ -13,33 +13,30 @@ import styles from "./index.module.less";
 interface VisTableProps extends IComponentPropsWithStore {
   currentTime: number,
   currentVideo: VideoType | null,
-  canvasEl: React.RefObject<HTMLCanvasElement>,
   visList: VisType[],
+  selectedVisKey: string | null,
+  onSelectVis: (vis: VisType) => void,
+  // Reports the keys left after column filters (null = no filter active)
+  // so the gantt and the bbox overlay can follow the table.
+  onFilteredChange: (keys: Set<string> | null) => void,
 }
 
 function VisTable(props: VisTableProps) {
   const store = props.store as Store
-  const { currentTime, currentVideo, canvasEl, visList } = props
-  const [selectedVis, setSelectedVis] = useState<VisType | null>(null)
-  const [tablePageSize, setTablePageSize] = useState<number>(100)
+  const { currentTime, currentVideo, visList, selectedVisKey, onSelectVis, onFilteredChange } = props
+  const [tablePageSize, setTablePageSize] = useState<number>(50)
   const [tablePage, setTablePage] = useState<number>(1)
+  const wrapRef = useRef<HTMLDivElement | null>(null)
+  const [bodyHeight, setBodyHeight] = useState<number>(300)
 
-
-  // rowSelection object indicates the need for row selection
-  const rowSelection = {
-    selectedRowKeys: selectedVis ? [selectedVis.key] : [],
-    onChange: (selectedRowKeys: React.Key[], selectedRows: VisType[]) => {
-      console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-      setSelectedVis(selectedRows[0])
-    },
-  };
-
-
-  function selectTableRow(record: VisType) {
-    if (store.checkIsKeyExist(record, store.visList)) {
-      setSelectedVis(record)
-    }
-  };
+  // Let the table body fill whatever height the side panel gives it.
+  useEffect(() => {
+    const el = wrapRef.current
+    if (!el) return
+    const ro = new ResizeObserver(() => setBodyHeight(Math.max(120, el.clientHeight - 96)))
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [])
 
   function goToStart(record: VisType) {
     if (store.checkIsKeyExist(record, store.visList)) {
@@ -52,19 +49,6 @@ function VisTable(props: VisTableProps) {
       if (record.endMoment > 0) {
         store.setVideoPlayerSeekTime(record.endMoment)
       }
-    }
-  }
-
-  function showBbox(v: VisType) {
-    if (!canvasEl.current) return
-    const ctx = canvasEl.current.getContext("2d")
-    if (ctx) {
-      ctx.clearRect(0, 0, 640, 360)
-      ctx.beginPath();
-      // ctx.rect(v.visBbox.x1 / 2, v.visBbox.y1 / 2, (v.visBbox.x2 - v.visBbox.x1) / 2, (v.visBbox.y2 - v.visBbox.y1) / 2);
-      ctx.rect((v.visBbox.x1) / 2, (v.visBbox.y1 - 4) / 2, (v.visBbox.x2 - v.visBbox.x1 - 4) / 2, (v.visBbox.y2 - v.visBbox.y1 - 4) / 2);
-      ctx.strokeStyle = "orange";
-      ctx.stroke();
     }
   }
 
@@ -362,7 +346,7 @@ function VisTable(props: VisTableProps) {
 
 
   return (
-    <div>
+    <div ref={wrapRef} style={{ height: "100%" }}>
       <Table
         className={styles.visTable}
         columns={columns}
@@ -370,19 +354,19 @@ function VisTable(props: VisTableProps) {
           return vis.videoKey === currentVideo?.key
         })}
         size="small"
-        // rowSelection={{
-        //   type: "radio",
-        //   ...rowSelection,
-        // }}
+        rowClassName={(record) => [
+          record.key === selectedVisKey ? styles.selectedRow : "",
+          record.startMoment <= currentTime && currentTime < record.endMoment ? styles.activeRow : "",
+        ].filter(Boolean).join(" ")}
         onRow={(record) => ({
-          // onClick: () => {
-          //   selectTableRow(record);
-          // },
-          style: {
-            background: record.startMoment > currentTime && record.endMoment < currentTime ? 'red' : 'default',
-          }
+          onClick: () => onSelectVis(record),
+          style: { cursor: "pointer" },
         })}
-        scroll={{ x: 1500, y: 350 }}
+        onChange={(_pagination, filters, _sorter, extra) => {
+          const active = Object.values(filters).some((f) => Array.isArray(f) && f.length > 0)
+          onFilteredChange(active ? new Set(extra.currentDataSource.map((r) => r.key)) : null)
+        }}
+        scroll={{ x: 1500, y: bodyHeight }}
         pagination={{
           defaultPageSize: tablePageSize,
           size: "small",
@@ -396,7 +380,6 @@ function VisTable(props: VisTableProps) {
         }}
       />
     </div>
-
   )
 }
 
