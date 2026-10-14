@@ -207,12 +207,12 @@ function VideoSegmentList(props: VideoSegmentListProps) {
   }, [url])
 
   return (
-    <div>
+    <div className={styles.segmentRoot}>
       <AddNewVideoForm
         url={url}
         onAddNewVideoFormFinish={onAddNewVideoFormFinish}
         currentTime={currentTime} />
-      <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
+      <Space direction="vertical" size="middle" className={styles.videoColumn}>
         {/* <div className={styles.videoTextBoxTitle}>
           {`Videos in this URL.`}
         </div> */}
@@ -248,6 +248,8 @@ function VideoSegmentList(props: VideoSegmentListProps) {
         <div className={styles.videoTextBoxSelect}>
           {`${selectedVideo ? `The selected video is [${selectedVideo.year}, ${selectedVideo.type}, ${selectedVideo.distance}, ${selectedVideo.style}]. Key: ${selectedVideo.key}` : `No video is selected.`}`}
         </div>
+      </Space>
+      <div className={styles.listColumn}>
         {
           labelType === "vis"
             ?
@@ -261,8 +263,7 @@ function VideoSegmentList(props: VideoSegmentListProps) {
                 <CameraShotList currentTime={currentTime} currentVideo={selectedVideo} />
             )
         }
-      </Space>
-      {/* <Test /> */}
+      </div>
     </div>
   )
 }

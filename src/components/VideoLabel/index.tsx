@@ -256,30 +256,34 @@ function VideoLabel(props: VideoLabelProps) {
   }
 
   return (
-      <div style={{width: "100vw", height: "100vh", background: "var(--background-color)"}}>
+      <div className={styles.labelPage}>
         <div className={styles.videoPart}>
-          <ReactPlayer
-            className={styles.videoMajor}
-            ref={videoMajorPlayerRef}
-            url={url}
-            onProgress={(v) => updateCurrentTime(v)}
-            onPlay={() => onMajorPlay()}
-            onPause={() => onMajorPause()}
-            playing={playFlag}
-            controls={!editingMode} />
-          <canvas
-            className={styles.videoMajor}
-            ref={canvasRef}
-            id="canvasContainer"
-            width={canvasWidth}
-            height={canvasHeight}
-            style={{ visibility: editingMode ? "visible" : "hidden" }} />
-          <canvas
-            className={styles.labelPreview}
-            ref={canvasLabelRef}
-            width={canvasWidth}
-            height={canvasHeight}
-            style={{ visibility: editingMode ? "visible" : "hidden" }} />
+          <div className={styles.playerBox}>
+            <ReactPlayer
+              className={styles.videoMajor}
+              ref={videoMajorPlayerRef}
+              url={url}
+              width={canvasWidth}
+              height={canvasHeight}
+              onProgress={(v) => updateCurrentTime(v)}
+              onPlay={() => onMajorPlay()}
+              onPause={() => onMajorPause()}
+              playing={playFlag}
+              controls={!editingMode} />
+            <canvas
+              className={styles.videoMajor}
+              ref={canvasRef}
+              id="canvasContainer"
+              width={canvasWidth}
+              height={canvasHeight}
+              style={{ visibility: editingMode ? "visible" : "hidden" }} />
+            <canvas
+              className={styles.labelPreview}
+              ref={canvasLabelRef}
+              width={canvasWidth}
+              height={canvasHeight}
+              style={{ visibility: editingMode ? "visible" : "hidden" }} />
+          </div>
           <Space className={styles.editBtnGroup} size={"middle"}>
             <Switch onChange={onEditSwitchChange} checkedChildren="edit" />
             <Tooltip title="When editing, there will be a green border around video player.">
@@ -322,9 +326,7 @@ function VideoLabel(props: VideoLabelProps) {
           </Space>
           <Tag className={styles.urlNameTag} color="cyan">{urlVideoName}</Tag>
         </div>
-        <div>
-          <VideoSegmentList labelType={labelType} canvasEl={canvasLabelRef} url={url} currentTime={currentTime} />
-        </div>
+        <VideoSegmentList labelType={labelType} canvasEl={canvasLabelRef} url={url} currentTime={currentTime} />
         {/* <div style={{ position: "absolute", right: "10px", top: "10px" }}>
           <div>
             <button style={{ marginBottom: '10px' }} onClick={onButtonClick}>

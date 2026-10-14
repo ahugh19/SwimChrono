@@ -21,6 +21,7 @@ const Header = forwardRef((props: HeaderProps, ref) => {
   const refVideoSelection = useRef(null)
   const refImportExport = useRef(null)
   const refExampleSelection = useRef(null)
+  const refPages = useRef(null)
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -39,7 +40,8 @@ const Header = forwardRef((props: HeaderProps, ref) => {
   useImperativeHandle(ref, () => ({
     videoSelection: refVideoSelection.current,
     importExport: refImportExport.current,
-    exampleSelection: refExampleSelection.current
+    exampleSelection: refExampleSelection.current,
+    pages: refPages.current,
   }))
 
   function handleVideoChange(value: string) {
@@ -110,7 +112,7 @@ const Header = forwardRef((props: HeaderProps, ref) => {
         </div>
 
         <div className={styles.right}>
-          <AppNav mode="menu" />
+          <span ref={refPages}><AppNav mode="menu" /></span>
           <Tooltip title={mode === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}>
             <Button
               type='text'

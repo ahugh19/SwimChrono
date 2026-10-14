@@ -1,29 +1,33 @@
-.videoTextBoxTitle {
-  font-size: 14px;
-  position: absolute;
-  left: 10px;
-  top: 730px;
+// The root is `display: contents` so its children become items of the
+// page grid defined in VideoLabel: the form and the video table stack in
+// the left column under the player, the annotation list fills the right
+// column from the top.
+.segmentRoot {
+  display: contents;
+}
+
+.videoColumn {
+  grid-column: 1;
+  display: flex;
   width: 640px;
 }
+
+.listColumn {
+  grid-column: 2;
+  grid-row: 1 / span 3;
+  min-width: 0;
+}
+
 .videoTextBoxSelect {
-  font-size: 14px;
-  position: absolute;
-  left: 10px;
-  top: 850px;
-  width: 540px;
-  z-index: 1;
-  color: var(--text-color-bright)
+  font-size: 13px;
+  color: var(--text-color-bright);
+  word-break: break-all;
 }
+
 .videoTable {
-  position: absolute;
-  top: 720px;
-  left: 10px;
   width: 640px;
-  z-index: 20;
 }
-.cancelSelectionBtn{
-  position: absolute;
-  z-index: 50;
-  top: 820px;
-  left: 10px;
+
+.cancelSelectionBtn {
+  align-self: flex-start;
 }

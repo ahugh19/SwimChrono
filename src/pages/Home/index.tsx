@@ -7,7 +7,7 @@ import styles from "./index.module.less"
 import { inject, observer } from "mobx-react"
 import { IComponentPropsWithStore, Store } from "../../store"
 import { Button, Divider, Space, Tour, FloatButton } from 'antd';
-import { QuestionCircleOutlined, FieldTimeOutlined, EyeOutlined, CopyOutlined, ArrowUpOutlined, ArrowDownOutlined, DeleteOutlined } from "@ant-design/icons";
+import { QuestionCircleOutlined, FieldTimeOutlined, EyeOutlined, CopyOutlined, ArrowUpOutlined, ArrowDownOutlined, DeleteOutlined, RollbackOutlined, AppstoreOutlined } from "@ant-design/icons";
 import type { TourProps } from 'antd';
 import ResizeHandle, { readStoredSize, writeStoredSize } from '../../components/ResizeHandle';
 
@@ -111,12 +111,20 @@ function Home(props: IComponentPropsWithStore) {
     },
     {
       title: '📺 Video Panel',
-      description: 'Watch the video along with embedded visualizations here. 🎬',
+      description: <div>
+        <p>Watch the video along with embedded visualizations here. 🎬</p>
+        <p>Hover a visualization to highlight it and <b>click it to select its layer</b> for editing. 🎯</p>
+      </div>,
       target: () => childVideoPanelRef.current?.videoPanelComponent,
     },
     {
-      title: '📊 Layer Panel',
-      description: 'Configure visualization layers and check each layer’s timeline in this panel. 🕒',
+      title: '📊 Layer Panel & Timeline',
+      description: <div>
+        <p>Each layer is a row; the bars show <b>when</b> it is visible. 🕒</p>
+        <p>Drag on the ruler or the rows to <b>seek</b>, drag a bar's edges to <b>change its length</b>, or drag the bar to move it. Edited bars get a dashed outline; <RollbackOutlined /> restores the trigger result.</p>
+        <p>Keys: <b>Space</b> play/pause · <b>←/→</b> one frame (Shift: 1 s) · <b>Home</b> race start · <b>Ctrl/⌘ + wheel</b> zoom.</p>
+        <p>Drag the gutters between the panels to resize them (double-click to reset). ↔️</p>
+      </div>,
       target: () => childLayerPanelRef.current?.layerPanelComponent,
       placement: "top"
     },
@@ -152,6 +160,12 @@ function Home(props: IComponentPropsWithStore) {
       </div>,
       target: () => childLayerPanelRef.current?.layerGroupBtn,
       placement: "right"
+    },
+    {
+      title: <div><AppstoreOutlined /> Other Pages</div>,
+      description: 'The labelling tools and the result gantt charts of the systematic review live under this menu. The About dialog lists the paper and the changelog.',
+      target: () => childHeaderRef.current?.pages,
+      placement: "bottomRight"
     },
     {
       title: '🔄 Restart the Tour',

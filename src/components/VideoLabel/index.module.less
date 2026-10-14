@@ -1,57 +1,72 @@
+// Two-column page: the 640px player column on the left (player, transport
+// controls, video form and video table) and the annotation list on the
+// right. Everything is in normal flow so nothing can overlap.
+.labelPage {
+  display: grid;
+  grid-template-columns: 640px minmax(0, 1fr);
+  grid-auto-rows: max-content;
+  column-gap: 24px;
+  row-gap: 12px;
+  align-items: start;
+  width: 100vw;
+  min-height: calc(100vh - 40px);
+  padding: 10px 12px 24px;
+  background: var(--background-color);
+  color: var(--text-color);
+  overflow: auto;
+}
+
 .videoPart {
-  position: absolute;
-  left: 0;
+  grid-column: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 640px;
   font-size: 14px;
+
+  .playerBox {
+    position: relative;
+    width: 640px;
+    height: 360px;
+    background: #000;
+    border-radius: 4px;
+    overflow: hidden;
+  }
 
   .videoMajor {
     position: absolute;
-    left: 10px;
+    top: 0;
+    left: 0;
   }
 
   .labelPreview {
     z-index: 100;
     position: absolute;
-    left: 10px;
+    top: 0;
+    left: 0;
     pointer-events: none;
   }
 
-  .editBtnGroup {
-    position: absolute;
-    top: 370px;
-    left: 10px;
-    .bboxText {
-      width: 380px;
-      color: var(--text-color-bright);
-    }
-  }
-
-  .playBtnGroup {
-    position: absolute;
-    top: 410px;
-    left: 10px;
-  }
-
-  .frameBtnGroup {
-    position: absolute;
-    top: 445px;
-    left: 10px;
-  }
-
+  .editBtnGroup,
+  .playBtnGroup,
+  .frameBtnGroup,
   .urlBtnGroup {
-    position: absolute;
-    top: 480px;
-    left: 10px;
+    flex-wrap: wrap;
+  }
+
+  .editBtnGroup .bboxText {
+    width: 380px;
+    color: var(--text-color-bright);
   }
 
   .urlNameTag {
-    position: absolute;
-    top: 515px;
-    left: 10px;
+    align-self: flex-start;
+    max-width: 640px;
+    white-space: normal;
   }
 }
 
+// VideoSegmentList children are placed on the same grid (see its styles).
 .dataPart {
-  position: absolute;
-  left: 670px;
-  width: 1000px;
+  grid-column: 2;
 }
