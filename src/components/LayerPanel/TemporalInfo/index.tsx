@@ -221,12 +221,28 @@ function TemporalInfo(props: TemporalInfoProps) {
             playingLineY1={0}
             playingLineY2={totalHeight}
           />
-          {tooltip && (
-            <Label x={Math.min(tooltip.x, canvasWidth - 220)} y={tooltip.y} listening={false}>
-              <Tag fill={palette.legendOverlayBg} stroke={palette.accent} strokeWidth={1} cornerRadius={4} shadowBlur={6} shadowOpacity={0.25} />
-              <Text text={tooltip.text} fontSize={11} padding={6} fill={palette.textBright} lineHeight={1.3} />
-            </Label>
-          )}
+          {tooltip && (() => {
+            // Size estimate of the label, then flip it left / up when it
+            // would leave the visible part of the (possibly scrolled) chart.
+            const lines = tooltip.text.split("\n")
+            const boxW = Math.min(360, Math.max(...lines.map((l) => l.length)) * 6.4 + 14)
+            const boxH = lines.length * 11 * 1.3 + 14
+            const scroller = konvaStageRef.current?.container().parentElement
+            const visLeft = scroller?.scrollLeft ?? 0
+            const visRight = visLeft + (scroller?.clientWidth ?? canvasWidth)
+            const visTop = scroller?.scrollTop ?? 0
+            const visBottom = visTop + (scroller?.clientHeight ?? totalHeight)
+            let lx = tooltip.x
+            if (lx + boxW > visRight) lx = Math.max(visLeft, tooltip.x - 24 - boxW)
+            let ly = tooltip.y
+            if (ly + boxH > visBottom) ly = Math.max(visTop, tooltip.y - 24 - boxH)
+            return (
+              <Label x={lx} y={ly} listening={false}>
+                <Tag fill={palette.legendOverlayBg} stroke={palette.accent} strokeWidth={1} cornerRadius={4} shadowBlur={6} shadowOpacity={0.25} />
+                <Text text={tooltip.text} fontSize={11} padding={6} fill={palette.textBright} lineHeight={1.3} />
+              </Label>
+            )
+          })()}
         </Layer>
       </Stage>
     </div>

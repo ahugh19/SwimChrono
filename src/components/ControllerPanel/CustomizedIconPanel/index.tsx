@@ -1,8 +1,10 @@
-import { Row, Flex, InputNumber, Button, Tag, Switch, Modal, Input, Space, Typography, Tooltip } from 'antd'
+import { Row, Flex, InputNumber, Button, Tag, Switch, Modal, Space, Typography, Tooltip } from 'antd'
 import { useEffect, useState, useRef } from "react"
 import { DEFAULTSwimFlow2CustomizedIconControllerIconSize } from '../../../utils/values'
 import { LayerType } from "../../../types"
-import { FileImageOutlined, FileExcelOutlined, CodeOutlined, CopyOutlined } from '@ant-design/icons';
+import { FileImageOutlined, FileExcelOutlined, CodeOutlined, CopyOutlined, AlignLeftOutlined } from '@ant-design/icons';
+import CodeEditor from '../../CodeEditor'
+import { formatXml } from '../../CodeEditor/xml'
 import { message } from '../../../utils/feedback'
 import styles from './index.module.less'
 
@@ -75,7 +77,7 @@ function CustomizedIconController(props: ICustomizedIconControllerProps) {
   }
 
   function openEditor() {
-    setDraft(svgContent)
+    setDraft(formatXml(svgContent))
     setEditorOpen(true)
   }
 
@@ -168,6 +170,9 @@ function CustomizedIconController(props: ICustomizedIconControllerProps) {
         width={640}
         footer={
           <Space>
+            <Tooltip title="Re-indent the markup">
+              <Button icon={<AlignLeftOutlined />} onClick={() => setDraft(formatXml(draft))} disabled={!draft.trim()}>Format</Button>
+            </Tooltip>
             <Tooltip title="Copy the code to the clipboard">
               <Button icon={<CopyOutlined />} onClick={copyDraft} disabled={!draft}>Copy</Button>
             </Tooltip>
@@ -179,12 +184,9 @@ function CustomizedIconController(props: ICustomizedIconControllerProps) {
         <Typography.Paragraph type="secondary" style={{ marginBottom: 8 }}>
           Paste or edit the markup of one <Typography.Text code>&lt;svg&gt;</Typography.Text> element. The icon is drawn at its own size and scaled by the Size value.
         </Typography.Paragraph>
-        <Input.TextArea
+        <CodeEditor
           value={draft}
-          onChange={(e) => setDraft(e.target.value)}
-          autoSize={{ minRows: 12, maxRows: 24 }}
-          spellCheck={false}
-          className={styles.code}
+          onChange={setDraft}
           placeholder={'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 16">…</svg>'}
         />
         {draft.trim() && (

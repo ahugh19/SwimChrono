@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { SwimmerVideoFrameType, SwimmerVideoDataType, LayerType, EditableElementType, VideoMetaDataType } from "../../../../../types";
+import { SwimmerVideoFrameType, SwimmerVideoDataType, LayerType, EditableElementType, VideoMetaDataType, CustomizedIconType } from "../../../../../types";
 import { isOlympic, recordLabel } from "../../../../../utils/raceInfo";
 import { editableElementInVisConfig } from "../../../../../utils/values";
+import CustomGlyph from "../../CustomGlyph";
 
 interface VisOlympicRecordCornerProps {
   currentSwimmerVideo: SwimmerVideoDataType | null | undefined,
@@ -15,11 +16,13 @@ interface VisOlympicRecordCornerProps {
   svgWidth: number | undefined,
   svgHeight: number | undefined,
   videoMetaData?: VideoMetaDataType | null,
+  // optional svg replacing the built-in glyph
+  customizedIcon?: CustomizedIconType
 }
 
 function VisOlympicRecordCorner(props: VisOlympicRecordCornerProps) {
 
-  const { currentSwimmerVideo, currentFrameIndex, x, y, r, s, editableElementList, visibility, svgHeight, svgWidth, videoMetaData } = props;
+  const { currentSwimmerVideo, currentFrameIndex, x, y, r, s, editableElementList, visibility, svgHeight, svgWidth, videoMetaData , customizedIcon } = props;
   const olympic = isOlympic(videoMetaData)
 
   const [olympicRecord, setOlympicRecord] = useState<number | string | null>(null)
@@ -80,7 +83,7 @@ function VisOlympicRecordCorner(props: VisOlympicRecordCornerProps) {
         stroke={orBgStyle?.shapeStrokeColor}
         strokeWidth={orBgStyle?.shapeStrokeWidth}
         visibility={visibility && orBgStyle?.visible ? "visible" : "hidden"}/>
-      {!olympic && (
+      {customizedIcon?.svgContent ? <CustomGlyph icon={customizedIcon} visibility={visibility} /> : <>{!olympic && (
         <text
           x={`${(orTextStyle?.x ?? 0) + 12.3}`}
           y={`${(orTextStyle?.y ?? 0) + 12}`}
@@ -97,7 +100,7 @@ function VisOlympicRecordCorner(props: VisOlympicRecordCornerProps) {
         fill={orTextStyle?.shapeFillColor}
         stroke={orTextStyle?.shapeStrokeColor}
         strokeWidth={orTextStyle?.shapeStrokeWidth}
-        visibility={visibility && orTextStyle?.visible ? "visible" : "hidden"} />}
+        visibility={visibility && orTextStyle?.visible ? "visible" : "hidden"} />}</>}
 
       <text
         x={`${orValueStyle?.x ? orValueStyle?.x + 30 : 30}`}

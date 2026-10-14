@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, forwardRef, useImperativeHandle } from "react";
-import { Button, Spin, Row, Tag, Progress } from "antd"
+import { Button, Spin, Progress } from "antd"
 import { message } from "../../utils/feedback"
 import { PlayCircleOutlined, PauseCircleOutlined, VideoCameraFilled } from '@ant-design/icons';
 import DataPanel from "./DataPanel"
@@ -193,13 +193,6 @@ const VideoPanel = forwardRef((props: VideoPanelProps, ref) => {
 
   return (
     <div className={styles.videoPanelContainer} ref={containerRef}>
-      <Row className={styles.videoTitle}>
-        {
-          store?.currentVideoMetaData ?
-            <Tag bordered={false} icon={<VideoCameraFilled />}>{`${store?.currentVideoMetaData.videoName}.mp4`}</Tag> :
-            <Tag bordered={false}>No video.</Tag>
-        }
-      </Row>
       <div className={styles.videoWrapper} style={{ width: size.width, height: size.height }}>
         <video ref={videoRef} src={videoSrc} onLoadedData={handleLoadedData} crossOrigin="anonymous" muted></video>
         <div className={styles.visHolder} style={{ width: size.width, height: size.height }}>
@@ -219,6 +212,11 @@ const VideoPanel = forwardRef((props: VideoPanelProps, ref) => {
             icon={isVideoPlay ? <PauseCircleOutlined style={{ fontSize: "20px" }} /> : <PlayCircleOutlined style={{ fontSize: "20px" }} />}
             onClick={playPauseVideo}
           />
+        </div>
+        {/* source file, tucked under the video's bottom-right corner */}
+        <div className={styles.videoCaption} title={store?.currentVideoMetaData ? store.currentVideoMetaData.video : undefined}>
+          <VideoCameraFilled />
+          <span>{store?.currentVideoMetaData ? `${store.currentVideoMetaData.videoName}.mp4` : "No video"}</span>
         </div>
       </div>
       {

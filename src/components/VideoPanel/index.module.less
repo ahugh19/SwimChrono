@@ -4,15 +4,11 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin: auto;
-  max-height: -webkit-fill-available;
-  max-width: -webkit-fill-available;
+  // Explicit size: the video wrapper is sized from this box by script,
+  // so the container must not collapse to its (initially empty) content.
+  width: 100%;
+  height: 100%;
 
-  .videoTitle {
-    line-height: 20px;
-    font-size: 14px;
-    margin-bottom: 10px;
-  }
 
   .videoWrapper {
     position: relative; // positioning context for absolute children
@@ -40,6 +36,19 @@
       left: 50%;
       transform: translateX(-50%);
       z-index: 2;
+    }
+
+    .videoCaption {
+      position: absolute;
+      right: 0;
+      top: 100%;
+      margin-top: 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+      color: var(--text-color-faint);
+      white-space: nowrap;
     }
   }
 

@@ -13,9 +13,9 @@ function setup() {
       onMinDurationChange={onMinDurationChange}
     />
   )
-  // The InputNumber inputs live inside a Collapse panel that is collapsed
-  // by default. Click the header so the inputs mount in the DOM.
-  const header = result.container.querySelector(".ant-collapse-header") as HTMLElement
+  // The inputs are hidden behind the collapsed section title by default.
+  // Click the title so they mount in the DOM.
+  const header = result.container.querySelector("button[aria-expanded]") as HTMLElement
   fireEvent.click(header)
   return { ...result, onBlurChange, onMinDurationChange }
 }

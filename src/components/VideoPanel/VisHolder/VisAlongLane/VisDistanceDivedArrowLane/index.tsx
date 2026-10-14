@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { SwimmerVideoFrameType, SwimmerVideoDataType, LayerType, EditableElementType, VideoFrameDataType } from "../../../../../types";
+import { SwimmerVideoFrameType, SwimmerVideoDataType, LayerType, EditableElementType, VideoFrameDataType, CustomizedIconType } from "../../../../../types";
 import { VALUEHalfDistance, editableElementInVisConfig, DEFAULTSwimFlow2PositionXNoMove, DEFAULTSwimFlow2LaneSum, VALUEFrameDataDirection_advance, VALUEFrameDataDirection_return, DEFAULTSwimFlow2TextControllerFontSize, DEFAULTSwimFlow2LapDistance } from "../../../../../utils/values"
+import CustomGlyph from "../../CustomGlyph";
 
 interface VisDistanceDivedArrowLaneProps {
   layerList: LayerType[],
@@ -19,10 +20,12 @@ interface VisDistanceDivedArrowLaneProps {
   laneCount?: number
   poolLength?: number
   lapLength?: number
+  // optional svg replacing the built-in glyph
+  customizedIcon?: CustomizedIconType
 }
 
 function VisDistanceDivedArrowLane(props: VisDistanceDivedArrowLaneProps) {
-  const { currentSwimmerVideo, currentFrameIndex, x, y, r, s, isMove, laneIndex, svgWidth, svgHeight, editableElementList, visibility , laneCount = DEFAULTSwimFlow2LaneSum , poolLength = VALUEHalfDistance , lapLength = DEFAULTSwimFlow2LapDistance } = props;
+  const { currentSwimmerVideo, currentFrameIndex, x, y, r, s, isMove, laneIndex, svgWidth, svgHeight, editableElementList, visibility , laneCount = DEFAULTSwimFlow2LaneSum , poolLength = VALUEHalfDistance , lapLength = DEFAULTSwimFlow2LapDistance , customizedIcon } = props;
   const [distanceDived, setDistanceDived] = useState<number>(0)
   const [lineEndX, setLineEndX] = useState<number>(0)
   const [arrowTipX, setArrowTipX] = useState<number>(0)
@@ -77,7 +80,7 @@ function VisDistanceDivedArrowLane(props: VisDistanceDivedArrowLaneProps) {
       visibility={visibility ? "visible" : "hidden"}
     >
       <line x1={lineStartX} y1="50" x2={lineEndX} y2="50" stroke={shapeStyle?.shapeStrokeColor} strokeWidth={shapeStyle?.shapeStrokeWidth} visibility={visibility && shapeStyle?.visible ? "visible" : "hidden"}/>
-      <polygon points={`${arrowTipX},50 ${arrowTipX + 20},40 ${arrowTipX + 20},60`} fill={shapeStyle?.shapeFillColor} visibility={visibility && shapeStyle?.visible ? "visible" : "hidden"}/>
+      {customizedIcon?.svgContent ? <CustomGlyph icon={customizedIcon} visibility={visibility} /> : <><polygon points={`${arrowTipX},50 ${arrowTipX + 20},40 ${arrowTipX + 20},60`} fill={shapeStyle?.shapeFillColor} visibility={visibility && shapeStyle?.visible ? "visible" : "hidden"}/></>}
     </g>
   )
 }

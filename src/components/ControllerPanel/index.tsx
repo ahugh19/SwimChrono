@@ -14,6 +14,7 @@ import { EditableElementType, EmbeddedVisType, LayerType } from "../../types"
 import { embeddedVisTypeComposeType_GLOBAL, embeddedVisTypeComposeType_INDIVIDUAL, editableElementInVisConfig, VALUE_customizedIconGlobal, VALUE_customizedIconIndividual, VALUE_eventLogoCorner } from "../../utils/values"
 import { OLYMPIC_RINGS_FULL_SVG } from "../VideoPanel/VisHolder/VisGlobal/VisEventLogoCorner/olympicRings"
 import { isOlympic } from "../../utils/raceInfo"
+import { builtInGlyphs } from "../VideoPanel/VisHolder/builtInGlyphs"
 import LaneController from "./LaneController"
 import { Row, Typography, Divider } from "antd"
 import GlobalController from "./GlobalController"
@@ -35,6 +36,20 @@ const ControllerPanel = forwardRef((props: ControllerPanelProps, ref) => {
   const refControllerPanel = useRef<any>(null)
   const refChooseData = useRef<any>(null)
   const refChooseVis = useRef<any>(null)
+
+  // Built-in glyph (svg + hint) of the selected visualization, if it has one.
+  function builtInGlyphFor(visName: string | undefined) {
+    if (!visName) return undefined
+    if (visName === VALUE_eventLogoCorner) {
+      return isOlympic(store?.currentVideoMetaData)
+        ? { svg: OLYMPIC_RINGS_FULL_SVG, hint: "Built-in Olympic rings. Edit the code to replace them." }
+        : { svg: "", hint: "Built-in badge with the competition name. Write code to replace it with your own logo." }
+    }
+    return builtInGlyphs[visName]
+  }
+  function hasBuiltInGlyph(visName: string | undefined) {
+    return visName === VALUE_eventLogoCorner || (!!visName && visName in builtInGlyphs)
+  }
 
   useImperativeHandle(ref, () => ({
     controllerPanelComponent: refControllerPanel.current,
@@ -230,7 +245,7 @@ const ControllerPanel = forwardRef((props: ControllerPanelProps, ref) => {
               onVisSelect={onVisSelect} />
 
             {
-              currentLayer.embeddedVis?.visName === VALUE_customizedIconGlobal || currentLayer.embeddedVis?.visName === VALUE_customizedIconIndividual || currentLayer.embeddedVis?.visName === VALUE_eventLogoCorner
+              currentLayer.embeddedVis?.visName === VALUE_customizedIconGlobal || currentLayer.embeddedVis?.visName === VALUE_customizedIconIndividual || hasBuiltInGlyph(currentLayer.embeddedVis?.visName)
                 ?
                 <>
                   <CustomizedIconController
@@ -239,8 +254,8 @@ const ControllerPanel = forwardRef((props: ControllerPanelProps, ref) => {
                     onCustomizedIconVisibilityChange={onCustomizedIconVisibilityChange}
                     defaultSize={currentLayer.embeddedVis?.customizedIcon?.size}
                     currentLayer={currentLayer}
-                    builtInSvg={currentLayer.embeddedVis?.visName === VALUE_eventLogoCorner && isOlympic(store?.currentVideoMetaData) ? OLYMPIC_RINGS_FULL_SVG : undefined}
-                    builtInHint={currentLayer.embeddedVis?.visName === VALUE_eventLogoCorner ? (isOlympic(store?.currentVideoMetaData) ? "Built-in Olympic rings. Edit the code to replace them." : "Built-in badge with the competition name. Write code to replace it with your own logo.") : undefined}
+                    builtInSvg={builtInGlyphFor(currentLayer.embeddedVis?.visName)?.svg}
+                    builtInHint={builtInGlyphFor(currentLayer.embeddedVis?.visName)?.hint}
                   />
                   <Divider style={{ margin: "14px 0" }} />
                 </>

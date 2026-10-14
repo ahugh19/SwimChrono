@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { SwimmerVideoFrameType, SwimmerVideoDataType, LayerType, EditableElementType } from "../../../../../types";
+import { SwimmerVideoFrameType, SwimmerVideoDataType, LayerType, EditableElementType, CustomizedIconType } from "../../../../../types";
 import { editableElementInVisConfig } from "../../../../../utils/values";
+import CustomGlyph from "../../CustomGlyph";
 
 interface VisWorldRecordSplitCornerProps {
   currentSwimmerVideo: SwimmerVideoDataType | null | undefined,
@@ -13,11 +14,13 @@ interface VisWorldRecordSplitCornerProps {
   visibility: boolean,
   svgWidth: number | undefined,
   svgHeight: number | undefined,
+  // optional svg replacing the built-in glyph
+  customizedIcon?: CustomizedIconType
 }
 
 function VisWorldRecordSplitCorner(props: VisWorldRecordSplitCornerProps) {
 
-  const { currentSwimmerVideo, currentFrameIndex, x, y, r, s, editableElementList, visibility } = props;
+  const { currentSwimmerVideo, currentFrameIndex, x, y, r, s, editableElementList, visibility , customizedIcon } = props;
 
   const [worldRecordSplit, setWorldRecordSplit] = useState<number | string | null>(null)
   const [opacity, setOpacity] = useState<number>(0)
@@ -72,7 +75,7 @@ function VisWorldRecordSplitCorner(props: VisWorldRecordSplitCornerProps) {
         stroke={wrBgStyle?.shapeStrokeColor}
         strokeWidth={wrBgStyle?.shapeStrokeWidth}
         visibility={visibility && wrBgStyle?.visible ? "visible" : "hidden"} />
-      <path
+      {customizedIcon?.svgContent ? <CustomGlyph icon={customizedIcon} visibility={visibility} /> : <><path
         d="M11.387 12H9.45403L9.09103 5.6475H10.8062V10.1396L12.7936 5.6475H14.5542L14.7266 10.1305L16.5053 5.6475H18.2296L15.3437 12H13.4017L13.2111 7.88903L11.387 12ZM22.1495 7.7166C22.1797 7.56535 22.1737 7.43527 22.1313 7.32637C22.095 7.21142 22.0194 7.1237 21.9044 7.0632C21.7895 7.0027 21.6382 6.97245 21.4507 6.97245H20.2074L19.917 8.46982H21.1603C21.4386 8.46982 21.6594 8.4063 21.8228 8.27925C21.9922 8.14615 22.1011 7.9586 22.1495 7.7166ZM21.8228 5.6475C22.3431 5.6475 22.7575 5.7443 23.066 5.9379C23.3806 6.12545 23.5924 6.37652 23.7013 6.69112C23.8102 7.00572 23.8283 7.34755 23.7557 7.7166C23.6892 8.0554 23.541 8.38513 23.3111 8.70578C23.0812 9.02643 22.7726 9.2896 22.3854 9.4953C21.9982 9.69495 21.5354 9.79477 20.9969 9.79477H19.6538L19.2092 12H17.6301L18.9006 5.6475H21.8228ZM21.9044 9.25028L23.0207 12H21.2783L20.2528 9.25028H21.9044Z"
         fill={wrTextStyle?.shapeFillColor}
         stroke={wrTextStyle?.shapeStrokeColor}
@@ -83,7 +86,7 @@ function VisWorldRecordSplitCorner(props: VisWorldRecordSplitCornerProps) {
         fill={splitTextStyle?.shapeFillColor}
         stroke={splitTextStyle?.shapeStrokeColor}
         strokeWidth={splitTextStyle?.shapeStrokeWidth}
-        visibility={visibility && splitTextStyle?.visible ? "visible" : "hidden"} />
+        visibility={visibility && splitTextStyle?.visible ? "visible" : "hidden"} /></>}
 
       <text
         x={`${(textStyle?.x ?? 0) + 68}`}

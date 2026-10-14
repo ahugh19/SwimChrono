@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { SwimmerVideoFrameType, SwimmerVideoDataType, LayerType, EditableElementType, VideoFrameDataType } from "../../../../../types";
+import { SwimmerVideoFrameType, SwimmerVideoDataType, LayerType, EditableElementType, VideoFrameDataType, CustomizedIconType } from "../../../../../types";
 import { VALUEHalfDistance, editableElementInVisConfig, DEFAULTSwimFlow2PositionXNoMove, DEFAULTSwimFlow2LaneSum, VALUEFrameDataDirection_advance, VALUEFrameDataDirection_return, VALUEClimbHeight, VALUEClimbWidth, VALUEClimbVideoHeight, VALUEClimbVideoWidth } from "../../../../../utils/values"
+import CustomGlyph from "../../CustomGlyph";
 
 interface SchemaProps {
   transform?: any,
@@ -23,10 +24,12 @@ interface VisClimbIconProps {
   svgHeight: number | undefined,
   editableElementList: EditableElementType[]
   visibility: boolean
+  // optional svg replacing the built-in glyph
+  customizedIcon?: CustomizedIconType
 }
 
 function VisClimbIcon(props: VisClimbIconProps) {
-  const { currentSwimmerVideo, currentFrameIndex, x, y, r, s, isMove, laneIndex, svgWidth, svgHeight, editableElementList, visibility } = props;
+  const { currentSwimmerVideo, currentFrameIndex, x, y, r, s, isMove, laneIndex, svgWidth, svgHeight, editableElementList, visibility , customizedIcon } = props;
   const [laneData, setLaneData] = useState<VideoFrameDataType | undefined>()
   const [iconStyle, setIconStyle] = useState<EditableElementType | undefined>()
   const fontSize = 20;
@@ -76,7 +79,7 @@ function VisClimbIcon(props: VisClimbIconProps) {
         laneData ?
           <g transform={
             `translate(0, -70) rotate(180) scale(${20 / 100})`}>
-            <path d="M93.7,110.4l-71.7,48c-1.7,1.2-4,.6-5.2-1.2,0-.6-.6-1.2-.6-2.3V45c0-2.3,1.7-4,4-4s1.7,0,2.3.6l71.7,48v-44.5c0-2.3,1.7-4,4-4s1.7,0,2.3.6l82.7,54.9c1.7,1.2,2.3,3.5,1.2,5.2,0,0-.6.6-1.2,1.2l-82.7,54.9c-1.7,1.2-4,.6-5.2-1.2,0-.6-.6-1.2-.6-2.3v-44.5h0l-1.2.6Z" fill={iconStyle?.shapeFillColor} />
+            {customizedIcon?.svgContent ? <CustomGlyph icon={customizedIcon} visibility={visibility} /> : <><path d="M93.7,110.4l-71.7,48c-1.7,1.2-4,.6-5.2-1.2,0-.6-.6-1.2-.6-2.3V45c0-2.3,1.7-4,4-4s1.7,0,2.3.6l71.7,48v-44.5c0-2.3,1.7-4,4-4s1.7,0,2.3.6l82.7,54.9c1.7,1.2,2.3,3.5,1.2,5.2,0,0-.6.6-1.2,1.2l-82.7,54.9c-1.7,1.2-4,.6-5.2-1.2,0-.6-.6-1.2-.6-2.3v-44.5h0l-1.2.6Z" fill={iconStyle?.shapeFillColor} /></>}
           </g>
           :
           null

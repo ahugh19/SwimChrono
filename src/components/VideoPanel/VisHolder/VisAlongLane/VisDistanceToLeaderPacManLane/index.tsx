@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { SwimmerVideoFrameType, SwimmerVideoDataType, LayerType, EditableElementType, VideoFrameDataType } from "../../../../../types";
+import { SwimmerVideoFrameType, SwimmerVideoDataType, LayerType, EditableElementType, VideoFrameDataType, CustomizedIconType } from "../../../../../types";
 import { VALUEHalfDistance, editableElementInVisConfig, DEFAULTSwimFlow2PositionXNoMove, DEFAULTSwimFlow2LaneSum, VALUEFrameDataDirection_advance, VALUEFrameDataDirection_return, DEFAULTSwimFlow2TextControllerFontSize } from "../../../../../utils/values"
 import { getFlagSVG } from "../../../../../utils"
+import CustomGlyph from "../../CustomGlyph";
 
 interface VisDistanceToLeaderPacManLaneProps {
   layerList: LayerType[],
@@ -19,10 +20,12 @@ interface VisDistanceToLeaderPacManLaneProps {
   visibility: boolean
   laneCount?: number
   poolLength?: number
+  // optional svg replacing the built-in glyph
+  customizedIcon?: CustomizedIconType
 }
 
 function VisDistanceToLeaderPacManLane(props: VisDistanceToLeaderPacManLaneProps) {
-  const { currentSwimmerVideo, currentFrameIndex, x, y, r, s, isMove, laneIndex, svgWidth, svgHeight, editableElementList, visibility , laneCount = DEFAULTSwimFlow2LaneSum , poolLength = VALUEHalfDistance } = props;
+  const { currentSwimmerVideo, currentFrameIndex, x, y, r, s, isMove, laneIndex, svgWidth, svgHeight, editableElementList, visibility , laneCount = DEFAULTSwimFlow2LaneSum , poolLength = VALUEHalfDistance , customizedIcon } = props;
 
   const [isPacManRendering, setIsPacManRendering] = useState<boolean>(true)
   const [isDotRendering, setIsDotRendering] = useState<boolean>(true)
@@ -132,7 +135,7 @@ function VisDistanceToLeaderPacManLane(props: VisDistanceToLeaderPacManLaneProps
               laneData
                 ?
                 <g transform="scale(-1, 1)" visibility={visibility && pacManStyle?.visible ? "visible" : "hidden"}>
-                  <svg width="50" height="50" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                  {customizedIcon?.svgContent ? <CustomGlyph icon={customizedIcon} visibility={visibility} /> : <><svg width="50" height="50" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                       <mask id="pacman-mask">
                           <rect width="100" height="100" fill="white" />
                           <path id="mouth" fill="black"
@@ -150,7 +153,7 @@ function VisDistanceToLeaderPacManLane(props: VisDistanceToLeaderPacManLaneProps
                           strokeWidth={pacManStyle?.shapeStrokeWidth}
                           mask="url(#pacman-mask)" />
                         <circle cx="60" cy="38" r="3" fill={pacManStyle?.shapeStrokeColor ?? "black"} />
-                  </svg>
+                  </svg></>}
                 </g>
                 : null
             }

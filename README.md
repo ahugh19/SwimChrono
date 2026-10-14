@@ -168,6 +168,26 @@ exposes editors based on the element's `type` (`text` / `shape` / `icon` /
 
 ## Changelog
 
+### 1.5.0
+
+Visualizations driven by the video metadata
+* The race-name corner reads gender, distance, stroke and round from the video's metadata instead of a fixed string; lane count, pool length and lap length come from the metadata too (27 components, climbing unchanged).
+* New "Event logo" corner (data: race name): the Olympic rings for an Olympic race, otherwise the competition name and year. The Olympic Style example uses it in place of the hand-made rings icon. The record corner reads "OR" at the Olympics and "CR" elsewhere.
+* Built-in glyphs can be replaced by a custom svg: the event logo, Pac-Man, the ranking arrows, the climbing icon, the dive arrowhead and the WR / OR lettering. Selecting such a layer shows the default svg in the icon panel, ready to copy or edit.
+
+Customized SVG icon panel
+* Preview of the current icon, and a code window with syntax highlighting, a Format button, Copy and Apply.
+
+Result charts
+* The player is cued at the race start without playing (no more pre-roll on page load); seeking while paused stays paused; a mute button with a speaker icon.
+* The page is titled "Labeling results".
+
+Headers, tours and polish
+* Every page header ends with the same button group: Pages menu, GitHub, About (with page icons on its links) and the help tour. The tours of the label tools and the result charts open only from that button; the authoring tour gained a "Resize the panels" step and its help button moved into the header.
+* Timeline ruler: tick labels yield to the race-start label and the playhead badge; interval tooltips flip to stay inside the visible chart.
+* Controller panel: tighter spacing, "Global settings" styled like the other sections, and the video file name shown under the player instead of above it.
+* User-facing text uses American spelling throughout; a few notices were reworded.
+
 ### 1.4.0
 
 Result charts (`/visualization`)
@@ -188,17 +208,6 @@ Onboarding & appearance
 * Guided tours on the result charts and on each label tool (? button in the header), shown once on first visit; the authoring tour gained steps for the timeline, click-to-select on the video, resizable panels and the Pages menu.
 * The label tools use a two-column flow layout instead of fixed absolute offsets, so nothing overlaps any more.
 * Light mode uses a deeper accent blue (#1a8fc7) and firmer selection tints; the accent is theme-aware in the timeline and chart canvases.
-* Every page header ends with the same button group: Pages menu, GitHub, About and the help tour. The tours of the label tools and the result charts open only from that button.
-* Result player: the video is cued at the race start without playing (no more pre-roll on page load), seeking while paused stays paused, and a mute button was added.
-
-Visualizations driven by the video metadata
-* The race-name corner reads gender, distance, stroke and round from the video's metadata instead of a fixed string; lane count, pool length and lap length come from the metadata too (27 components, climbing unchanged).
-* New "Event logo" corner (data: race name): the Olympic rings for an Olympic race, otherwise the competition name and year. The Olympic Style example uses it in place of the hand-made rings icon. The record corner reads "OR" at the Olympics and "CR" elsewhere.
-* Customized SVG icon: the controller shows a preview of the current icon and opens a code window to copy or edit the SVG markup; tighter spacing in the controller panel.
-* About dialog links carry the page icons; the results page is titled "Labeling results".
-* The event logo can be replaced by a custom svg: selecting its layer shows the built-in badge in the SVG icon panel, ready to copy or edit.
-* User-facing text uses American spelling throughout (labeling, color, gray); a few notices were reworded ("Video data loaded.", "Deleted …", "URL").
-
 ### 1.3.0
 
 Timeline

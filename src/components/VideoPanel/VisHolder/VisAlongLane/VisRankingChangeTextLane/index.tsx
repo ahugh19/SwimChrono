@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { SwimmerVideoFrameType, SwimmerVideoDataType, LayerType, EditableElementType, VideoFrameDataType } from "../../../../../types";
+import { SwimmerVideoFrameType, SwimmerVideoDataType, LayerType, EditableElementType, VideoFrameDataType, CustomizedIconType } from "../../../../../types";
 import { VALUEHalfDistance, editableElementInVisConfig, DEFAULTSwimFlow2PositionXNoMove, DEFAULTSwimFlow2LaneSum, VALUEFrameDataDirection_advance, VALUEFrameDataDirection_return } from "../../../../../utils/values"
+import CustomGlyph from "../../CustomGlyph";
 
 interface SchemaProps {
   transform?: any,
@@ -25,10 +26,12 @@ interface VisRankingChangeTextLaneProps {
   visibility: boolean
   laneCount?: number
   poolLength?: number
+  // optional svg replacing the built-in glyph
+  customizedIcon?: CustomizedIconType
 }
 
 function VisRankingChangeTextLane(props: VisRankingChangeTextLaneProps) {
-  const { currentSwimmerVideo, currentFrameIndex, x, y, r, s, isMove, laneIndex, svgWidth, svgHeight, editableElementList, visibility , laneCount = DEFAULTSwimFlow2LaneSum , poolLength = VALUEHalfDistance } = props;
+  const { currentSwimmerVideo, currentFrameIndex, x, y, r, s, isMove, laneIndex, svgWidth, svgHeight, editableElementList, visibility , laneCount = DEFAULTSwimFlow2LaneSum , poolLength = VALUEHalfDistance , customizedIcon } = props;
   const [contentText, setContentText] = useState<number>(0)
   const [laneData, setLaneData] = useState<VideoFrameDataType | undefined>()
   const [textStyle, setTextStyle] = useState<EditableElementType | undefined>()
@@ -112,7 +115,7 @@ function VisRankingChangeTextLane(props: VisRankingChangeTextLaneProps) {
         contentText === 1 ?
           <></> :
           <>
-            <svg width="21" height="22" viewBox="0 0 21 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+            {customizedIcon?.svgContent ? <CustomGlyph icon={customizedIcon} visibility={visibility} /> : <><svg width="21" height="22" viewBox="0 0 21 22" fill="none" xmlns="http://www.w3.org/2000/svg">
               {rankingChangeStatus === UP ?
               <g>
                 <path
@@ -131,7 +134,7 @@ function VisRankingChangeTextLane(props: VisRankingChangeTextLaneProps) {
                   visibility={visibility && arrowDownStyle?.visible ? "visible" : "hidden"} />
               </g>
             }
-            </svg>
+            </svg></>}
             <text
               x={`${textStyle?.x ? textStyle?.x + 25 : 25}`}
               y={`${textStyle?.y ? textStyle?.y + 20 : 20}`}
