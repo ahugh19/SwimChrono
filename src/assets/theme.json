@@ -1,8 +1,9 @@
 {
   "token": {
-    "colorTextBase": "#dedede",
+    "colorTextBase": "#e8eef3",
     "colorPrimary": "#2babea",
-    "colorInfo": "#2babea"
+    "colorInfo": "#2babea",
+    "borderRadius": 4
   },
   "components": {
     "Slider": {

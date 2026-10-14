@@ -1,19 +1,44 @@
 .layerItemContainer {
   display: flex;
-  width: 222px;
+  align-items: center;
+  width: 248px;
   justify-content: flex-start;
   height: 24px;
-  // margin-bottom: 1px;
   border-bottom: 1px solid var(--border-color-soft);
-  border-left: 1px solid var(--border-color-soft);
+  border-left: 3px solid transparent; // accent bar when selected
   border-right: 1px solid var(--border-color-soft);
   line-height: 24px;
   font-size: 13px;
-  .controlBtn {
+  background-color: var(--background-color);
+  transition: background-color 0.12s ease;
+
+  &:hover {
+    background-color: var(--row-bg-hover);
   }
+
+  &.invisible {
+    background-color: var(--row-bg-invisible);
+    color: var(--text-color-faint);
+  }
+
+  &.selected {
+    background-color: var(--row-bg-selected);
+    border-left-color: var(--my-theme-color);
+  }
+
+  &.selected.invisible {
+    background-color: var(--row-bg-selected-invisible);
+  }
+
+  .controlBtn {
+    display: flex;
+    align-items: center;
+  }
+
   .layerName {
     margin: 0 4px;
-    width: 99px;
+    width: 118px;
     border: none;
+    background: transparent;
   }
 }

@@ -45,18 +45,23 @@ html, body {
      screens. */
   --height-layer-panel: clamp(300px, 45vh, 440px);
 
-  /* dark palette (default) */
-  --background-color: #1a1a1a;
-  --background-color-elevated: #222222;
-  --background-color-pre-start: #222222;
-  --background-color-overlay: #000000;
-  --text-color: #B0B0B0;
-  --text-color-bright: #dedede;
-  --text-color-faint: rgba(222, 222, 222, 0.25);
+  /* dark palette (default): blue-tinted neutrals, see utils/theme.tsx */
+  --background-color: #161a1f;
+  --background-color-elevated: #1e242b;
+  --background-color-pre-start: #1b2128;
+  --background-color-overlay: #0d1013;
+  --text-color: #b8c2cc;
+  --text-color-bright: #e8eef3;
+  --text-color-faint: rgba(184, 194, 204, 0.45);
   --stroke-color: #000000;
-  --border-color: #ffffff1a;
-  --border-color-soft: #454545;
-  --accent-color: #3C6CA8;
+  --border-color: #ffffff14;
+  --border-color-soft: #2f3a45;
+  --accent-color: #2babea;
+  /* layer rows (shared by the list and the timeline) */
+  --row-bg-hover: #222a33;
+  --row-bg-invisible: #1e242b;
+  --row-bg-selected: #1c3b53;
+  --row-bg-selected-invisible: #182b3b;
   /* Brand teal-blue, matches antd colorPrimary. Stays the same in
      both modes so the SwimChrOnO highlights keep their identity. */
   --my-theme-color: #2babea;
@@ -65,16 +70,20 @@ html, body {
 
 :root[data-theme="light"] {
   --background-color: #ffffff;
-  --background-color-elevated: #f5f5f5;
-  --background-color-pre-start: #ececec;
-  --background-color-overlay: #f0f0f0;
-  --text-color: #333333;
-  --text-color-bright: #1a1a1a;
-  --text-color-faint: rgba(0, 0, 0, 0.45);
+  --background-color-elevated: #f3f6f9;
+  --background-color-pre-start: #e8eef3;
+  --background-color-overlay: #eef2f6;
+  --text-color: #3b4a59;
+  --text-color-bright: #14202c;
+  --text-color-faint: rgba(59, 74, 89, 0.55);
   --stroke-color: #ffffff;
-  --border-color: #00000014;
-  --border-color-soft: #d9d9d9;
-  --accent-color: #1677ff;
+  --border-color: #00000012;
+  --border-color-soft: #d5dde5;
+  --accent-color: #1a8fc7;
+  --row-bg-hover: #eef3f7;
+  --row-bg-invisible: #f3f6f9;
+  --row-bg-selected: #d9ecf9;
+  --row-bg-selected-invisible: #ebf4fa;
 }
 
 .hidden > * {

@@ -101,38 +101,42 @@ export function useTheme(): ThemeContextValue {
  * declared in src/index.css.
  */
 export const themePalette = {
+  // Blue-tinted neutrals; keep in sync with the CSS variables in index.css.
   dark: {
-    background: "#1a1a1a",
-    backgroundElevated: "#222222",
-    backgroundPreStart: "#222222",
-    backgroundPreStartInvisible: "#1d1d1d",
-    text: "#B0B0B0",
-    textBright: "#dedede",
-    borderSoft: "#454545",
-    legendStroke: "#dedede",
-    legendOverlayBg: "#1a1a1a",
+    background: "#161a1f",
+    backgroundElevated: "#1e242b",
+    backgroundPreStart: "#1b2128",
+    backgroundPreStartInvisible: "#181d23",
+    text: "#b8c2cc",
+    textBright: "#e8eef3",
+    borderSoft: "#2f3a45",
+    legendStroke: "#e8eef3",
+    legendOverlayBg: "#161a1f",
     // Per-layer timeline bar.
-    layerBarFill: "#616161",
-    layerBarFillInvisible: "#303030",
-    layerRowSelected: "#1e5874",
-    layerRowSelectedInvisible: "#1b2c35",
+    layerBarFill: "#5b6b7a",
+    layerBarFillInvisible: "#303a44",
+    // Selected row: a deep blue tint, dark enough that the bright link
+    // icons (and their hover state) stay readable on top of it.
+    layerRowSelected: "#1c3b53",
+    layerRowSelectedInvisible: "#182b3b",
+    rowHover: "#222a33",
   },
   light: {
     background: "#ffffff",
-    backgroundElevated: "#f5f5f5",
-    backgroundPreStart: "#ececec",
-    backgroundPreStartInvisible: "#f6f6f6",
-    text: "#333333",
-    textBright: "#1a1a1a",
-    borderSoft: "#d9d9d9",
-    legendStroke: "#333333",
+    backgroundElevated: "#f3f6f9",
+    backgroundPreStart: "#e8eef3",
+    backgroundPreStartInvisible: "#f3f6f9",
+    text: "#3b4a59",
+    textBright: "#14202c",
+    borderSoft: "#d5dde5",
+    legendStroke: "#3b4a59",
     legendOverlayBg: "#ffffff",
-    // Per-layer timeline bar — antd-flavoured greys & primary-tinted
-    // selected row.
-    layerBarFill: "#bfbfbf",
-    layerBarFillInvisible: "#e6e6e6",
-    layerRowSelected: "#bae0ff",
-    layerRowSelectedInvisible: "#e6f4ff",
+    // Per-layer timeline bar.
+    layerBarFill: "#a9b8c6",
+    layerBarFillInvisible: "#dfe6ec",
+    layerRowSelected: "#d9ecf9",
+    layerRowSelectedInvisible: "#ebf4fa",
+    rowHover: "#eef3f7",
   },
 } as const
 
@@ -180,7 +184,32 @@ export function ThemedAntdProvider({ children }: { children: ReactNode }) {
   // helper labels ("Visibility:", "Size:" etc.) and antd-rendered chrome
   // (button labels, select options) down a notch to match the trimmed
   // section headers.
-  const tokenWithFontSize = { fontSize: 13, ...tokenForMode }
+  // Link-styled buttons (layer row icons) sit on tinted selected rows: use
+  // a lighter blue in dark mode and a deeper blue in light mode so both the
+  // resting and hover states keep contrast against the row background.
+  const modeTokens = mode === "dark"
+    ? {
+        colorBgBase: themePalette.dark.background,
+        colorBgContainer: themePalette.dark.backgroundElevated,
+        colorBgElevated: themePalette.dark.backgroundElevated,
+        colorBorder: themePalette.dark.borderSoft,
+        colorBorderSecondary: themePalette.dark.borderSoft,
+        colorLink: "#4fc0f0",
+        colorLinkHover: "#9adcf8",
+        colorLinkActive: "#2babea",
+      }
+    : {
+        colorBgBase: themePalette.light.background,
+        colorBgContainer: themePalette.light.background,
+        colorBgElevated: themePalette.light.background,
+        colorBorder: themePalette.light.borderSoft,
+        colorBorderSecondary: themePalette.light.borderSoft,
+        colorTextBase: themePalette.light.textBright,
+        colorLink: "#1a8fc7",
+        colorLinkHover: "#0d6fa0",
+        colorLinkActive: "#2babea",
+      }
+  const tokenWithFontSize = { fontSize: 13, ...tokenForMode, ...modeTokens }
 
   return (
     <ConfigProvider
