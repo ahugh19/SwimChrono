@@ -23,8 +23,8 @@ const DataSelectionPanel = forwardRef((props: DataSelectionPanelProps, ref) => {
 
   return (
     <div ref={refChooseData}>
-      <Row style={{ alignItems: "center", width: "200px", fontSize: "14px", fontWeight: 500, marginTop: "16px" }}>Data</Row>
-      <Row style={{ height: "24px", lineHeight: "24px", marginTop: "20px" }}>
+      <Row style={{ alignItems: "center", width: "200px", fontSize: "14px", fontWeight: 500, marginTop: "12px" }}>Data</Row>
+      <Row style={{ height: "24px", lineHeight: "24px", marginTop: "8px" }}>
         <Flex style={{ width: "80%" }} vertical gap={"small"} justify={"flex-start"} align={"center"}>
           <Select
             style={{ width: "100%" }}

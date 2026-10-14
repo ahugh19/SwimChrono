@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { SwimmerVideoFrameType, SwimmerVideoDataType, LayerType, EditableElementType } from "../../../../../types";
+import { SwimmerVideoFrameType, SwimmerVideoDataType, LayerType, EditableElementType, VideoMetaDataType } from "../../../../../types";
+import { raceNameParts } from "../../../../../utils/raceInfo";
 import { editableElementInVisConfig, DEFAULTSwimFlow2LapDistance, DEFAULTSwimFlow2TextControllerFontSize } from "../../../../../utils/values";
 
 interface VisRaceNameCornerProps {
@@ -13,11 +14,12 @@ interface VisRaceNameCornerProps {
   visibility: boolean,
   svgWidth: number | undefined,
   svgHeight: number | undefined,
+  videoMetaData?: VideoMetaDataType | null,
 }
 
 function VisRaceNameCorner(props: VisRaceNameCornerProps) {
 
-  const { currentSwimmerVideo, currentFrameIndex, x, y, r, s, editableElementList, visibility, svgHeight, svgWidth } = props;
+  const { currentSwimmerVideo, currentFrameIndex, x, y, r, s, editableElementList, visibility, svgHeight, svgWidth, videoMetaData } = props;
 
   const [gender, setGender] = useState<string | null>(null)
   const [distance, setDistance] = useState<string | null>(null)
@@ -33,20 +35,12 @@ function VisRaceNameCorner(props: VisRaceNameCornerProps) {
 
     if (frameList && frameList[0] && frameList[frameList[0].currentLeader]) {
       setOpacity(1)
-      const leaderFrameData = frameList[frameList[0].currentLeader]
-      //todo: load race name from data
-      // setGender("M")
-      // setDistance("100")
-      // setSwimmingStyle("back")
-      // setRaceLevel("F")
-      // setGender("M")
-      // setDistance("200")
-      // setSwimmingStyle("mix")
-      // setRaceLevel("F")
-      setGender("F")
-      setDistance("100")
-      setSwimmingStyle("breast")
-      setRaceLevel("F")
+      // Race name comes from the video's metadata, never from a fixed string.
+      const parts = raceNameParts(videoMetaData)
+      setGender(parts.gender)
+      setDistance(parts.distance)
+      setSwimmingStyle(parts.style)
+      setRaceLevel(parts.round)
     } else {
       setOpacity(0)
     }
@@ -59,7 +53,7 @@ function VisRaceNameCorner(props: VisRaceNameCornerProps) {
       }
     })
 
-  }, [currentFrameIndex, currentSwimmerVideo])
+  }, [currentFrameIndex, currentSwimmerVideo, videoMetaData])
 
   return (
     <g
@@ -70,14 +64,14 @@ function VisRaceNameCorner(props: VisRaceNameCornerProps) {
       <rect
         x={`${bgStyle?.x ? bgStyle?.x + 0 : 0}`}
         y={`${bgStyle?.y ? bgStyle?.y + 0 : 0}`}
-        width="97"
+        width={Math.max(97, 20 + 7 * (`${gender} ${distance}M ${swimmingStyle} ${raceLevel}`.length))}
         height="15"
         fill={bgStyle?.shapeFillColor}
         stroke={bgStyle?.shapeStrokeColor}
         strokeWidth={bgStyle?.shapeStrokeWidth}
         visibility={visibility && bgStyle?.visible ? "visible" : "hidden"}/>
       <text
-        x={`${valueStyle?.x ? valueStyle?.x + 45 : 45}`}
+        x={`${(valueStyle?.x ?? 0) + Math.max(97, 20 + 7 * (`${gender} ${distance}M ${swimmingStyle} ${raceLevel}`.length)) / 2}`}
         y={`${valueStyle?.y ? valueStyle?.y + 11 : 11}`}
         textAnchor="middle"
         style={{ fontFamily: 'OlympicStyle' }}

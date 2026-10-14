@@ -17,6 +17,7 @@ import {
   Typography,
 } from "antd";
 import { Link as RouterLink } from "react-router-dom";
+import { APP_PAGES } from "../../AppNav";
 import { APP_VERSION } from "../../../utils/version";
 
 const { Title, Paragraph, Text, Link } = Typography;
@@ -41,10 +42,14 @@ function AboutModal() {
 
       <Paragraph>
         <ul>
-          <li><RouterLink to="/label-vis">Visualization Labeling Tool</RouterLink></li>
-          <li><RouterLink to="/label-event">Event Labeling Tool</RouterLink></li>
-          <li><RouterLink to="/label-camera">Camera Shot Labeling Tool</RouterLink></li>
-          <li><RouterLink to="/visualization">Result Gantt Charts</RouterLink></li>
+          {APP_PAGES.filter((p) => p.path !== "/").map((p) => (
+            <li key={p.path}>
+              <RouterLink to={p.path} style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
+                {p.icon}
+                {p.label}
+              </RouterLink>
+            </li>
+          ))}
         </ul>
       </Paragraph>
 

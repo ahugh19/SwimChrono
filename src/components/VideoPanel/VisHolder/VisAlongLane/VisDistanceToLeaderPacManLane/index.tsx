@@ -17,10 +17,12 @@ interface VisDistanceToLeaderPacManLaneProps {
   svgHeight: number | undefined,
   editableElementList: EditableElementType[]
   visibility: boolean
+  laneCount?: number
+  poolLength?: number
 }
 
 function VisDistanceToLeaderPacManLane(props: VisDistanceToLeaderPacManLaneProps) {
-  const { currentSwimmerVideo, currentFrameIndex, x, y, r, s, isMove, laneIndex, svgWidth, svgHeight, editableElementList, visibility } = props;
+  const { currentSwimmerVideo, currentFrameIndex, x, y, r, s, isMove, laneIndex, svgWidth, svgHeight, editableElementList, visibility , laneCount = DEFAULTSwimFlow2LaneSum , poolLength = VALUEHalfDistance } = props;
 
   const [isPacManRendering, setIsPacManRendering] = useState<boolean>(true)
   const [isDotRendering, setIsDotRendering] = useState<boolean>(true)
@@ -59,9 +61,9 @@ function VisDistanceToLeaderPacManLane(props: VisDistanceToLeaderPacManLaneProps
       if (rankingNum === 2) {
         const distanceRemaining = _thisFrameLaneList[laneIndex].distanceRemaining
         if (!svgWidth || distanceRemaining === null || distanceRemaining === undefined) return
-        const count = distanceRemaining > VALUEHalfDistance ? distanceRemaining % VALUEHalfDistance : distanceRemaining;
+        const count = distanceRemaining > poolLength ? distanceRemaining % poolLength : distanceRemaining;
         let circles = [];
-        const unit = width / VALUEHalfDistance
+        const unit = width / poolLength
         const foodFill = editableElementList.find((e) => e.id === editableElementInVisConfig.distanceToLeaderPacManLane[1].id)?.shapeFillColor ?? "#ffffff"
         const foodStroke = editableElementList.find((e) => e.id === editableElementInVisConfig.distanceToLeaderPacManLane[1].id)?.shapeStrokeColor
         const foodStrokeWidth = editableElementList.find((e) => e.id === editableElementInVisConfig.distanceToLeaderPacManLane[1].id)?.shapeStrokeWidth
@@ -111,13 +113,13 @@ function VisDistanceToLeaderPacManLane(props: VisDistanceToLeaderPacManLaneProps
                 ${isMove
                 ? laneData && svgWidth
                   ? (laneData.direction === VALUEFrameDataDirection_advance
-                    ? x + (laneData.x_middle / VALUEHalfDistance) * svgWidth
-                    : -((laneData.x_middle / VALUEHalfDistance) * svgWidth - x))
+                    ? x + (laneData.x_middle / poolLength) * svgWidth
+                    : -((laneData.x_middle / poolLength) * svgWidth - x))
                   : x
                 : DEFAULTSwimFlow2PositionXNoMove}
               ,
               ${svgHeight
-                ? y + (laneIndex) * svgHeight / DEFAULTSwimFlow2LaneSum
+                ? y + (laneIndex) * svgHeight / laneCount
                 : y}
               )
               rotate(${r})
@@ -161,7 +163,7 @@ function VisDistanceToLeaderPacManLane(props: VisDistanceToLeaderPacManLaneProps
             transform={
               `translate(0,
                   ${svgHeight
-                ? y + (currentLeaderLaneIndex + 0.5) * svgHeight / DEFAULTSwimFlow2LaneSum
+                ? y + (currentLeaderLaneIndex + 0.5) * svgHeight / laneCount
                 : y}
                   )
                 rotate(${r})

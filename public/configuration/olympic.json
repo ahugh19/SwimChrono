@@ -79,14 +79,14 @@
   },
   {
     "uuid": "b4d29f76-88fb-4862-a2ee-c5fb2f5dd3ad",
-    "name": "Olympic ring",
+    "name": "Event logo",
     "visibility": true,
     "intervalList": null,
     "triggerCompList": null,
     "embeddedVis": {
-      "visName": "VisCustomizedIconGlobal",
+      "visName": "eventLogoCorner",
       "visIcon": "generalIconCustomized.png",
-      "dataName": "elapsedTime",
+      "dataName": "raceName",
       "composeType": "global",
       "positionX": 650,
       "positionXAndWidthRatio": 0.90027701,
@@ -96,12 +96,23 @@
       "positionS": 100,
       "positionSRatio": 0.13850416,
       "positionMove": false,
-      "editableElementList": [],
-      "customizedIcon": {
-        "svgContent": "<svg width=\"40\" height=\"16\" viewBox=\"0 0 40 16\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<rect width=\"40\" height=\"16\" fill=\"#0A1222\"/>\n<path d=\"M11.4288 9.85759C13.3225 9.85759 14.8576 8.32247 14.8576 6.4288C14.8576 4.53512 13.3225 3 11.4288 3C9.53512 3 8 4.53512 8 6.4288C8 8.32247 9.53512 9.85759 11.4288 9.85759Z\" stroke=\"white\" stroke-width=\"0.661392\"/>\n<path d=\"M19.5743 9.85759C21.468 9.85759 23.0031 8.32247 23.0031 6.4288C23.0031 4.53512 21.468 3 19.5743 3C17.6806 3 16.1455 4.53512 16.1455 6.4288C16.1455 8.32247 17.6806 9.85759 19.5743 9.85759Z\" stroke=\"white\" stroke-width=\"0.661392\"/>\n<path d=\"M27.7198 9.85759C29.6135 9.85759 31.1486 8.32247 31.1486 6.4288C31.1486 4.53512 29.6135 3 27.7198 3C25.8261 3 24.291 4.53512 24.291 6.4288C24.291 8.32247 25.8261 9.85759 27.7198 9.85759Z\" stroke=\"white\" stroke-width=\"0.661392\"/>\n<path d=\"M15.5011 13.3386C17.3947 13.3386 18.9299 11.8034 18.9299 9.90975C18.9299 8.01608 17.3947 6.48096 15.5011 6.48096C13.6074 6.48096 12.0723 8.01608 12.0723 9.90975C12.0723 11.8034 13.6074 13.3386 15.5011 13.3386Z\" stroke=\"white\" stroke-width=\"0.661392\"/>\n<path d=\"M23.6475 13.3386C25.5412 13.3386 27.0763 11.8034 27.0763 9.90975C27.0763 8.01608 25.5412 6.48096 23.6475 6.48096C21.7539 6.48096 20.2188 8.01608 20.2188 9.90975C20.2188 11.8034 21.7539 13.3386 23.6475 13.3386Z\" stroke=\"white\" stroke-width=\"0.661392\"/>\n</svg>\n",
-        "size": 1,
-        "visible": true
-      }
+      "editableElementList": [
+        {
+          "id": "background-shape-1",
+          "type": "shape",
+          "visible": true,
+          "shapeFillColor": "#0A1222",
+          "shapeStrokeColor": "#0A1222",
+          "shapeStrokeWidth": 0
+        },
+        {
+          "id": "text-1",
+          "type": "text",
+          "visible": true,
+          "fontSize": 7,
+          "fontFillColor": "#ffffff"
+        }
+      ]
     },
     "isSelected": false
   },

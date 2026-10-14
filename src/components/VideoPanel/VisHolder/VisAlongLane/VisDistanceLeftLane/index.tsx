@@ -24,10 +24,12 @@ interface VisDistanceLeftLaneProps {
   svgHeight: number | undefined,
   editableElementList: EditableElementType[]
   visibility: boolean
+  laneCount?: number
+  poolLength?: number
 }
 
 function VisDistanceLeftLane(props: VisDistanceLeftLaneProps) {
-  const { currentSwimmerVideo, currentFrameIndex, x, y, r, s, isMove, laneIndex, svgWidth, svgHeight, editableElementList, visibility } = props;
+  const { currentSwimmerVideo, currentFrameIndex, x, y, r, s, isMove, laneIndex, svgWidth, svgHeight, editableElementList, visibility , laneCount = DEFAULTSwimFlow2LaneSum , poolLength = VALUEHalfDistance } = props;
   const [contentText, setContentText] = useState<number>(0)
   const [laneData, setLaneData] = useState<VideoFrameDataType | undefined>()
   const [textStyle, setTextStyle] = useState<EditableElementType | undefined>()
@@ -54,38 +56,38 @@ function VisDistanceLeftLane(props: VisDistanceLeftLaneProps) {
         (e) => e.id === editableElementInVisConfig.distanceLeftLane[2].id
       ))
       if (rectStyle1 && rectStyle2 && rectStyle1.shapeFillColor && rectStyle2.shapeFillColor) {
-        setGradColor(getGradientColor(_thisFrameLaneList[laneIndex].distanceSwam % VALUEHalfDistance / VALUEHalfDistance, rectStyle1?.shapeFillColor, rectStyle2?.shapeFillColor))
+        setGradColor(getGradientColor(_thisFrameLaneList[laneIndex].distanceSwam % poolLength / poolLength, rectStyle1?.shapeFillColor, rectStyle2?.shapeFillColor))
       }
     }
   }, [currentFrameIndex, currentSwimmerVideo])
 
   useEffect(() => {
-    setWidth(svgWidth ? svgWidth * 100 / s * (1 - contentText % VALUEHalfDistance / VALUEHalfDistance) : 0)
+    setWidth(svgWidth ? svgWidth * 100 / s * (1 - contentText % poolLength / poolLength) : 0)
   }, [svgWidth, s, contentText])
 
   useEffect(() => {
     if (svgHeight && svgHeight != 0) {
-      setHeight((svgHeight / DEFAULTSwimFlow2LaneSum * 100 / s) * 0.8)
+      setHeight((svgHeight / laneCount * 100 / s) * 0.8)
     } else {
       setHeight(0)
     }
   }, [svgHeight, s])
 
   return (
-    // frame[lane].x_middle / VALUEHalfDistance * svgLaneWidth
+    // frame[lane].x_middle / poolLength * svgLaneWidth
     <g
       transform={
         `translate(
         ${isMove
           ? laneData && svgWidth
             ? (laneData.direction === VALUEFrameDataDirection_advance
-              ? x + (laneData.x_middle / VALUEHalfDistance) * svgWidth
-              : (laneData.x_middle / VALUEHalfDistance) * svgWidth - x)
+              ? x + (laneData.x_middle / poolLength) * svgWidth
+              : (laneData.x_middle / poolLength) * svgWidth - x)
             : x
           : DEFAULTSwimFlow2PositionXNoMove}
         ,
         ${svgHeight
-          ? y + (laneIndex + 0.5) * svgHeight / DEFAULTSwimFlow2LaneSum - fontSize
+          ? y + (laneIndex + 0.5) * svgHeight / laneCount - fontSize
           : y}
           )
         rotate(${r})
@@ -114,7 +116,7 @@ function VisDistanceLeftLane(props: VisDistanceLeftLaneProps) {
         </linearGradient>
       </defs>
       <rect x={laneData && svgWidth ? (laneData.direction === VALUEFrameDataDirection_advance
-        ? "0" : `${(laneData.x_middle / VALUEHalfDistance) * svgWidth - x}`) : "0"} y="0"
+        ? "0" : `${(laneData.x_middle / poolLength) * svgWidth - x}`) : "0"} y="0"
         width={width} height={height}
         fill={laneData ? `url(#VisDistanceLeftLane-grad1-${laneData.direction})` : rectStyle1?.shapeFillColor}
         stroke={rectStyle1?.shapeStrokeColor}

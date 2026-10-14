@@ -936,6 +936,7 @@ export const VALUE_distanceLeftLane = "distanceLeftLane" as const
 export const VALUE_climbCount = "climbCount" as const
 export const VALUE_climbLine = "climbLine" as const
 export const VALUE_climbIcon = "climbIcon" as const
+export const VALUE_eventLogoCorner = "eventLogoCorner" as const
 
 
 // map data to visualizations
@@ -1735,6 +1736,22 @@ export const visControllerPanelConfig: visControllerPanelConfigType = {
           { id: "background-shape-1", type: "shape", visible: true, shapeFillColor: "#1B505D", shapeStrokeColor: "#c9c9c9", shapeStrokeWidth: 0 },
         ]
       },
+      {
+        visName: VALUE_eventLogoCorner,
+        visIcon: "generalIconCustomized.png",
+        dataName: "raceName",
+        triggerRecommendation: "This visualization usually appears during the whole race.",
+        composeType: embeddedVisTypeComposeType_GLOBAL,
+        positionX: DEFAULTSwimFlow2PositionX,
+        positionY: DEFAULTSwimFlow2PositionY,
+        positionR: DEFAULTSwimFlow2PositionR,
+        positionS: DEFAULTSwimFlow2PositionS,
+        positionMove: false,
+        editableElementList: [
+          { id: "background-shape-1", type: "shape", visible: true, shapeFillColor: "#0A1222", shapeStrokeColor: "#0A1222", shapeStrokeWidth: 0 },
+          { id: "text-1", type: "text", visible: true, fontSize: 7, fontFillColor: "#ffffff" },
+        ]
+      },
     ]
   },
   "strokeCount": {
@@ -1907,6 +1924,10 @@ export const editableElementInVisConfig: editableElementInVisConfigType = {
   "raceNameCorner": [
     { id: "text-1", type: "text", visible: true },
     { id: "background-shape-1", type: "shape", visible: true },
+  ],
+  "eventLogoCorner": [
+    { id: "background-shape-1", type: "shape", visible: true, shapeFillColor: "#0A1222", shapeStrokeColor: "#0A1222", shapeStrokeWidth: 0 },
+    { id: "text-1", type: "text", visible: true, fontSize: 7, fontFillColor: "#ffffff" },
   ],
   "rankingFlagLane": [
     { id: "text-ranking", type: "text", visible: true },

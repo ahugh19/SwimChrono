@@ -16,10 +16,13 @@ interface VisDistanceDivedArrowLaneProps {
   svgHeight: number | undefined,
   editableElementList: EditableElementType[]
   visibility: boolean
+  laneCount?: number
+  poolLength?: number
+  lapLength?: number
 }
 
 function VisDistanceDivedArrowLane(props: VisDistanceDivedArrowLaneProps) {
-  const { currentSwimmerVideo, currentFrameIndex, x, y, r, s, isMove, laneIndex, svgWidth, svgHeight, editableElementList, visibility } = props;
+  const { currentSwimmerVideo, currentFrameIndex, x, y, r, s, isMove, laneIndex, svgWidth, svgHeight, editableElementList, visibility , laneCount = DEFAULTSwimFlow2LaneSum , poolLength = VALUEHalfDistance , lapLength = DEFAULTSwimFlow2LapDistance } = props;
   const [distanceDived, setDistanceDived] = useState<number>(0)
   const [lineEndX, setLineEndX] = useState<number>(0)
   const [arrowTipX, setArrowTipX] = useState<number>(0)
@@ -48,8 +51,8 @@ function VisDistanceDivedArrowLane(props: VisDistanceDivedArrowLaneProps) {
   useEffect(() => {
     if (!svgWidth) return
     setLineEndX(svgWidth)
-    setArrowTipX(svgWidth - distanceDived * (svgWidth / DEFAULTSwimFlow2LapDistance)) // x of the arrow tip
-    setLineStartX(svgWidth - distanceDived * (svgWidth / DEFAULTSwimFlow2LapDistance) + 10) // shorten the line slightly so it doesn't extend past the arrow head
+    setArrowTipX(svgWidth - distanceDived * (svgWidth / lapLength)) // x of the arrow tip
+    setLineStartX(svgWidth - distanceDived * (svgWidth / lapLength) + 10) // shorten the line slightly so it doesn't extend past the arrow head
   }, [svgWidth, distanceDived])
 
   return (
@@ -59,13 +62,13 @@ function VisDistanceDivedArrowLane(props: VisDistanceDivedArrowLaneProps) {
         ${isMove
           ? laneData && svgWidth
             ? (laneData.direction === VALUEFrameDataDirection_advance
-              ? x + (laneData.x_middle / VALUEHalfDistance) * svgWidth
-              : (laneData.x_middle / VALUEHalfDistance) * svgWidth - x)
+              ? x + (laneData.x_middle / poolLength) * svgWidth
+              : (laneData.x_middle / poolLength) * svgWidth - x)
             : x
           : DEFAULTSwimFlow2PositionXNoMove}
         ,
         ${svgHeight
-          ? y + (laneIndex + 0.5) * svgHeight / DEFAULTSwimFlow2LaneSum - DEFAULTSwimFlow2TextControllerFontSize
+          ? y + (laneIndex + 0.5) * svgHeight / laneCount - DEFAULTSwimFlow2TextControllerFontSize
           : y}
           )
         rotate(${r})

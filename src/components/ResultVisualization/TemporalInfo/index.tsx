@@ -240,7 +240,7 @@ function TemporalInfo(props: TemporalInfoProps) {
   return (
     <div className={styles.page} onKeyDown={onKeyDown}>
       <PageHeader
-        title="Results"
+        title="Labelling results"
         extra={<Tag bordered={false}>{videos.length} videos · {annotationCount} annotations</Tag>}
         tour={{
           storageKey: "swimchrono.tourSeen.results",

@@ -17,10 +17,12 @@ interface VisTop3DistanceGapLaneProps {
   svgHeight: number | undefined,
   editableElementList: EditableElementType[]
   visibility: boolean
+  laneCount?: number
+  poolLength?: number
 }
 
 function VisTop3DistanceGapLane(props: VisTop3DistanceGapLaneProps) {
-  const { currentSwimmerVideo, currentFrameIndex, x, y, r, s, isMove, laneIndex, svgWidth, svgHeight, editableElementList, visibility } = props;
+  const { currentSwimmerVideo, currentFrameIndex, x, y, r, s, isMove, laneIndex, svgWidth, svgHeight, editableElementList, visibility , laneCount = DEFAULTSwimFlow2LaneSum , poolLength = VALUEHalfDistance } = props;
 
   const [isRendering, setIsRendering] = useState<boolean>(false)
   const [distanceGapText, setDistanceGapText] = useState<string | number | null>()
@@ -76,13 +78,13 @@ function VisTop3DistanceGapLane(props: VisTop3DistanceGapLaneProps) {
                 ${isMove
                 ? laneData && svgWidth
                   ? (laneData.direction === VALUEFrameDataDirection_advance
-                    ? x + (laneData.x_middle / VALUEHalfDistance) * svgWidth
-                    : (laneData.x_middle / VALUEHalfDistance) * svgWidth - x - scaleConstantValue(140, s))
+                    ? x + (laneData.x_middle / poolLength) * svgWidth
+                    : (laneData.x_middle / poolLength) * svgWidth - x - scaleConstantValue(140, s))
                   : x
                 : DEFAULTSwimFlow2PositionXNoMove}
               ,
               ${svgHeight
-                ? y + (laneIndex) * svgHeight / DEFAULTSwimFlow2LaneSum
+                ? y + (laneIndex) * svgHeight / laneCount
                 : y}
               )
               rotate(${r})

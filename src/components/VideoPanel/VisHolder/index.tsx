@@ -51,6 +51,7 @@ function VisHolder(props: VisHolderProps) {
           svgWidth={svgWidth}
           svgHeight={svgHeight}
           raceStartFrame={raceStartFrame}
+          videoMetaData={meta}
           selectedLayerUuid={selectedLayerUuid}
           onSelectLayer={onSelectLayer}
           selectableClassName={styles.selectable}
@@ -66,6 +67,7 @@ function VisHolder(props: VisHolderProps) {
           svgWidth={svgWidth}
           svgHeight={svgHeight}
           raceStartFrame={raceStartFrame}
+          videoMetaData={meta}
           selectedLayerUuid={selectedLayerUuid}
           onSelectLayer={onSelectLayer}
           selectableClassName={styles.selectable}

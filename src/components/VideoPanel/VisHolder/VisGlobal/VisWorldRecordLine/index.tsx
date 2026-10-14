@@ -14,11 +14,12 @@ interface VisWorldRecordLineProps {
   visibility: boolean,
   svgWidth: number | undefined,
   svgHeight: number | undefined,
+  poolLength?: number
 }
 
 function VisWorldRecordLine(props: VisWorldRecordLineProps) {
 
-  const { currentSwimmerVideo, currentFrameIndex, x, y, r, s, editableElementList, visibility, svgHeight, svgWidth } = props;
+  const { currentSwimmerVideo, currentFrameIndex, x, y, r, s, editableElementList, visibility, svgHeight, svgWidth , poolLength = VALUEHalfDistance } = props;
 
   const [worldRecordPos, setWorldRecordPos] = useState<number | null>(null)
   const [opacity, setOpacity] = useState<number>(0)
@@ -38,7 +39,7 @@ function VisWorldRecordLine(props: VisWorldRecordLineProps) {
       // leaderFrameData.x_world is in metres along the half-pool. Convert to
       // pixels using the live svgWidth, falling back to DEFAULT_VIDEO_PIXEL_WIDTH.
       setWorldRecordPos(Math.round(
-        leaderFrameData.x_world / VALUEHalfDistance
+        leaderFrameData.x_world / poolLength
         * (svgWidth ? svgWidth * 100 / s : DEFAULT_VIDEO_PIXEL_WIDTH)
       ))
 

@@ -16,10 +16,12 @@ interface VisStrokeCountTextLaneProps {
   svgHeight: number | undefined,
   editableElementList: EditableElementType[]
   visibility: boolean
+  laneCount?: number
+  poolLength?: number
 }
 
 function VisStrokeCountTextLane(props: VisStrokeCountTextLaneProps) {
-  const { currentSwimmerVideo, currentFrameIndex, x, y, r, s, isMove, laneIndex, svgWidth, svgHeight, editableElementList, visibility } = props;
+  const { currentSwimmerVideo, currentFrameIndex, x, y, r, s, isMove, laneIndex, svgWidth, svgHeight, editableElementList, visibility , laneCount = DEFAULTSwimFlow2LaneSum , poolLength = VALUEHalfDistance } = props;
   const [contentText, setContentText] = useState<number>(0)
   const [laneData, setLaneData] = useState<VideoFrameDataType | undefined>()
   const [textStyle, setTextStyle] = useState<EditableElementType | undefined>()
@@ -48,13 +50,13 @@ function VisStrokeCountTextLane(props: VisStrokeCountTextLaneProps) {
         ${isMove
           ? laneData && svgWidth
             ? (laneData.direction === VALUEFrameDataDirection_advance
-              ? x + (laneData.x_middle / VALUEHalfDistance) * svgWidth
-              : (laneData.x_middle / VALUEHalfDistance) * svgWidth - x)
+              ? x + (laneData.x_middle / poolLength) * svgWidth
+              : (laneData.x_middle / poolLength) * svgWidth - x)
             : x
           : DEFAULTSwimFlow2PositionXNoMove}
         ,
         ${svgHeight
-          ? y + (laneIndex + 0.5) * svgHeight / DEFAULTSwimFlow2LaneSum - DEFAULTSwimFlow2TextControllerFontSize
+          ? y + (laneIndex + 0.5) * svgHeight / laneCount - DEFAULTSwimFlow2TextControllerFontSize
           : y}
           )
         rotate(${r})

@@ -2,7 +2,7 @@
 // Adding a visualization means adding one line here (plus its editable
 // elements in utils/values.tsx) instead of a new switch case.
 import type { ComponentType } from "react"
-import type { CustomizedIconType, EditableElementType, LayerType, SwimmerVideoDataType } from "../../../types"
+import type { CustomizedIconType, EditableElementType, LayerType, SwimmerVideoDataType, VideoMetaDataType } from "../../../types"
 import {
   VALUE_accelerationTextLane, VALUE_climbCount, VALUE_climbIcon, VALUE_climbLine,
   VALUE_currentSpeedGlyphLane, VALUE_currentSpeedTextLane, VALUE_customizedIconGlobal,
@@ -10,7 +10,7 @@ import {
   VALUE_distanceDivedArrowLane, VALUE_distanceDivedTextLane, VALUE_distanceLeftLane,
   VALUE_distanceSwumBarCorner, VALUE_distanceSwumTextCorner, VALUE_distanceSwumTextLane,
   VALUE_distanceToLeaderBarLane, VALUE_distanceToLeaderPacManLane, VALUE_distanceToLeaderTextLane,
-  VALUE_elapsedTimeCorner, VALUE_elapsedTimeLane, VALUE_laneHighlight, VALUE_lapDistanceCorner,
+  VALUE_elapsedTimeCorner, VALUE_elapsedTimeLane, VALUE_eventLogoCorner, VALUE_laneHighlight, VALUE_lapDistanceCorner,
   VALUE_leaderLaneNumberTextCorner, VALUE_nationalityIconLane, VALUE_nationalityTextLane,
   VALUE_olympicRecordCorner, VALUE_raceNameCorner, VALUE_rankingBarCorner, VALUE_rankingChangeTextLane,
   VALUE_rankingFlagLane, VALUE_rankingTextLane, VALUE_strokeCountTextLane, VALUE_swimmerNameTextLane,
@@ -60,6 +60,7 @@ import VisDistanceSwumTextCorner from "./VisGlobal/VisDistanceSwumTextCorner"
 import VisLeaderLaneNumberTextCorner from "./VisGlobal/VisLeaderLaneNumberTextCorner"
 import VisDistanceSwumBarCorner from "./VisGlobal/VisDistanceSwumBarCorner"
 import VisClimbLine from "./VisGlobal/VisClimbLine"
+import VisEventLogoCorner from "./VisGlobal/VisEventLogoCorner"
 
 // Props shared by every per-lane visualization.
 export interface LaneVisProps {
@@ -78,6 +79,11 @@ export interface LaneVisProps {
   customizedIcon?: CustomizedIconType
   customizedText?: string
   visibility: boolean
+  // From the current video's metadata (lanes, pool length) so nothing is hard-coded.
+  videoMetaData?: VideoMetaDataType | null
+  laneCount?: number
+  poolLength?: number
+  lapLength?: number
 }
 
 // Props shared by every global (screen-anchored) visualization. Components
@@ -95,6 +101,10 @@ export interface GlobalVisProps {
   svgHeight: number | undefined
   customizedIcon?: CustomizedIconType
   customizedText?: string
+  videoMetaData?: VideoMetaDataType | null
+  laneCount?: number
+  poolLength?: number
+  lapLength?: number
 }
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -143,6 +153,7 @@ export const globalVisRegistry: Record<string, ComponentType<any>> = {
   [VALUE_worldRecordSplitDiffCorner]: VisWorldRecordSplitDiffCorner,
   [VALUE_worldRecordLine]: VisWorldRecordLine,
   [VALUE_climbLine]: VisClimbLine,
+  [VALUE_eventLogoCorner]: VisEventLogoCorner,
 }
 /* eslint-enable @typescript-eslint/no-explicit-any */
 

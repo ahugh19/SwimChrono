@@ -17,11 +17,13 @@ interface VisCustomizedTextLaneProps {
   svgWidth: number | undefined,
   svgHeight: number | undefined,
   editableElementList: EditableElementType[]
+  laneCount?: number
+  poolLength?: number
 }
 
 function VisCustomizedTextLane(props: VisCustomizedTextLaneProps) {
 
-  const { currentSwimmerVideo, currentFrameIndex, customizedText, x, y, r, s, isMove, laneIndex, svgWidth, svgHeight, visibility, editableElementList } = props;
+  const { currentSwimmerVideo, currentFrameIndex, customizedText, x, y, r, s, isMove, laneIndex, svgWidth, svgHeight, visibility, editableElementList , laneCount = DEFAULTSwimFlow2LaneSum , poolLength = VALUEHalfDistance } = props;
   const [laneData, setLaneData] = useState<VideoFrameDataType | undefined>()
   const [textStyle, setTextStyle] = useState<EditableElementType | undefined>()
   const fontSize = 20;
@@ -45,13 +47,13 @@ function VisCustomizedTextLane(props: VisCustomizedTextLaneProps) {
             ${isMove
           ? laneData && svgWidth
             ? (laneData.direction === VALUEFrameDataDirection_advance
-              ? x + (laneData.x_middle / VALUEHalfDistance) * svgWidth
-              : (laneData.x_middle / VALUEHalfDistance) * svgWidth - x)
+              ? x + (laneData.x_middle / poolLength) * svgWidth
+              : (laneData.x_middle / poolLength) * svgWidth - x)
             : x
           : DEFAULTSwimFlow2PositionXNoMove}
             ,
             ${svgHeight
-          ? y + (laneIndex + 0.5) * svgHeight / DEFAULTSwimFlow2LaneSum - fontSize
+          ? y + (laneIndex + 0.5) * svgHeight / laneCount - fontSize
           : y}
               )
             rotate(${r})

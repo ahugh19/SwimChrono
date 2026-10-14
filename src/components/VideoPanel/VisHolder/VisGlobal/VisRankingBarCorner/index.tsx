@@ -12,11 +12,12 @@ interface VisRankingBarCornerProps {
   s: number,
   editableElementList: EditableElementType[],
   visibility: boolean,
+  poolLength?: number
 }
 
 function VisRankingBarCorner(props: VisRankingBarCornerProps) {
 
-  const { currentSwimmerVideo, currentFrameIndex, x, y, r, s, editableElementList, visibility } = props;
+  const { currentSwimmerVideo, currentFrameIndex, x, y, r, s, editableElementList, visibility , poolLength = VALUEHalfDistance } = props;
 
   const [top3Lanes, setTop3Lanes] = useState<(string | number | null | undefined)[]>([null, null, null])
   const [top3Nations, setTop3Nations] = useState<(string | null)[]>([null, null, null])
@@ -45,8 +46,8 @@ function VisRankingBarCorner(props: VisRankingBarCornerProps) {
       for (let i = 0; i < topNumber; i++) {
         const thisFrame = sortedFrame[i]
         if (thisFrame) {
-          const thisCurrentLap = thisFrame.distanceSwam - VALUEHalfDistance > 0 ? Math.ceil((thisFrame.distanceSwam - VALUEHalfDistance) / VALUEHalfDistance) : 0
-          const lapKey = `currentLap${thisCurrentLap * VALUEHalfDistance}`
+          const thisCurrentLap = thisFrame.distanceSwam - poolLength > 0 ? Math.ceil((thisFrame.distanceSwam - poolLength) / poolLength) : 0
+          const lapKey = `currentLap${thisCurrentLap * poolLength}`
 
           setTop3TimeDiff((prevTimeDiffs) =>
             prevTimeDiffs.map((value, index) =>

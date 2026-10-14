@@ -17,7 +17,7 @@ export const APP_PAGES: AppPage[] = [
   { path: '/label-vis', label: 'Visualization labelling', short: 'Vis labels', icon: <EditOutlined /> },
   { path: '/label-event', label: 'Event labelling', short: 'Event labels', icon: <ProjectOutlined /> },
   { path: '/label-camera', label: 'Camera-shot labelling', short: 'Camera labels', icon: <VideoCameraOutlined /> },
-  { path: '/visualization', label: 'Result gantt charts', short: 'Results', icon: <BuildOutlined /> },
+  { path: '/visualization', label: 'Labelling results', short: 'Results', icon: <BuildOutlined /> },
 ]
 
 function normalize(pathname: string) {

@@ -191,6 +191,12 @@ Onboarding & appearance
 * Every page header ends with the same button group: Pages menu, GitHub, About and the help tour. The tours of the label tools and the result charts open only from that button.
 * Result player: the video is cued at the race start without playing (no more pre-roll on page load), seeking while paused stays paused, and a mute button was added.
 
+Visualizations driven by the video metadata
+* The race-name corner reads gender, distance, stroke and round from the video's metadata instead of a fixed string; lane count, pool length and lap length come from the metadata too (27 components, climbing unchanged).
+* New "Event logo" corner (data: race name): the Olympic rings for an Olympic race, otherwise the competition name and year. The Olympic Style example uses it in place of the hand-made rings icon. The record corner reads "OR" at the Olympics and "CR" elsewhere.
+* Customized SVG icon: the controller shows a preview of the current icon and opens a code window to copy or edit the SVG markup; tighter spacing in the controller panel.
+* About dialog links carry the page icons; the results page is titled "Labelling results".
+
 ### 1.3.0
 
 Timeline

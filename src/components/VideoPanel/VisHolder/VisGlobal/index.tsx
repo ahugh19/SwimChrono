@@ -1,4 +1,4 @@
-import { LayerType, SwimmerVideoDataType } from "../../../../types"
+import { LayerType, SwimmerVideoDataType, VideoMetaDataType } from "../../../../types"
 import { embeddedVisTypeComposeType_GLOBAL } from "../../../../utils/values"
 import { globalVisRegistry, isFrameInIntervals, resolveS, resolveX, resolveY } from "../visRegistry"
 
@@ -8,6 +8,7 @@ interface VisGlobalProps {
   currentFrameIndex: number,
   svgWidth: number | undefined,
   svgHeight: number | undefined
+  videoMetaData?: VideoMetaDataType | null
   raceStartFrame?: number
   // click-to-select support (optional so tests can omit it)
   selectedLayerUuid?: string
@@ -19,7 +20,7 @@ interface VisGlobalProps {
 // Renders each screen-anchored layer whose trigger interval contains the
 // current frame.
 function VisGlobal(props: VisGlobalProps) {
-  const { layerList, currentSwimmerVideo, currentFrameIndex, svgWidth, svgHeight, raceStartFrame = 0, selectedLayerUuid, onSelectLayer, selectableClassName, selectedClassName } = props;
+  const { layerList, currentSwimmerVideo, currentFrameIndex, svgWidth, svgHeight, videoMetaData, raceStartFrame = 0, selectedLayerUuid, onSelectLayer, selectableClassName, selectedClassName } = props;
   if (!currentSwimmerVideo) return null
 
   return (
@@ -45,6 +46,10 @@ function VisGlobal(props: VisGlobalProps) {
           editableElementList={embeddedVis.editableElementList}
           customizedIcon={embeddedVis.customizedIcon}
           customizedText={embeddedVis.customizedText}
+          videoMetaData={videoMetaData}
+          laneCount={videoMetaData?.lanes}
+          poolLength={videoMetaData?.poolLapLength}
+          lapLength={videoMetaData?.poolLapLength}
           currentSwimmerVideo={currentSwimmerVideo}
           currentFrameIndex={currentFrameIndex}
           svgWidth={svgWidth}

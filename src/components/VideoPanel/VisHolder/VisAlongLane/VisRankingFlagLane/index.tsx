@@ -17,10 +17,12 @@ interface VisRankingFlagLaneProps {
   svgHeight: number | undefined,
   editableElementList: EditableElementType[]
   visibility: boolean
+  laneCount?: number
+  poolLength?: number
 }
 
 function VisRankingFlagLane(props: VisRankingFlagLaneProps) {
-  const { currentSwimmerVideo, currentFrameIndex, x, y, r, s, isMove, laneIndex, svgWidth, svgHeight, editableElementList, visibility } = props;
+  const { currentSwimmerVideo, currentFrameIndex, x, y, r, s, isMove, laneIndex, svgWidth, svgHeight, editableElementList, visibility , laneCount = DEFAULTSwimFlow2LaneSum , poolLength = VALUEHalfDistance } = props;
 
   const [isRendering, setIsRendering] = useState<boolean>(false)
   const [rankingText, setRankingText] = useState<number | null>()
@@ -82,13 +84,13 @@ function VisRankingFlagLane(props: VisRankingFlagLaneProps) {
                 ${isMove
                   ? laneData && svgWidth
                     ? (laneData.direction === VALUEFrameDataDirection_advance
-                      ? x + (laneData.x_middle / VALUEHalfDistance) * svgWidth
-                      : (laneData.x_middle / VALUEHalfDistance) * svgWidth - x - 260)
+                      ? x + (laneData.x_middle / poolLength) * svgWidth
+                      : (laneData.x_middle / poolLength) * svgWidth - x - 260)
                     : x
                   : x}
               ,
               ${svgHeight
-                ? y + (laneIndex + 0.5) * svgHeight / DEFAULTSwimFlow2LaneSum - DEFAULTSwimFlow2TextControllerFontSize
+                ? y + (laneIndex + 0.5) * svgHeight / laneCount - DEFAULTSwimFlow2TextControllerFontSize
                 : y}
               )
               rotate(${r})

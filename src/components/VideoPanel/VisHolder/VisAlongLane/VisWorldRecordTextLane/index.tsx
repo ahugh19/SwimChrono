@@ -23,10 +23,12 @@ interface VisWorldRecordTextLaneProps {
   svgHeight: number | undefined,
   editableElementList: EditableElementType[]
   visibility: boolean
+  laneCount?: number
+  poolLength?: number
 }
 
 function VisWorldRecordTextLane(props: VisWorldRecordTextLaneProps) {
-  const { currentSwimmerVideo, currentFrameIndex, x, y, r, s, isMove, laneIndex, svgWidth, svgHeight, editableElementList, visibility } = props;
+  const { currentSwimmerVideo, currentFrameIndex, x, y, r, s, isMove, laneIndex, svgWidth, svgHeight, editableElementList, visibility , laneCount = DEFAULTSwimFlow2LaneSum , poolLength = VALUEHalfDistance } = props;
   const [contentText, setContentText] = useState<number | string>(0)
   const [laneData, setLaneData] = useState<VideoFrameDataType | undefined>()
   const [textStyle, setTextStyle] = useState<EditableElementType | undefined>()
@@ -45,20 +47,20 @@ function VisWorldRecordTextLane(props: VisWorldRecordTextLaneProps) {
   }, [currentFrameIndex, currentSwimmerVideo])
 
   return (
-    // frame[lane].x_middle / VALUEHalfDistance * svgLaneWidth
+    // frame[lane].x_middle / poolLength * svgLaneWidth
     <g
       transform={
         `translate(
         ${isMove
           ? laneData && svgWidth
             ? (laneData.direction === VALUEFrameDataDirection_advance
-              ? x + (laneData.x_middle / VALUEHalfDistance) * svgWidth
-              : (laneData.x_middle / VALUEHalfDistance) * svgWidth - x)
+              ? x + (laneData.x_middle / poolLength) * svgWidth
+              : (laneData.x_middle / poolLength) * svgWidth - x)
             : x
           : DEFAULTSwimFlow2PositionXNoMove}
         ,
         ${svgHeight
-          ? y + (laneIndex + 0.5) * svgHeight / DEFAULTSwimFlow2LaneSum - fontSize
+          ? y + (laneIndex + 0.5) * svgHeight / laneCount - fontSize
           : y}
           )
         rotate(${r})

@@ -1,4 +1,4 @@
-import { LayerType, SwimmerInfoType, SwimmerVideoDataType } from "../../../../types"
+import { LayerType, SwimmerInfoType, SwimmerVideoDataType, VideoMetaDataType } from "../../../../types"
 import { embeddedVisTypeComposeType_INDIVIDUAL } from "../../../../utils/values"
 import { isFrameInIntervals, laneVisRegistry, resolveS, resolveX, resolveY } from "../visRegistry"
 
@@ -9,6 +9,7 @@ interface VisAlongLaneProps {
   swimmersInfo: SwimmerInfoType[] | null | undefined,
   svgWidth: number | undefined,
   svgHeight: number | undefined
+  videoMetaData?: VideoMetaDataType | null
   raceStartFrame?: number
   // click-to-select support (optional so tests can omit it)
   selectedLayerUuid?: string
@@ -21,7 +22,7 @@ interface VisAlongLaneProps {
 // interval contains the current frame. Layer order is reversed so the
 // first layer in the panel is painted last (on top).
 function VisAlongLane(props: VisAlongLaneProps) {
-  const { layerList, currentSwimmerVideo, currentFrameIndex, swimmersInfo, svgHeight, svgWidth, raceStartFrame = 0, selectedLayerUuid, onSelectLayer, selectableClassName, selectedClassName } = props;
+  const { layerList, currentSwimmerVideo, currentFrameIndex, swimmersInfo, svgHeight, svgWidth, videoMetaData, raceStartFrame = 0, selectedLayerUuid, onSelectLayer, selectableClassName, selectedClassName } = props;
   if (!currentSwimmerVideo || !swimmersInfo) return null
 
   const orderedLayers = layerList.slice().reverse()
@@ -58,6 +59,10 @@ function VisAlongLane(props: VisAlongLaneProps) {
               editableElementList={embeddedVis.editableElementList}
               customizedIcon={embeddedVis.customizedIcon}
               customizedText={embeddedVis.customizedText}
+              videoMetaData={videoMetaData}
+              laneCount={videoMetaData?.lanes}
+              poolLength={videoMetaData?.poolLapLength}
+              lapLength={videoMetaData?.poolLapLength}
               visibility={layer.visibility}
             /></g>
           })

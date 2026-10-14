@@ -220,7 +220,7 @@ const ControllerPanel = forwardRef((props: ControllerPanelProps, ref) => {
               ref={refChooseData}
               currentLayer={currentLayer}
               onDataSelect={onDataSelect} />
-            <Divider style={{ margin: "24px 0" }} />
+            <Divider style={{ margin: "14px 0" }} />
             <VisSelectionPanel
               ref={refChooseVis}
               currentLayer={currentLayer}
@@ -238,7 +238,7 @@ const ControllerPanel = forwardRef((props: ControllerPanelProps, ref) => {
                     defaultSize={currentLayer.embeddedVis?.customizedIcon?.size}
                     currentLayer={currentLayer}
                   />
-                  <Divider style={{ margin: "24px 0" }} />
+                  <Divider style={{ margin: "14px 0" }} />
                 </>
                 :
                 null
@@ -254,7 +254,7 @@ const ControllerPanel = forwardRef((props: ControllerPanelProps, ref) => {
                     selectedVis={selectedVis}
                     currentLayer={currentLayer}
                   />
-                  <Divider style={{ margin: "24px 0" }} />
+                  <Divider style={{ margin: "14px 0" }} />
                 </>
                 :
                 null
@@ -282,7 +282,7 @@ const ControllerPanel = forwardRef((props: ControllerPanelProps, ref) => {
                     onSChange={onSChange}
                     onMoveChange={onMoveChange}
                   />
-                  <Divider style={{ margin: "24px 0" }} />
+                  <Divider style={{ margin: "14px 0" }} />
 
                   {currentLayer.embeddedVis?.visName !== VALUE_customizedIconGlobal && currentLayer.embeddedVis?.visName !== VALUE_customizedIconIndividual ?
                     <>
@@ -290,11 +290,11 @@ const ControllerPanel = forwardRef((props: ControllerPanelProps, ref) => {
                         onEditableElementSelect={onEditableElementSelect}
                         currentLayer={currentLayer}
                       />
-                      {/* <Divider style={{ margin: "24px 0" }} /> */}
+                      {/* <Divider style={{ margin: "14px 0" }} /> */}
                     </>
                     : null
                   }
-                  <div style={{ height: 24, display: "block" }}></div>
+                  <div style={{ height: 14, display: "block" }}></div>
 
                   {
                     editingMode === "shape" || editingMode === "color"
@@ -308,7 +308,7 @@ const ControllerPanel = forwardRef((props: ControllerPanelProps, ref) => {
                           onShapeVisibilityChange={onShapeVisibilityChange}
                           strokeDisable={editingMode === "color"}
                         />
-                        <Divider style={{ margin: "24px 0" }} />
+                        <Divider style={{ margin: "14px 0" }} />
                       </>
                       :
                       null
@@ -327,7 +327,7 @@ const ControllerPanel = forwardRef((props: ControllerPanelProps, ref) => {
                           onFontVisibilityChange={onFontVisibilityChange}
                           onFontXChange={onFontXChange}
                           onFontYChange={onFontYChange}/>
-                        <Divider style={{ margin: "24px 0" }} />
+                        <Divider style={{ margin: "14px 0" }} />
                       </>
                       :
                       null
@@ -341,7 +341,7 @@ const ControllerPanel = forwardRef((props: ControllerPanelProps, ref) => {
                           editingElement={editingElement ? JSON.parse(JSON.stringify(editingElement)) : undefined}
                           onIconSizeChange={onIconSizeChange}
                           onIconVisibilityChange={onIconVisibilityChange} />
-                        <Divider style={{ margin: "24px 0" }} />
+                        <Divider style={{ margin: "14px 0" }} />
                       </>
                       :
                       null

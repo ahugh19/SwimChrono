@@ -13,11 +13,12 @@ interface VisLapDistanceCornerProps {
   visibility: boolean,
   svgWidth: number | undefined,
   svgHeight: number | undefined,
+  lapLength?: number
 }
 
 function VisLapDistanceCorner(props: VisLapDistanceCornerProps) {
 
-  const { currentSwimmerVideo, currentFrameIndex, x, y, r, s, editableElementList, visibility, svgHeight, svgWidth } = props;
+  const { currentSwimmerVideo, currentFrameIndex, x, y, r, s, editableElementList, visibility, svgHeight, svgWidth , lapLength = DEFAULTSwimFlow2LapDistance } = props;
 
   const [value, setValue] = useState<number | null>(null)
   const [opacity, setOpacity] = useState<number>(0)
@@ -25,10 +26,10 @@ function VisLapDistanceCorner(props: VisLapDistanceCornerProps) {
   const [bgStyle, setBgStyle] = useState<EditableElementType | undefined>()
 
   function customRound(num: number) {
-    if (num < DEFAULTSwimFlow2LapDistance * 0.5) {
+    if (num < lapLength * 0.5) {
         return 0;
     }
-    return Math.floor((num + DEFAULTSwimFlow2LapDistance * 0.5) / DEFAULTSwimFlow2LapDistance) * DEFAULTSwimFlow2LapDistance;
+    return Math.floor((num + lapLength * 0.5) / lapLength) * lapLength;
 }
 
   useEffect(() => {

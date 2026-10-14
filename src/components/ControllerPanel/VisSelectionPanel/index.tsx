@@ -64,7 +64,7 @@ const VisSelectionPanel = forwardRef((props: VisSelectionPanelProps, ref) => {
                 })}
               </Flex>
             </Row>
-            <Divider style={{ margin: "24px 0" }} />
+            <Divider style={{ margin: "14px 0" }} />
           </>
           :
           null
