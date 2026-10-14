@@ -10,6 +10,7 @@ import { IComponentPropsWithStore, Store } from "../../store"
 import { Button, Divider, Space, Tour, FloatButton } from 'antd';
 import { QuestionCircleOutlined, FieldTimeOutlined, EyeOutlined, CopyOutlined, ArrowUpOutlined, ArrowDownOutlined, DeleteOutlined } from "@ant-design/icons";
 import type { TourProps } from 'antd';
+import ResizeHandle, { readStoredSize, writeStoredSize } from '../../components/ResizeHandle';
 
 
 interface HomeProps extends IComponentPropsWithStore {
@@ -17,6 +18,8 @@ interface HomeProps extends IComponentPropsWithStore {
 }
 
 const TOUR_SEEN_STORAGE_KEY = "swimchrono.tourSeen"
+const CONTROLLER_WIDTH_KEY = "swimchrono.layout.controllerWidth"
+const LAYER_HEIGHT_KEY = "swimchrono.layout.layerHeight"
 
 function readTourSeen(): boolean {
   if (typeof window === "undefined") return false
@@ -51,6 +54,19 @@ function Home(props: IComponentPropsWithStore) {
   const tourOpenBtnRef = useRef(null);
 
   const [currentVideoTime, setCurrentVideoTime] = useState<number>(0);
+
+  // Panel sizes; null keeps the responsive CSS default (clamp()). Dragging
+  // the gutters sets a pixel value which is remembered across sessions.
+  const [controllerWidth, setControllerWidth] = useState<number | null>(() => readStoredSize(CONTROLLER_WIDTH_KEY));
+  const [layerHeight, setLayerHeight] = useState<number | null>(() => readStoredSize(LAYER_HEIGHT_KEY));
+  const controllerDivRef = useRef<HTMLDivElement | null>(null);
+  const layerDivRef = useRef<HTMLDivElement | null>(null);
+  useEffect(() => { writeStoredSize(CONTROLLER_WIDTH_KEY, controllerWidth) }, [controllerWidth]);
+  useEffect(() => { writeStoredSize(LAYER_HEIGHT_KEY, layerHeight) }, [layerHeight]);
+  const layoutStyle = {
+    ...(controllerWidth !== null ? { "--width-controller-panel": `${controllerWidth}px` } : {}),
+    ...(layerHeight !== null ? { "--height-layer-panel": `${layerHeight}px` } : {}),
+  } as React.CSSProperties;
   const [videoDuration, setVideoDuration] = useState<number>(0)
   const [videoStart, setVideoStart] = useState<number>(0)
 
@@ -148,7 +164,7 @@ function Home(props: IComponentPropsWithStore) {
 
 
   return (
-    <div className={styles.home}>
+    <div className={styles.home} style={layoutStyle}>
       <div className={styles.header}>
         <Header
           ref={childHeaderRef}
@@ -161,7 +177,7 @@ function Home(props: IComponentPropsWithStore) {
         onCurrentVideoTimeChange={onCurrentVideoTimeChange}
         />
       </div>
-      <div className={styles.layerPanel}>
+      <div className={styles.layerPanel} ref={layerDivRef}>
         <LayerPanel
           ref={childLayerPanelRef}
           fileInputRef={fileInputRef}
@@ -169,8 +185,32 @@ function Home(props: IComponentPropsWithStore) {
           currentVideoTime={currentVideoTime}
           />
       </div>
-      <div className={styles.controllerPanel}>
+      <div className={styles.controllerPanel} ref={controllerDivRef}>
         <ControllerPanel ref={childControllerPanelRef} />
+      </div>
+      <div className={styles.controllerGutter}>
+        <ResizeHandle
+          direction="col"
+          invert
+          value={controllerWidth ?? controllerDivRef.current?.offsetWidth ?? 360}
+          min={240}
+          max={720}
+          onChange={setControllerWidth}
+          onDoubleClick={() => setControllerWidth(null)}
+          title="Drag to resize the controller panel · double-click to reset"
+        />
+      </div>
+      <div className={styles.layerGutter}>
+        <ResizeHandle
+          direction="row"
+          invert
+          value={layerHeight ?? layerDivRef.current?.offsetHeight ?? 400}
+          min={200}
+          max={Math.max(260, window.innerHeight - 260)}
+          onChange={setLayerHeight}
+          onDoubleClick={() => setLayerHeight(null)}
+          title="Drag to resize the layer panel · double-click to reset"
+        />
       </div>
       <input type="file" onChange={(e) => onFileInput(e)} style={{ display: 'none' }} ref={fileInputRef} />
       <NavBtns />

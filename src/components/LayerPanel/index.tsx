@@ -104,9 +104,13 @@ const LayerPanel = forwardRef((props: LayerPanelProps, ref) => {
 
     updateTimelineDivWidth()
 
+    // The panel can be resized by its gutter, not only by the window.
+    const ro = new ResizeObserver(updateTimelineDivWidth)
+    if (timelineDivRef.current) ro.observe(timelineDivRef.current)
     window.addEventListener('resize', updateTimelineDivWidth);
 
     return () => {
+      ro.disconnect()
       window.removeEventListener('resize', updateTimelineDivWidth);
     };
   }, [])

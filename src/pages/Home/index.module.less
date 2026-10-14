@@ -12,7 +12,7 @@
   padding: 0;
   width: 100vw;
   height: 100vh;
-  // overflow: hidden;
+  position: relative; // gutters are positioned against the grid
 
   background-color: var(--background-color);
 
@@ -62,5 +62,30 @@
   .videoPanel, .controllerPanel, .layerPanel {
     min-width: 0;
     min-height: 0;
+  }
+
+  // Drag gutters sit on the panel borders.
+  .controllerGutter {
+    position: absolute;
+    top: var(--height-header);
+    bottom: 0;
+    right: calc(var(--width-controller-panel) - 3px);
+    display: flex;
+
+    > * {
+      height: 100%;
+    }
+  }
+
+  .layerGutter {
+    position: absolute;
+    left: 0;
+    right: var(--width-controller-panel);
+    bottom: calc(var(--height-layer-panel) - 3px);
+    display: flex;
+
+    > * {
+      width: 100%;
+    }
   }
 }
