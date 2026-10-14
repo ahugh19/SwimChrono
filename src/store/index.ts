@@ -13,6 +13,9 @@ export class Store {
   constructor() {
     makeAutoObservable(this, {
       layerList: observable,
+      // Frame data is a large read-only table (tens of thousands of rows);
+      // keep it as a plain reference instead of a deep observable proxy.
+      currentSwimmerVideo: observable.ref,
       updateCurrentLayerVisPosX: action,
       updateCurrentLayerVisPosY: action,
     });
@@ -669,36 +672,31 @@ export class Store {
   setCurrentSwimmerVideo = (newFrameDataList: VideoFrameDataType[]) => {
     // VideoFrameDataType[] -> SwimmerVideoDataType
     // single frame one swimmer -> single frame multiple swimmer
-    console.log(newFrameDataList)
     if (newFrameDataList.length === 0) {
       this.currentSwimmerVideo = null
-    } else {
-      const newSwimmerVideo: SwimmerVideoDataType = {}
-      let maxFrameId = -1
-      let minFrameId = Infinity
-      newFrameDataList.forEach((d) => {
-        if (typeof d.frameId !== "number") return
-        if (d.frameId > maxFrameId) maxFrameId = d.frameId
-        if (d.frameId < minFrameId) minFrameId = d.frameId
-      })
-      // only frames between [minFrameId, maxFrameId] has data
-      // fill other frame by null
-      for (let i = 0; i <= maxFrameId; i++) {
-        if (i < minFrameId) {
-          newSwimmerVideo[i] = null
-        } else {
-          let index = 0
-          newSwimmerVideo[i] = {} as SwimmerVideoFrameType
-          do {
-            //@ts-ignore
-            newSwimmerVideo[i][newFrameDataList[0].swimmerId as number] = _.cloneDeep(newFrameDataList[0])
-            newFrameDataList.shift()
-            if (newFrameDataList.length === 0) break
-          } while (newFrameDataList[0].frameId === i)
-        }
-      }
-      this.currentSwimmerVideo = _.cloneDeep(newSwimmerVideo)
+      return
     }
+    let maxFrameId = -1
+    let minFrameId = Infinity
+    for (const d of newFrameDataList) {
+      if (typeof d.frameId !== "number") continue
+      if (d.frameId > maxFrameId) maxFrameId = d.frameId
+      if (d.frameId < minFrameId) minFrameId = d.frameId
+    }
+    if (maxFrameId < 0) {
+      this.currentSwimmerVideo = null
+      return
+    }
+    // Frames before the first data row are null; frames inside
+    // [minFrameId, maxFrameId] always exist (empty object when no row).
+    const newSwimmerVideo: SwimmerVideoDataType = {}
+    for (let i = 0; i < minFrameId; i++) newSwimmerVideo[i] = null
+    for (let i = minFrameId; i <= maxFrameId; i++) newSwimmerVideo[i] = {} as SwimmerVideoFrameType
+    for (const d of newFrameDataList) {
+      if (typeof d.frameId !== "number") continue
+      (newSwimmerVideo[d.frameId] as SwimmerVideoFrameType)[d.swimmerId as number] = d
+    }
+    this.currentSwimmerVideo = newSwimmerVideo
   }
 
   updateVideo = (video: VideoType) => {

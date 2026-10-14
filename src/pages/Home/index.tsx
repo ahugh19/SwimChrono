@@ -7,7 +7,7 @@ import VideoPanel from '../../components/VideoPanel';
 import styles from "./index.module.less"
 import { inject, observer } from "mobx-react"
 import { IComponentPropsWithStore, Store } from "../../store"
-import { Button, Divider, Space, Tour, FloatButton, notification } from 'antd';
+import { Button, Divider, Space, Tour, FloatButton } from 'antd';
 import { QuestionCircleOutlined, FieldTimeOutlined, EyeOutlined, CopyOutlined, ArrowUpOutlined, ArrowDownOutlined, DeleteOutlined } from "@ant-design/icons";
 import type { TourProps } from 'antd';
 
@@ -67,17 +67,8 @@ function Home(props: IComponentPropsWithStore) {
     setCurrentVideoTime(currentTime)
   }
 
-  const [api, contextHolder] = notification.useNotification();
   useEffect(() => {
     store?.addDefaultLayer()
-    api.warning({
-      message: "⏳ Loading may take a while.",
-      description:
-        "You're using the development version, which loads videos locally. This might take some time—thanks for your patience! 🙌",
-      placement: "bottom",
-      duration: null,
-    });
-    // setTourOpen(true)
   }, [])
 
   const steps: TourProps['steps'] = [
@@ -209,7 +200,6 @@ function Home(props: IComponentPropsWithStore) {
           </span>
         )}
         gap={{ offset: 10, radius: 4 }} />
-        <>{contextHolder}</>
     </div>
   )
 }

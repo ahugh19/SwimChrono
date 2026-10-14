@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, forwardRef, useImperativeHandle } from "react";
-import { Button, Spin, Row, message, Tag } from "antd"
+import { Button, Spin, Row, message, Tag, Progress } from "antd"
 import { PlayCircleOutlined, PauseCircleOutlined, VideoCameraFilled } from '@ant-design/icons';
 import DataPanel from "./DataPanel"
 import PreferencePanel from "./PreferencePanel"
@@ -7,8 +7,8 @@ import VisHolder from "./VisHolder"
 import styles from "./index.module.less"
 import { inject, observer } from "mobx-react"
 import { IComponentPropsWithStore, Store } from "../../store"
-import { VideoFrameDataType } from "../../types"
-import Papa from 'papaparse'
+import { assetUrl } from "../../utils/assets"
+import { loadFrameData } from "../../utils/frameData"
 
 interface VideoPanelProps extends IComponentPropsWithStore {
   onVideoDurationChange: (duration: number) => void
@@ -21,6 +21,7 @@ const VideoPanel = forwardRef((props: VideoPanelProps, ref) => {
   const [isVideoPlay, setIsVideoPlay] = useState<boolean>(false);
   const [isVideoLoading, setIsVideoLoading] = useState<boolean>(true);
   const [isDataLoading, setIsDataLoading] = useState<boolean>(true);
+  const [dataProgress, setDataProgress] = useState<number | null>(0);
   const [videoSrc, setVideoSrc] = useState<string>("");
   const [frameRate, setFrameRate] = useState<number>(50);
   const [currentFrameIndex, setCurrentFrameIndex] = useState<number>(0);
@@ -35,41 +36,35 @@ const VideoPanel = forwardRef((props: VideoPanelProps, ref) => {
 
   useEffect(() => {
     if (!store || !store.currentVideoMetaData) return
-    setVideoSrc(store.currentVideoMetaData.video)
-    setFrameRate(store.currentVideoMetaData.framerate)
-    const fetchVideoData = async () => {
-      setIsDataLoading(true)
-      const csvFileName = store.currentVideoMetaData?.dataCSV; // CSV file derived from the video metadata
-      try {
-        const response = await fetch(`csv/${csvFileName}`);
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const csvText = await response.text();
-        const parsedData = Papa.parse<VideoFrameDataType>(csvText.trim(), {
-          header: true,
-          dynamicTyping: true, // auto-convert numeric strings to numbers
-          delimiter: ",",
-          skipEmptyLines: true,
-          transformHeader: (header: string) => header.trim(), // strip whitespace from headers
-        });
-        // console.log(parsedData)
-        if (parsedData.data.length > 0) {
-          store.setCurrentSwimmerVideo(parsedData.data.filter((d) => typeof d.frameId === "number").sort((a, b) => a.frameId - b.frameId))
-          message.success("Successfully load video data.")
-          store.log()
-          setIsDataLoading(false)
-          // store.addDefaultLayer()
-        } else {
-          store.setCurrentSwimmerVideo([]);
-        }
-      } catch (error) {
-        message.error("Failed to load video data.")
-        // store.setCurrentSwimmerVideo([]);
-      }
-    };
+    const metaData = store.currentVideoMetaData
+    setVideoSrc(assetUrl(metaData.video))
+    setFrameRate(metaData.framerate)
 
-    fetchVideoData();
+    // Abort the previous download when the user switches video before
+    // it finished, so a stale CSV can't overwrite the new one.
+    const controller = new AbortController()
+    setIsDataLoading(true)
+    setDataProgress(0)
+
+    loadFrameData(assetUrl(`csv/${metaData.dataCSV}`), controller.signal, (loaded, total) => {
+      setDataProgress(total && total > 0 ? Math.min(100, Math.round((loaded / total) * 100)) : null)
+    })
+      .then((rows) => {
+        if (controller.signal.aborted) return
+        store.setCurrentSwimmerVideo(rows)
+        if (rows.length > 0) {
+          message.success("Successfully load video data.")
+        }
+        setIsDataLoading(false)
+      })
+      .catch((error) => {
+        if (controller.signal.aborted) return
+        console.error("Failed to load video data", error)
+        message.error("Failed to load video data.")
+        setIsDataLoading(false)
+      })
+
+    return () => controller.abort()
   }, [store?.currentVideoMetaData])
 
   useEffect(() => {
@@ -189,7 +184,6 @@ const VideoPanel = forwardRef((props: VideoPanelProps, ref) => {
   return (
     <div className={styles.videoPanelContainer} ref={containerRef}>
       <Row className={styles.videoTitle}>
-        <Spin spinning={isVideoLoading || isDataLoading} percent={"auto"}></Spin>
         {
           store?.currentVideoMetaData ?
             <Tag bordered={false} icon={<VideoCameraFilled />}>{`${store?.currentVideoMetaData.videoName}.mp4`}</Tag> :
@@ -198,6 +192,27 @@ const VideoPanel = forwardRef((props: VideoPanelProps, ref) => {
       </Row>
       <div className={styles.videoWrapper} style={{ width: size.width, height: size.height }}>
         <video ref={videoRef} src={videoSrc} onLoadedData={handleLoadedData} crossOrigin="anonymous" muted></video>
+        {
+          (isVideoLoading || isDataLoading) &&
+          <div className={styles.loadingOverlay}>
+            <div className={styles.loadingBox}>
+              <div className={styles.loadingRow}>
+                <span>Race data</span>
+                {
+                  isDataLoading
+                    ? (dataProgress === null
+                      ? <Spin size="small" />
+                      : <Progress percent={dataProgress} size="small" showInfo={true} style={{ width: 160, margin: 0 }} />)
+                    : <span className={styles.loadingDone}>ready</span>
+                }
+              </div>
+              <div className={styles.loadingRow}>
+                <span>Video</span>
+                {isVideoLoading ? <Spin size="small" /> : <span className={styles.loadingDone}>ready</span>}
+              </div>
+            </div>
+          </div>
+        }
         <div className={styles.visHolder} style={{ width: size.width, height: size.height }}>
           <VisHolder
             svgHeight={size.height}
