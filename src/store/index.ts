@@ -7,6 +7,7 @@ import { toJS } from 'mobx';
 import { message } from "antd";
 import _, { min } from "lodash";
 import { backendApiUrl } from "../utils/aiConfig";
+import { assetUrl } from "../utils/assets";
 
 export class Store {
   constructor() {
@@ -412,7 +413,7 @@ export class Store {
   }
 
   importExample = async (exampleFileName: string) => {
-    fetch(`configuration/${exampleFileName}`)
+    fetch(assetUrl(`configuration/${exampleFileName}`))
       .then((response) => response.json())
       .then((json) => {
         const newLayerList = json
@@ -580,7 +581,7 @@ export class Store {
   }
 
   getExistingData = () => {
-    fetch(`labelTool/result-vis25.json`)
+    fetch(assetUrl(`labelTool/result-vis25.json`))
       .then((res) => res.json())
       .then((response: any) => {
         console.log(response)
@@ -865,7 +866,7 @@ export class Store {
   }
 
   getProcessedData = () => {
-    fetch(`labelTool/result-vis25.json`)
+    fetch(assetUrl(`labelTool/result-vis25.json`))
       .then((res) => res.json())
       .then((existingData: any) => {
         const visGroupList: any[][] = [];
