@@ -175,11 +175,11 @@ Export with the visualizations rendered in
 
 * The export dialog shows the number of frames and an estimated duration, explains that smaller sizes and lower frame rates are faster, notes that the start time defaults to the race start from the data, and reminds you to keep the tab in the foreground since browsers throttle timers in background tabs.
 * Start and end are entered as timecodes (mm:ss:ff at the source frame rate, plain seconds also accepted) with a "use player time" shortcut; the file name is editable; a running export shows the frames done and the estimated time left.
-* Import and Export buttons explain themselves in a tooltip; Export carries a menu chevron.
+* Import and Export are menus with a chevron; the Export menu keeps a fixed width.
 * The default global blur of the embedded visualizations is 0.2 (was 0.5).
 * Timeline: loading a video zooms the ruler so the race start sits at the left edge; the zoom survives resizing the panels; clicking the tick row of the ruler seeks like the label row; the right edge of a bar reaching the end of the video is no longer clipped; a "Legend" popover explains the bar colors (green initiation trigger, purple conclusion trigger from race data, gray conclusion trigger from a fixed duration), hand-edited bars, handles and the pre-start shading.
-* A "Fit race" button next to the zoom slider fits the race to the timeline (with a small gap before the race start); the header's Import/Export group is labeled "File" and the Export menu has a fixed width.
-* Import is a menu too: upload a configuration, or open "About the JSON format", a dialog with a highlighted example and a field reference of the configuration file. Exported JSON is pretty-printed.
+* A "Fit race" button next to the zoom slider fits the race to the timeline (with a small gap before the race start); the header's Import/Export group is labeled "File".
+* Import is a menu too: upload a configuration, or open "About the JSON format", a dialog with a highlighted example and a field reference of the configuration file. Exported JSON is pretty-printed. Importing keeps hand-edited intervals instead of recomputing them.
 
 ### 1.5.0
 

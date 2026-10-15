@@ -213,7 +213,7 @@ function ExportMenu({ store, onExportConfig }: ExportMenuProps) {
           <div style={{ marginTop: 2 }}><Text type="secondary">Smaller size, lower frame rate or a shorter range make it faster.</Text></div>
           <div style={{ marginTop: 6 }}>
             <Text type="secondary">
-              Output: {format === "mp4" ? "MP4 (H.264)" : format === "webm" ? "WebM" : "–"} at {wFps ?? sourceFps} fps, no audio. The timecodes above count frames at the source rate ({sourceFps} fps). The visualizations are rendered exactly as in the editor.
+              Output: {format === "mp4" ? "MP4 (H.264)" : format === "webm" ? "WebM" : "–"} at {wFps ?? sourceFps} fps, no audio. The timecodes above count frames at the source rate ({sourceFps} fps). The visualizations are rendered as shown in the editor.
               {format === "webm" ? " WebM is recorded in real time, so it takes at least as long as the clip." : ""}
             </Text>
           </div>

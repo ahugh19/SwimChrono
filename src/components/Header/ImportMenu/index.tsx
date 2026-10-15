@@ -63,8 +63,8 @@ const FIELDS = [
   { key: "layers", field: "layers", type: "Layer[]", note: "The layers, top of the list first. A bare array of layers (the format of the shipped examples) is also accepted." },
   { key: "l.name", field: "layers[].name / uuid / visibility", type: "string / string / boolean", note: "Display name, unique id, and whether the layer is drawn." },
   { key: "l.trig", field: "layers[].triggerCompList", type: "Trigger[] | null", note: "Trigger components (name, triggerType start+end or start+duration, priority, subject/compare/value for start and end). null shows the layer for the whole race." },
-  { key: "l.int", field: "layers[].intervalList", type: "Interval[] | null", note: "Frames where the layer is visible, computed from the triggers (startFrame, endFrame, relative moments in seconds). Recomputed when another video is loaded, unless intervalEdited is true." },
-  { key: "l.edit", field: "layers[].intervalEdited", type: "boolean", note: "true when the intervals were changed by hand on the timeline." },
+  { key: "l.int", field: "layers[].intervalList", type: "Interval[] | null", note: "Frames where the layer is visible (startFrame, endFrame, relative moments in seconds). On import they are recomputed from the triggers for the loaded video, except for hand-edited layers, which are imported as they are. Loading another video recomputes every layer from its triggers." },
+  { key: "l.edit", field: "layers[].intervalEdited", type: "boolean", note: "true when the intervals were changed by hand on the timeline. Such layers keep their intervals on import; the ↺ button restores the trigger result." },
   { key: "v", field: "layers[].embeddedVis", type: "object | null", note: "The visualization: visName and dataName (see the Visualization picker), composeType global or individual, position (px plus ratios of the video size), rotation, scale, editable elements with their styles, optional customizedText / customizedIcon (svg)." },
 ]
 
@@ -112,7 +112,7 @@ function ImportMenu({ onUpload }: ImportMenuProps) {
           ]}
         />
         <Paragraph type="secondary" style={{ marginTop: 12, marginBottom: 0 }}>
-          Import validates the file and replaces the current layers. Intervals are recomputed from the triggers for the loaded video; hand-edited intervals (intervalEdited) are kept as they are.
+          Import validates the file and replaces the current layers. Intervals are recomputed from the triggers for the loaded video, except for hand-edited layers (intervalEdited), which are imported as they are.
         </Paragraph>
       </Modal>
     </>

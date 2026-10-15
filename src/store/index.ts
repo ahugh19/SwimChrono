@@ -359,6 +359,8 @@ export class Store {
         runInAction(() => {
           newLayerList.forEach((newLayer: LayerType) => {
             if (!newLayer.intervalList) return
+            // Intervals edited by hand are part of the design: keep them.
+            if (newLayer.intervalEdited) return
 
             const importTriggerCompList: TriggerFormProps = {
               triggerCompList: newLayer.triggerCompList
@@ -401,6 +403,8 @@ export class Store {
     runInAction(() => {
       newLayerList.forEach((newLayer: LayerType) => {
         if (!newLayer.intervalList) return
+        // Intervals edited by hand are part of the design: keep them.
+        if (newLayer.intervalEdited) return
 
         const importTriggerCompList: TriggerFormProps = {
           triggerCompList: newLayer.triggerCompList
