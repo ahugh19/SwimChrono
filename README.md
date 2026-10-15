@@ -168,7 +168,7 @@ exposes editors based on the element's `type` (`text` / `shape` / `icon` /
 
 ## Changelog
 
-### 1.5.1
+### 1.6.0
 
 Export with the visualizations rendered in
 * The header's Export menu offers, besides the configuration JSON, a PNG snapshot of the current frame and a video of a chosen time range with the visualizations rendered in. MP4 (H.264) is encoded in the browser with WebCodecs where available (Chrome, Edge, Safari 16.4+), otherwise a WebM is recorded in real time. Resolution and frame rate are selectable; the overlay is rendered exactly as in the editor, with the badge font embedded. No audio.
