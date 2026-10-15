@@ -1,7 +1,7 @@
 import TimelinePanel from "./TimelinePanel"
 import TriggerPanel from "./TriggerPanel"
 import { useEffect, useState, useRef, forwardRef, useImperativeHandle, useCallback } from 'react';
-import { DownloadOutlined, LoginOutlined, PlusOutlined, InfoCircleOutlined } from '@ant-design/icons';
+import { DownloadOutlined, LoginOutlined, PlusOutlined, InfoCircleOutlined, ColumnWidthOutlined } from '@ant-design/icons';
 import { Button, Tooltip, Slider, Typography, Popover } from 'antd';
 import { Stage, Layer, Text } from 'react-konva';
 import Konva from 'konva';
@@ -72,15 +72,15 @@ const LayerPanel = forwardRef((props: LayerPanelProps, ref) => {
     setRaceStart(store.currentVideoMetaData?.raceStartTime as number)
   }, [store?.currentVideoMetaData])
 
-  // When a video is loaded, zoom the timeline so the race start sits at the
-  // left edge (once per video, as soon as the duration and width are known).
+  // When a video is loaded, fit the race once (as soon as the duration and
+  // the width are known). fitRace is defined further down; reach it by ref.
+  const fitRaceRef = useRef<() => void>(() => undefined)
   const zoomedForVideo = useRef<string | null>(null)
   useEffect(() => {
     const key = store?.currentVideoMetaData?.name ?? null
     if (!key || !(videoDuration > 0) || !(ganttAreaWidth > 0) || zoomedForVideo.current === key) return
     zoomedForVideo.current = key
-    const startPct = Math.max(0, Math.min(95, (raceStart / videoDuration) * 100))
-    applyZoom(startPct, 100)
+    fitRaceRef.current()
   }, [store?.currentVideoMetaData?.name, videoDuration, ganttAreaWidth, raceStart])
 
   useEffect(() => {
@@ -230,6 +230,16 @@ const LayerPanel = forwardRef((props: LayerPanelProps, ref) => {
     requestAnimationFrame(apply)
   }, [canvasWidth])
 
+  // Zoom so the race (race start to the end of the video) fills the timeline.
+  const fitRace = useCallback(() => {
+    if (!(videoDuration > 0)) return
+    const startPct = Math.max(0, Math.min(95, (raceStart / videoDuration) * 100))
+    applyZoom(startPct, 100)
+  }, [videoDuration, raceStart, applyZoom])
+
+  // Assigned during render so the auto-fit effect above sees it on the first commit.
+  fitRaceRef.current = fitRace
+
   function handleSliderChange(value: number[]) {
     applyZoom(value[0], value[1])
   }
@@ -367,8 +377,13 @@ const LayerPanel = forwardRef((props: LayerPanelProps, ref) => {
           </div>
 
           <div className={styles.topRightPart}>
-            <div className={styles.sliderContainer} style={{ width: `${sliderWidth}px` }}>
-              <Slider onChange={handleSliderChange} range={{ draggableTrack: true }} value={zoomRange} min={0} max={100} step={0.01} tooltip={{ formatter: (value) => `${value !== undefined ? formatClock(value / 100 * videoDuration, 1) : 0}` }} />
+            <div className={styles.sliderRow} style={{ width: `${sliderWidth}px` }}>
+              <div className={styles.sliderContainer}>
+                <Slider onChange={handleSliderChange} range={{ draggableTrack: true }} value={zoomRange} min={0} max={100} step={0.01} tooltip={{ formatter: (value) => `${value !== undefined ? formatClock(value / 100 * videoDuration, 1) : 0}` }} />
+              </div>
+              <Tooltip title="Fit the race to the timeline (race start to the end of the video)">
+                <Button type="text" size="small" icon={<ColumnWidthOutlined />} onClick={fitRace} aria-label="Fit race" className={styles.fitBtn}>Fit race</Button>
+              </Tooltip>
             </div>
             <div className={styles.timelineAxisContainer} ref={axisScrollRef} style={{ width: ganttAreaWidth }}>
               <Stage width={canvasWidth} height={timelineAxisCanvasHeight} ref={konvaStageTimelineAxisRef}>

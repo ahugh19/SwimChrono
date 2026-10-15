@@ -41,8 +41,24 @@
     }
 
     .topRightPart {
+      .sliderRow {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
       .sliderContainer {
+        flex: 1;
+        min-width: 0;
         padding: 0;
+      }
+
+      .fitBtn {
+        flex: none;
+        font-size: 11px;
+        color: var(--text-color-faint);
+        height: 20px;
+        padding: 0 6px;
       }
       .timelineAxisContainer {
         overflow: hidden; // scrolled programmatically in sync with the gantt

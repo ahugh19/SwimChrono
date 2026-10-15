@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { Button, Dropdown, Modal, Form, Input, Select, Progress, Space, Typography, Alert, Tooltip, Row, Col } from 'antd'
+import { Button, Dropdown, Modal, Form, Input, Select, Progress, Space, Typography, Alert, Row, Col } from 'antd'
 import type { MenuProps } from 'antd'
 import { DownloadOutlined, DownOutlined, FileTextOutlined, PictureOutlined, VideoCameraOutlined } from '@ant-design/icons'
 import { Store } from '../../../store'
@@ -151,10 +151,13 @@ function ExportMenu({ store, onExportConfig }: ExportMenuProps) {
 
   return (
     <>
-      <Dropdown menu={{ items }} trigger={['click']}>
-        <Tooltip title="Export the configuration (JSON), a snapshot of this frame (PNG) or a video with the visualizations (MP4/WebM)" mouseEnterDelay={0.6}>
-          <Button icon={<DownloadOutlined />} aria-haspopup="menu">Export <DownOutlined style={{ fontSize: 10, marginLeft: 2 }} /></Button>
-        </Tooltip>
+      <Dropdown
+        menu={{ items, style: { minWidth: 280, whiteSpace: "nowrap" } }}
+        trigger={['click']}
+        placement="bottomRight"
+        overlayStyle={{ minWidth: 280 }}
+      >
+        <Button icon={<DownloadOutlined />} aria-haspopup="menu">Export <DownOutlined style={{ fontSize: 10, marginLeft: 2 }} /></Button>
       </Dropdown>
       <Modal
         title="Export video with visualizations"
