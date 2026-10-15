@@ -11,7 +11,7 @@ yarn run dev
 
 Then open [http://localhost:5173/SwimChrono/](http://localhost:5173/SwimChrono/) (see [README](../README.md) for details). Alternatively, use the online version at https://ahugh19.github.io/SwimChrono/ — no local setup needed.
 
-The authoring interface that opens is the tool shown in **Figure 4** of the paper:
+The authoring interface that opens is the tool shown in **Figure 4** of the paper (the screenshot below is the current version; the paper used `v1.0.0`):
 
 ![The SwimChrono authoring interface](./img/tool-screenshot.jpg)
 
