@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { Button, Dropdown, Modal, Form, Input, Select, Progress, Space, Typography, Alert, Tooltip } from 'antd'
+import { Button, Dropdown, Modal, Form, Input, Select, Progress, Space, Typography, Alert, Tooltip, Row, Col } from 'antd'
 import type { MenuProps } from 'antd'
 import { DownloadOutlined, DownOutlined, FileTextOutlined, PictureOutlined, VideoCameraOutlined } from '@ant-design/icons'
 import { Store } from '../../../store'
@@ -171,44 +171,49 @@ function ExportMenu({ store, onExportConfig }: ExportMenuProps) {
         {format === null && <Alert type="warning" showIcon style={{ marginBottom: 12 }} message="This browser can encode neither MP4 (WebCodecs) nor WebM (MediaRecorder). Try Chrome, Edge or Safari 16.4+." />}
         {format === "webm" && <Alert type="info" showIcon style={{ marginBottom: 12 }} message="MP4 encoding is not available here; a WebM file will be recorded in real time (export takes as long as the clip)." />}
         <Form form={form} layout="vertical" size="small" disabled={running}>
-          <Space size="middle" align="start">
-            <Form.Item
-              name="start"
-              label={<span>Start (mm:ss:ff) <Button type="link" size="small" style={{ padding: 0 }} onClick={() => setFromPlayer("start")}>use player time</Button></span>}
-              rules={[{ required: true }, timecodeRule]}
-              extra={meta ? `Defaults to the race start in the data (${toTc(meta.raceStartTime)}). Frames are counted at ${sourceFps} fps.` : undefined}
-            >
-              <Input style={{ width: 150 }} placeholder="mm:ss:ff" />
-            </Form.Item>
-            <Form.Item
-              name="end"
-              label={<span>End (mm:ss:ff) <Button type="link" size="small" style={{ padding: 0 }} onClick={() => setFromPlayer("end")}>use player time</Button></span>}
-              rules={[{ required: true }, timecodeRule, ({ getFieldValue }) => ({ validator: (_r, v) => { const e = fromTc(v), st = fromTc(getFieldValue("start")); return e !== null && st !== null && e <= st ? Promise.reject(new Error("End must be after start")) : Promise.resolve() } })]}
-              extra={`Video ends at ${toTc(duration)}.`}
-            >
-              <Input style={{ width: 150 }} placeholder="mm:ss:ff" />
-            </Form.Item>
-          </Space>
-          <Space size="middle">
-            <Form.Item name="scale" label="Size"><Select options={sizeOptions} style={{ width: 180 }} /></Form.Item>
-            <Form.Item name="fps" label="Export frame rate"><Select options={[meta?.framerate ?? 50, 30, 25].filter((v, i, a) => a.indexOf(v) === i).map((v) => ({ value: v, label: `${v} fps` }))} style={{ width: 110 }} /></Form.Item>
-          </Space>
+          <Row gutter={16}>
+            <Col span={12}>
+              <Form.Item
+                name="start"
+                label="Start (mm:ss:ff)"
+                rules={[{ required: true }, timecodeRule]}
+                extra={meta ? `Race start in the data: ${toTc(meta.raceStartTime)}` : undefined}
+              >
+                <Input placeholder="mm:ss:ff" addonAfter={<Button type="link" size="small" style={{ padding: 0, height: "auto" }} onClick={() => setFromPlayer("start")}>use player time</Button>} />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item
+                name="end"
+                label="End (mm:ss:ff)"
+                rules={[{ required: true }, timecodeRule, ({ getFieldValue }) => ({ validator: (_r, v) => { const e = fromTc(v), st = fromTc(getFieldValue("start")); return e !== null && st !== null && e <= st ? Promise.reject(new Error("End must be after start")) : Promise.resolve() } })]}
+                extra={`Video ends at ${toTc(duration)}`}
+              >
+                <Input placeholder="mm:ss:ff" addonAfter={<Button type="link" size="small" style={{ padding: 0, height: "auto" }} onClick={() => setFromPlayer("end")}>use player time</Button>} />
+              </Form.Item>
+            </Col>
+          </Row>
+          <Row gutter={16}>
+            <Col span={12}>
+              <Form.Item name="scale" label="Size"><Select options={sizeOptions} /></Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item name="fps" label="Export frame rate"><Select options={[meta?.framerate ?? 50, 30, 25].filter((v, i, a) => a.indexOf(v) === i).map((v) => ({ value: v, label: `${v} fps` }))} /></Form.Item>
+            </Col>
+          </Row>
           <Form.Item name="filename" label="File name" rules={[{ required: true, message: "Enter a file name" }]}>
-            <Input addonAfter={`.${format ?? "mp4"}`} style={{ maxWidth: 420 }} />
+            <Input addonAfter={`.${format ?? "mp4"}`} />
           </Form.Item>
         </Form>
-        <Text type="secondary">
-          Output: {format === "mp4" ? "MP4 (H.264)" : format === "webm" ? "WebM" : "–"} · the visualizations are rendered exactly as shown in the editor · no audio.
-        </Text>
-        <div style={{ marginTop: 8 }}>
-          <Text>
-            {estimate.frames} frames to render, about {estimate.seconds < 90 ? `${estimate.seconds} s` : `${Math.round(estimate.seconds / 60)} min`}.
-          </Text>
-          <br />
-          <Text type="secondary">
-            Export time grows with the clip length, the size and the frame rate: a smaller size and a lower frame rate are faster.
-            {format === "webm" ? " WebM is recorded in real time, so it takes at least as long as the clip." : ""}
-          </Text>
+        <div style={{ padding: "8px 12px", borderRadius: 4, background: "var(--background-color-elevated)", border: "1px solid var(--border-color-soft)" }}>
+          <div><Text strong>{estimate.frames} frames</Text><Text>, about {estimate.seconds < 90 ? `${estimate.seconds} s` : `${Math.round(estimate.seconds / 60)} min`}</Text></div>
+          <div style={{ marginTop: 2 }}><Text type="secondary">Smaller size, lower frame rate or a shorter range make it faster.</Text></div>
+          <div style={{ marginTop: 6 }}>
+            <Text type="secondary">
+              Output: {format === "mp4" ? "MP4 (H.264)" : format === "webm" ? "WebM" : "–"}, no audio. Frames are counted at {sourceFps} fps. The visualizations are rendered exactly as in the editor.
+              {format === "webm" ? " WebM is recorded in real time, so it takes at least as long as the clip." : ""}
+            </Text>
+          </div>
         </div>
         <Alert
           type="info"
