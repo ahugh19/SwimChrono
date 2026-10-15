@@ -1,13 +1,14 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { Button, Dropdown, Modal, Form, InputNumber, Select, Progress, Space, Typography, Alert } from 'antd'
+import { Button, Dropdown, Modal, Form, Input, Select, Progress, Space, Typography, Alert, Tooltip } from 'antd'
 import type { MenuProps } from 'antd'
-import { DownloadOutlined, FileTextOutlined, PictureOutlined, VideoCameraOutlined } from '@ant-design/icons'
+import { DownloadOutlined, DownOutlined, FileTextOutlined, PictureOutlined, VideoCameraOutlined } from '@ant-design/icons'
 import { Store } from '../../../store'
 import { message } from '../../../utils/feedback'
 import { exportSnapshot } from '../../../utils/export/snapshot'
 import { detectExportFormat, exportVideo, ExportFormat } from '../../../utils/export/video'
 import { downloadBlob } from '../../../utils/export/overlay'
 import { formatClock } from '../../../utils'
+import { formatTimecode, parseTimecode } from '../../../utils/timecode'
 
 const { Text } = Typography
 
@@ -17,10 +18,11 @@ interface ExportMenuProps {
 }
 
 interface VideoFormValues {
-  start: number
-  end: number
+  start: string // timecode mm:ss:ff at the source frame rate
+  end: string
   scale: number // 1 = source size
   fps: number
+  filename: string
 }
 
 // "Export" dropdown of the header: configuration json, a png of the
@@ -29,7 +31,7 @@ function ExportMenu({ store, onExportConfig }: ExportMenuProps) {
   const [videoOpen, setVideoOpen] = useState(false)
   const [format, setFormat] = useState<ExportFormat | null | undefined>(undefined)
   const [running, setRunning] = useState(false)
-  const [progress, setProgress] = useState<{ done: number; total: number } | null>(null)
+  const [progress, setProgress] = useState<{ done: number; total: number; startedAt: number } | null>(null)
   const abortRef = useRef<AbortController | null>(null)
   const [form] = Form.useForm<VideoFormValues>()
 
@@ -38,6 +40,11 @@ function ExportMenu({ store, onExportConfig }: ExportMenuProps) {
   const sourceWidth = video?.videoWidth || 1920
   const sourceHeight = video?.videoHeight || 1080
   const duration = video?.duration && Number.isFinite(video.duration) ? video.duration : 0
+  const sourceFps = meta?.framerate ?? 50
+  const toTc = (t: number) => formatTimecode(t, sourceFps)
+  const fromTc = (t: string | undefined) => (t === undefined ? null : parseTimecode(t, sourceFps))
+  const defaultFilename = (startSec: number, endSec: number) =>
+    `swimchrono-${meta?.name ?? "video"}-${formatClock(startSec, 1).replace(":", "m")}-${formatClock(endSec, 1).replace(":", "m")}`
 
   // Live estimate of the work: frames to render and a rough duration
   // (measured: about 0.12 s per 1080p frame in Chrome).
@@ -46,7 +53,7 @@ function ExportMenu({ store, onExportConfig }: ExportMenuProps) {
   const wScale = Form.useWatch("scale", form)
   const wFps = Form.useWatch("fps", form)
   const estimate = useMemo(() => {
-    const seconds = Math.max(0, (wEnd ?? 0) - (wStart ?? 0))
+    const seconds = Math.max(0, (fromTc(wEnd) ?? 0) - (fromTc(wStart) ?? 0))
     const frames = Math.round(seconds * (wFps ?? 0))
     const pixels = sourceWidth * sourceHeight * (wScale ?? 1) * (wScale ?? 1)
     const perFrame = 0.04 + 0.08 * (pixels / (1920 * 1080))
@@ -60,7 +67,8 @@ function ExportMenu({ store, onExportConfig }: ExportMenuProps) {
 
   useEffect(() => {
     if (!videoOpen) return
-    form.setFieldsValue({ start: meta?.raceStartTime ?? 0, end: Math.round(duration * 100) / 100, scale: 1, fps: meta?.framerate ?? 50 })
+    const startSec = meta?.raceStartTime ?? 0
+    form.setFieldsValue({ start: toTc(startSec), end: toTc(duration), scale: 1, fps: sourceFps, filename: defaultFilename(startSec, duration) })
     detectExportFormat(sourceWidth, sourceHeight, meta?.framerate ?? 50).then(setFormat)
   }, [videoOpen])
 
@@ -80,12 +88,14 @@ function ExportMenu({ store, onExportConfig }: ExportMenuProps) {
     const values = await form.validateFields()
     const fmt = format
     if (!fmt) { message.error("This browser cannot encode video."); return }
+    const startSec = fromTc(values.start) ?? 0
+    const endSec = fromTc(values.end) ?? duration
     const width = Math.round(sourceWidth * values.scale / 2) * 2
     const height = Math.round(sourceHeight * values.scale / 2) * 2
     const controller = new AbortController()
     abortRef.current = controller
     setRunning(true)
-    setProgress({ done: 0, total: 1 })
+    setProgress({ done: 0, total: 1, startedAt: performance.now() })
     const wasPlaying = !store.videoElement.paused
     store.videoElement.pause()
     try {
@@ -93,16 +103,17 @@ function ExportMenu({ store, onExportConfig }: ExportMenuProps) {
         store,
         sourceVideo: store.videoElement,
         overlaySize: { width: store.svgElement.clientWidth, height: store.svgElement.clientHeight },
-        start: values.start,
-        end: values.end,
+        start: startSec,
+        end: endSec,
         fps: values.fps,
         width,
         height,
         format: fmt,
         signal: controller.signal,
-        onProgress: (done, total) => setProgress({ done, total }),
+        onProgress: (done, total) => setProgress((p) => ({ done, total, startedAt: p?.startedAt ?? performance.now() })),
       })
-      const name = `swimchrono-${meta.name}-${formatClock(values.start, 1).replace(":", "m")}-${formatClock(values.end, 1).replace(":", "m")}.${fmt}`
+      const base = (values.filename || defaultFilename(startSec, endSec)).trim().replace(/[\\/:*?"<>|]+/g, "-").replace(/\.(mp4|webm)$/i, "")
+      const name = `${base}.${fmt}`
       downloadBlob(blob, name)
       message.success(`Video saved as ${name} (${(blob.size / 1_048_576).toFixed(1)} MB)`)
       setVideoOpen(false)
@@ -124,11 +135,26 @@ function ExportMenu({ store, onExportConfig }: ExportMenuProps) {
   ]
 
   const percent = progress ? Math.round((progress.done / progress.total) * 100) : 0
+  const eta = useMemo(() => {
+    if (!progress || progress.done < 5) return null
+    const elapsed = (performance.now() - progress.startedAt) / 1000
+    const remaining = (elapsed / progress.done) * (progress.total - progress.done)
+    return remaining < 90 ? `${Math.round(remaining)} s` : `${Math.round(remaining / 60)} min`
+  }, [progress])
+
+  const timecodeRule = { validator: (_r: unknown, v: string) => (fromTc(v) === null ? Promise.reject(new Error(`Use mm:ss:ff (frames at ${sourceFps} fps) or seconds`)) : Promise.resolve()) }
+  const setFromPlayer = (field: "start" | "end") => {
+    if (!video) return
+    form.setFieldValue(field, toTc(video.currentTime))
+    form.validateFields([field]).catch(() => undefined)
+  }
 
   return (
     <>
       <Dropdown menu={{ items }} trigger={['click']}>
-        <Button icon={<DownloadOutlined />}>Export</Button>
+        <Tooltip title="Export the configuration (JSON), a snapshot of this frame (PNG) or a video with the visualizations (MP4/WebM)" mouseEnterDelay={0.6}>
+          <Button icon={<DownloadOutlined />} aria-haspopup="menu">Export <DownOutlined style={{ fontSize: 10, marginLeft: 2 }} /></Button>
+        </Tooltip>
       </Dropdown>
       <Modal
         title="Export video with visualizations"
@@ -145,23 +171,31 @@ function ExportMenu({ store, onExportConfig }: ExportMenuProps) {
         {format === null && <Alert type="warning" showIcon style={{ marginBottom: 12 }} message="This browser can encode neither MP4 (WebCodecs) nor WebM (MediaRecorder). Try Chrome, Edge or Safari 16.4+." />}
         {format === "webm" && <Alert type="info" showIcon style={{ marginBottom: 12 }} message="MP4 encoding is not available here; a WebM file will be recorded in real time (export takes as long as the clip)." />}
         <Form form={form} layout="vertical" size="small" disabled={running}>
-          <Space size="middle">
+          <Space size="middle" align="start">
             <Form.Item
               name="start"
-              label="Start (s)"
-              rules={[{ required: true }]}
-              extra={meta ? `Defaults to the race start in the data (${meta.raceStartTime.toFixed(2)} s). Earlier frames show no visualization.` : undefined}
+              label={<span>Start (mm:ss:ff) <Button type="link" size="small" style={{ padding: 0 }} onClick={() => setFromPlayer("start")}>use player time</Button></span>}
+              rules={[{ required: true }, timecodeRule]}
+              extra={meta ? `Defaults to the race start in the data (${toTc(meta.raceStartTime)}). Frames are counted at ${sourceFps} fps.` : undefined}
             >
-              <InputNumber min={0} max={duration} step={0.1} style={{ width: 120 }} />
+              <Input style={{ width: 150 }} placeholder="mm:ss:ff" />
             </Form.Item>
-            <Form.Item name="end" label="End (s)" rules={[{ required: true }, ({ getFieldValue }) => ({ validator: (_r, v) => v > getFieldValue("start") ? Promise.resolve() : Promise.reject(new Error("End must be after start")) })]}>
-              <InputNumber min={0} max={duration} step={0.1} style={{ width: 120 }} />
+            <Form.Item
+              name="end"
+              label={<span>End (mm:ss:ff) <Button type="link" size="small" style={{ padding: 0 }} onClick={() => setFromPlayer("end")}>use player time</Button></span>}
+              rules={[{ required: true }, timecodeRule, ({ getFieldValue }) => ({ validator: (_r, v) => { const e = fromTc(v), st = fromTc(getFieldValue("start")); return e !== null && st !== null && e <= st ? Promise.reject(new Error("End must be after start")) : Promise.resolve() } })]}
+              extra={`Video ends at ${toTc(duration)}.`}
+            >
+              <Input style={{ width: 150 }} placeholder="mm:ss:ff" />
             </Form.Item>
           </Space>
           <Space size="middle">
             <Form.Item name="scale" label="Size"><Select options={sizeOptions} style={{ width: 180 }} /></Form.Item>
-            <Form.Item name="fps" label="Frame rate"><Select options={[meta?.framerate ?? 50, 30, 25].filter((v, i, a) => a.indexOf(v) === i).map((v) => ({ value: v, label: `${v} fps` }))} style={{ width: 110 }} /></Form.Item>
+            <Form.Item name="fps" label="Export frame rate"><Select options={[meta?.framerate ?? 50, 30, 25].filter((v, i, a) => a.indexOf(v) === i).map((v) => ({ value: v, label: `${v} fps` }))} style={{ width: 110 }} /></Form.Item>
           </Space>
+          <Form.Item name="filename" label="File name" rules={[{ required: true, message: "Enter a file name" }]}>
+            <Input addonAfter={`.${format ?? "mp4"}`} style={{ maxWidth: 420 }} />
+          </Form.Item>
         </Form>
         <Text type="secondary">
           Output: {format === "mp4" ? "MP4 (H.264)" : format === "webm" ? "WebM" : "–"} · the visualizations are rendered exactly as shown in the editor · no audio.
@@ -185,7 +219,7 @@ function ExportMenu({ store, onExportConfig }: ExportMenuProps) {
         {progress && (
           <div style={{ marginTop: 12 }}>
             <Progress percent={percent} status={running ? "active" : "normal"} />
-            <Text type="secondary">{progress.done} / {progress.total} frames</Text>
+            <Text type="secondary">{progress.done} / {progress.total} frames{eta ? ` · about ${eta} left` : ""}</Text>
           </div>
         )}
       </Modal>

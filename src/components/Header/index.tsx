@@ -96,7 +96,9 @@ const Header = forwardRef((props: HeaderProps, ref) => {
 
         <div className={styles.group} ref={refImportExport}>
           <span className={styles.label}>Config</span>
-          <Button icon={<UploadOutlined />} onClick={handleImportClick}>Import</Button>
+          <Tooltip title="Import a configuration (JSON) exported from SwimChrono. Its layers replace the current ones." mouseEnterDelay={0.6}>
+            <Button icon={<UploadOutlined />} onClick={handleImportClick}>Import</Button>
+          </Tooltip>
           <ExportMenu store={store} onExportConfig={handleExportClick} />
         </div>
 
