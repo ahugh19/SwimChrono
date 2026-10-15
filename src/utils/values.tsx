@@ -15,7 +15,7 @@ export const DEFAULTSwimFlow2PositionXNoMove = 0 //
 export const DEFAULTSwimFlow2LaneSum = 8 // 
 export const DEFAULTSwimFlow2LapDistance = 50 // 
 
-export const DEFAULTSwimFlow2GLOBAL_blur = 0.5 // 
+export const DEFAULTSwimFlow2GLOBAL_blur = 0.2 // default blur of the embedded visualizations 
 export const DEFAULTSwimFlow2GLOBAL_minDuration = 3 // 
 
 export const VALUEFrameDataDirection_advance = "advance" // 

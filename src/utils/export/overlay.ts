@@ -1,4 +1,5 @@
 import { createRoot, Root } from "react-dom/client"
+import { DEFAULTSwimFlow2GLOBAL_blur } from "../values"
 import { flushSync } from "react-dom"
 import { createElement } from "react"
 import { assetUrl } from "../assets"
@@ -100,7 +101,7 @@ export function createOverlayRenderer(store: Store, width: number, height: numbe
           videoMetaData: store.currentVideoMetaData,
           currentSwimmerVideo: store.currentSwimmerVideo,
           currentFrameIndex: frameIndex,
-          blur: store.globalSetting.blur ?? 0.5,
+          blur: store.globalSetting.blur ?? DEFAULTSwimFlow2GLOBAL_blur,
         }))
       })
       // The vis components derive their text in effects: let them run.

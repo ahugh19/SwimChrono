@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { DEFAULTSwimFlow2GLOBAL_blur } from "../../../utils/values"
 import { Row, Flex, InputNumber, Tooltip, Button } from "antd"
 import { InfoCircleOutlined, DownOutlined, RightOutlined } from '@ant-design/icons';
 
@@ -15,11 +16,11 @@ function GlobalController(props: GlobalControllerProps) {
   const { defaultBlur, defaultMinDuration, onBlurChange, onMinDurationChange } = props;
 
   const [open, setOpen] = useState(false)
-  const [blurValue, setBlurValue] = useState<number>(defaultBlur ?? 0.5)
+  const [blurValue, setBlurValue] = useState<number>(defaultBlur ?? DEFAULTSwimFlow2GLOBAL_blur)
   const [minDurationValue, setMinDurationValue] = useState<number>(defaultMinDuration ?? 3)
 
   useEffect(() => {
-    setBlurValue(defaultBlur ?? 0.5)
+    setBlurValue(defaultBlur ?? DEFAULTSwimFlow2GLOBAL_blur)
   }, [defaultBlur])
 
   useEffect(() => {

@@ -1,4 +1,5 @@
 import VisAlongLane from "./VisAlongLane"
+import { DEFAULTSwimFlow2GLOBAL_blur } from "../../../utils/values"
 import VisGlobal from "./VisGlobal"
 import styles from "./index.module.less"
 import { inject, observer } from "mobx-react"
@@ -38,7 +39,7 @@ function VisHolder(props: VisHolderProps) {
     <svg xmlns="http://www.w3.org/2000/svg" viewBox={`0 0 ${svgWidth ? svgWidth : 0} ${svgHeight ? svgHeight : 0}`} ref={svgRef} style={{ pointerEvents: "none" }}>
       <defs>
         <filter id="blurFilter" x="-50%" y="-50%" width="200%" height="200%">
-          <feGaussianBlur in="SourceGraphic" stdDeviation={`${store && store.globalSetting.blur !== null ? store.globalSetting.blur : 0.5}`} />
+          <feGaussianBlur in="SourceGraphic" stdDeviation={`${store && store.globalSetting.blur !== null ? store.globalSetting.blur : DEFAULTSwimFlow2GLOBAL_blur}`} />
         </filter>
       </defs>
 

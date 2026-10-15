@@ -176,6 +176,7 @@ Export with the visualizations rendered in
 * The export dialog shows the number of frames and an estimated duration, explains that smaller sizes and lower frame rates are faster, notes that the start time defaults to the race start from the data, and reminds you to keep the tab in the foreground since browsers throttle timers in background tabs.
 * Start and end are entered as timecodes (mm:ss:ff at the source frame rate, plain seconds also accepted) with a "use player time" shortcut; the file name is editable; a running export shows the frames done and the estimated time left.
 * Import and Export buttons explain themselves in a tooltip; Export carries a menu chevron.
+* The default global blur of the embedded visualizations is 0.2 (was 0.5).
 
 ### 1.5.0
 
