@@ -1,6 +1,6 @@
 import { useRef, useImperativeHandle, forwardRef } from 'react';
 import { Button, Select, Tooltip } from 'antd';
-import { BulbFilled, BulbOutlined, DownloadOutlined, UploadOutlined } from '@ant-design/icons';
+import { BulbFilled, BulbOutlined, UploadOutlined } from '@ant-design/icons';
 import { inject, observer } from "mobx-react"
 import { IComponentPropsWithStore } from "../../store"
 import styles from "./index.module.less"
@@ -8,6 +8,7 @@ import { exampleList, videoMetaDataList } from '../../utils/values';
 import { useTheme } from '../../utils/theme'
 import Brand from '../Brand'
 import HeaderActions from '../HeaderActions'
+import ExportMenu from './ExportMenu'
 
 interface HeaderProps extends IComponentPropsWithStore {
   fileInputRef: React.RefObject<HTMLInputElement | null>
@@ -96,7 +97,7 @@ const Header = forwardRef((props: HeaderProps, ref) => {
         <div className={styles.group} ref={refImportExport}>
           <span className={styles.label}>Config</span>
           <Button icon={<UploadOutlined />} onClick={handleImportClick}>Import</Button>
-          <Button icon={<DownloadOutlined />} onClick={handleExportClick}>Export</Button>
+          <ExportMenu store={store} onExportConfig={handleExportClick} />
         </div>
 
         <HeaderActions

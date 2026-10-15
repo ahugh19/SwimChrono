@@ -101,7 +101,7 @@ function Home(props: IComponentPropsWithStore) {
     },
     {
       title: '📂 Import/Export Configuration',
-      description: 'Load your custom settings by importing a JSON configuration file (must follow our framework). Once set, export it for later use! 🔄',
+      description: 'Import a JSON configuration to restore your layers. Export saves the configuration, a PNG of the current frame, or a video with the visualizations rendered in. 🔄',
       target: () => childHeaderRef.current?.importExport,
     },
     {
