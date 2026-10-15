@@ -3,6 +3,7 @@ import { Group, Line, Rect, Text, Label, Tag } from 'react-konva';
 import Konva from 'konva';
 import { useThemeColors } from '../../../utils/theme';
 import { formatClock } from '../../../utils';
+import { timelinePaddingRight } from '../../../utils/values';
 
 interface TimelineAxisProps {
   canvasWidth: number
@@ -30,7 +31,7 @@ function TimelineAxis(props: TimelineAxisProps) {
   const groupRef = useRef<Konva.Group>(null)
   const scrubbing = useRef(false)
 
-  const chartWidth = Math.max(0, canvasWidth - 2 * canvasContentPadding)
+  const chartWidth = Math.max(0, canvasWidth - canvasContentPadding - timelinePaddingRight)
   const pxPerSecond = videoEnd > 0 ? chartWidth / videoEnd : 0
   const axisY = canvasHeight - 1
 

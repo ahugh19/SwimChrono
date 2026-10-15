@@ -177,6 +177,7 @@ Export with the visualizations rendered in
 * Start and end are entered as timecodes (mm:ss:ff at the source frame rate, plain seconds also accepted) with a "use player time" shortcut; the file name is editable; a running export shows the frames done and the estimated time left.
 * Import and Export buttons explain themselves in a tooltip; Export carries a menu chevron.
 * The default global blur of the embedded visualizations is 0.2 (was 0.5).
+* Timeline: loading a video zooms the ruler so the race start sits at the left edge; the zoom survives resizing the panels; clicking the tick row of the ruler seeks like the label row; the right edge of a bar reaching the end of the video is no longer clipped; a "Legend" popover explains the bar colors (green initiation trigger, purple conclusion trigger from race data, gray conclusion trigger from a fixed duration), hand-edited bars, handles and the pre-start shading.
 
 ### 1.5.0
 

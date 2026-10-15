@@ -2,7 +2,7 @@ import { Line, Rect } from 'react-konva';
 import { KonvaEventObject } from 'konva/lib/Node';
 import DurationRect, { IntervalEdge } from './DurationRect';
 import { LayerType, VisIntervalType } from '../../../../types';
-import { durationRectHeight, durationRectLineStroke, uiLineColor, rectBorderRadius, TRIGGER_COMP_START_END, MANUAL_TRIGGER_NAME } from '../../../../utils/values'
+import { durationRectHeight, durationRectLineStroke, uiLineColor, rectBorderRadius, TRIGGER_COMP_START_END, MANUAL_TRIGGER_NAME, timelinePaddingRight } from '../../../../utils/values'
 import { useThemeColors } from '../../../../utils/theme'
 
 export interface IntervalDraft {
@@ -58,7 +58,7 @@ function TemporalInfoItem(props: TemporalInfoItemProps) {
       <Rect
         x={0}
         y={y}
-        width={Math.max(canvasWidth, scaleW(videoEnd) + 2 * canvasContentPadding)}
+        width={Math.max(0, canvasWidth)}
         height={durationRectHeight}
         fill={rowFill}
         cornerRadius={rectBorderRadius}
@@ -74,7 +74,7 @@ function TemporalInfoItem(props: TemporalInfoItemProps) {
         listening={false}
       />
       <Line
-        points={[canvasContentPadding, y + durationRectHeight + durationRectLineStroke, canvasWidth - canvasContentPadding, y + durationRectHeight + durationRectLineStroke]}
+        points={[canvasContentPadding, y + durationRectHeight + durationRectLineStroke, canvasWidth - timelinePaddingRight, y + durationRectHeight + durationRectLineStroke]}
         stroke={uiLineColor}
         strokeWidth={durationRectLineStroke}
         listening={false}

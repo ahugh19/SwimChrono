@@ -1,15 +1,16 @@
 import TimelinePanel from "./TimelinePanel"
 import TriggerPanel from "./TriggerPanel"
 import { useEffect, useState, useRef, forwardRef, useImperativeHandle, useCallback } from 'react';
-import { DownloadOutlined, LoginOutlined, PlusOutlined } from '@ant-design/icons';
-import { Button, Tooltip, Slider, Typography } from 'antd';
+import { DownloadOutlined, LoginOutlined, PlusOutlined, InfoCircleOutlined } from '@ant-design/icons';
+import { Button, Tooltip, Slider, Typography, Popover } from 'antd';
 import { Stage, Layer, Text } from 'react-konva';
 import Konva from 'konva';
 import TemporalInfo from './TemporalInfo'
 import { inject, observer } from "mobx-react"
 import { IComponentPropsWithStore } from "../../store"
 import TimelineAxis from './TimelineAxis';
-import { chromeScrollBarWidth, durationRectHeight, layerPartWidth } from '../../utils/values';
+import { durationRectHeight, layerPartWidth, timelinePaddingLeft, triggerStartBorderColor, triggerEndBorderColor, triggerEndDurationBorderColor } from '../../utils/values';
+import { useThemeColors } from '../../utils/theme';
 import ResizeHandle, { readStoredSize, writeStoredSize } from '../ResizeHandle';
 import styles from "./index.module.less"
 import LayerGroup from "./LayerGroup"
@@ -34,7 +35,8 @@ const LayerPanel = forwardRef((props: LayerPanelProps, ref) => {
   const canvasDefaultWidth = 900
   const canvasDefaultHeight = 340
   const timelineAxisCanvasHeight = 24
-  const canvasContentPadding = 1
+  const canvasContentPadding = timelinePaddingLeft
+  const palette = useThemeColors()
 
   const [ganttCanvasHeight, setGanttCanvasHeight] = useState<number>(canvasDefaultHeight)
   const [ganttAreaWidth, setGanttAreaWidth] = useState<number>(canvasDefaultWidth)
@@ -69,6 +71,17 @@ const LayerPanel = forwardRef((props: LayerPanelProps, ref) => {
     if (!store) return
     setRaceStart(store.currentVideoMetaData?.raceStartTime as number)
   }, [store?.currentVideoMetaData])
+
+  // When a video is loaded, zoom the timeline so the race start sits at the
+  // left edge (once per video, as soon as the duration and width are known).
+  const zoomedForVideo = useRef<string | null>(null)
+  useEffect(() => {
+    const key = store?.currentVideoMetaData?.name ?? null
+    if (!key || !(videoDuration > 0) || !(ganttAreaWidth > 0) || zoomedForVideo.current === key) return
+    zoomedForVideo.current = key
+    const startPct = Math.max(0, Math.min(95, (raceStart / videoDuration) * 100))
+    applyZoom(startPct, 100)
+  }, [store?.currentVideoMetaData?.name, videoDuration, ganttAreaWidth, raceStart])
 
   useEffect(() => {
     // Scroll event handlers.
@@ -120,13 +133,28 @@ const LayerPanel = forwardRef((props: LayerPanelProps, ref) => {
     };
   }, [])
 
+  // The stage at 100% zoom is exactly as wide as the gantt container's
+  // visible area, measured directly so the ruler (same width) and the
+  // rows always scroll to the same positions.
   useEffect(() => {
-    setGanttAreaWidth(timelineDivWidth - layerColumnWidth - chromeScrollBarWidth - canvasContentPadding)
+    const el = temporalInfoRef.current
+    if (!el) return
+    const measure = () => setGanttAreaWidth(Math.max(0, el.clientWidth))
+    const ro = new ResizeObserver(measure)
+    ro.observe(el)
+    measure()
+    return () => ro.disconnect()
   }, [timelineDivWidth, layerColumnWidth])
 
+  // Keep the zoom window when the available width changes (window resize,
+  // layer column or controller panel dragged): recompute the stage width
+  // and scroll offset from the current range instead of resetting them.
+  const zoomRangeRef = useRef<[number, number]>([0, 100])
+  useEffect(() => { zoomRangeRef.current = zoomRange }, [zoomRange])
   useEffect(() => {
     setSliderWidth(ganttAreaWidth + canvasContentPadding * 2)
-    setCanvasWidth(ganttAreaWidth)
+    if (ganttAreaWidth <= 0) return
+    applyZoom(zoomRangeRef.current[0], zoomRangeRef.current[1])
   }, [ganttAreaWidth])
 
   useEffect(() => {
@@ -178,18 +206,29 @@ const LayerPanel = forwardRef((props: LayerPanelProps, ref) => {
   }
 
   // Apply a visible window [startPct, endPct] of the video to the canvas.
+  // The scroll offset is applied after React has resized the stage (see the
+  // effect below); setting it right away would be clamped to the old width.
+  const pendingScrollLeft = useRef<number | null>(null)
   const applyZoom = useCallback((startPct: number, endPct: number) => {
     const range = Math.max(2, Math.min(100, endPct - startPct))
     const start = Math.max(0, Math.min(100 - range, startPct))
-    setZoomRange([start, start + range])
+    setZoomRange((prev) => (prev[0] === start && prev[1] === start + range ? prev : [start, start + range]))
     const width = ganttAreaWidth / (range / 100)
+    pendingScrollLeft.current = width * (start / 100)
     setCanvasWidth(width)
-    // The stage is exactly `width` wide, so the scroll offset can be
-    // derived without waiting for the DOM to re-measure.
-    const scrollLeft = width * (start / 100)
-    if (temporalInfoRef.current) temporalInfoRef.current.scrollLeft = scrollLeft
-    if (axisScrollRef.current) axisScrollRef.current.scrollLeft = scrollLeft
   }, [ganttAreaWidth])
+
+  useEffect(() => {
+    const scrollLeft = pendingScrollLeft.current
+    if (scrollLeft === null) return
+    pendingScrollLeft.current = null
+    const apply = () => {
+      if (temporalInfoRef.current) temporalInfoRef.current.scrollLeft = scrollLeft
+      if (axisScrollRef.current) axisScrollRef.current.scrollLeft = scrollLeft
+    }
+    apply()
+    requestAnimationFrame(apply)
+  }, [canvasWidth])
 
   function handleSliderChange(value: number[]) {
     applyZoom(value[0], value[1])
@@ -300,6 +339,24 @@ const LayerPanel = forwardRef((props: LayerPanelProps, ref) => {
                   Add a New Layer
                 </Button>
               </Tooltip>
+              <Popover
+                placement="topLeft"
+                trigger="click"
+                title="Timeline legend"
+                content={
+                  <div className={styles.legend}>
+                    <div className={styles.legendRow}><span className={styles.legendBar}><i style={{ background: triggerStartBorderColor }} /></span><span><b>Green edge</b>: initiation trigger. The bar starts where its condition on the race data is met.</span></div>
+                    <div className={styles.legendRow}><span className={styles.legendBar}><i className={styles.legendEnd} style={{ background: triggerEndBorderColor }} /></span><span><b>Purple edge</b>: conclusion trigger decided by a condition on the race data.</span></div>
+                    <div className={styles.legendRow}><span className={styles.legendBar}><i className={styles.legendEnd} style={{ background: triggerEndDurationBorderColor }} /></span><span><b>Gray edge</b>: conclusion trigger decided by a fixed duration.</span></div>
+                    <div className={styles.legendRow}><span className={styles.legendBar} style={{ outline: `1px dashed ${palette.accent}`, outlineOffset: -1 }} /><span><b>Dashed outline</b>: interval edited by hand. The ↺ button of the layer restores the trigger result.</span></div>
+                    <div className={styles.legendRow}><span className={styles.legendBar}><i style={{ background: palette.accent, width: 5 }} /><i className={styles.legendEnd} style={{ background: palette.accent, width: 5 }} /></span><span><b>Handles</b>: drag the edges to change the start or the end, drag the middle to move the bar.</span></div>
+                    <div className={styles.legendRow}><span className={styles.legendBar} style={{ background: palette.backgroundPreStart, opacity: 0.9 }} /><span><b>Shaded area</b>: before the race start.</span></div>
+                    <div className={styles.legendRow}><span className={styles.legendBar} /><span><b>"whole race"</b>: layer without triggers, shown from the race start to the end of the video.</span></div>
+                  </div>
+                }
+              >
+                <Button type="text" size="small" icon={<InfoCircleOutlined />} aria-label="Timeline legend" className={styles.legendBtn}>Legend</Button>
+              </Popover>
             </div>
             <div title={"Video time · time relative to the race start. Space: play/pause · ←/→: step a frame (shift: 1 s) · Home: race start · drag on the ruler to seek · ctrl/⌘ + wheel: zoom"} className={styles.timeTextContainer}>
               <Typography.Text style={{ fontVariantNumeric: 'tabular-nums' }}>{formatClock(currentVideoTime, 2)}</Typography.Text>

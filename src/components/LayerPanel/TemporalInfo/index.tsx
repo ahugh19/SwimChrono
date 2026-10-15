@@ -6,7 +6,7 @@ import Konva from 'konva';
 import { KonvaEventObject } from 'konva/lib/Node';
 import styles from "./index.module.less"
 import { VisIntervalType, LayerType } from '../../../types';
-import { durationRectHeight, durationRectMarginY, durationRectLineStroke, MIN_INTERVAL_SECONDS } from '../../../utils/values'
+import { durationRectHeight, durationRectMarginY, durationRectLineStroke, MIN_INTERVAL_SECONDS, timelinePaddingLeft, timelinePaddingRight } from '../../../utils/values'
 import { useThemeColors } from '../../../utils/theme'
 import TemporalInfoItem, { IntervalDraft } from './TemporalInfoItem';
 import { IntervalEdge } from './TemporalInfoItem/DurationRect';
@@ -40,8 +40,8 @@ function TemporalInfo(props: TemporalInfoProps) {
   const [hoverRow, setHoverRow] = useState<number | null>(null)
   const [tooltip, setTooltip] = useState<{ x: number; y: number; text: string } | null>(null)
 
-  const canvasContentPadding = 2
-  const chartWidth = canvasWidth - 2 * canvasContentPadding
+  const canvasContentPadding = timelinePaddingLeft
+  const chartWidth = Math.max(0, canvasWidth - timelinePaddingLeft - timelinePaddingRight)
   const layerList = store?.layerList ?? []
 
   function scaleX(x: number) {
@@ -187,7 +187,7 @@ function TemporalInfo(props: TemporalInfoProps) {
   return (
     <div className={styles.temporalInfo}>
       <Stage
-        width={canvasWidth}
+        width={Math.max(0, canvasWidth)}
         height={totalHeight}
         ref={konvaStageRef}
         onMouseDown={onStageMouseDown}
