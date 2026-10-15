@@ -173,7 +173,7 @@ exposes editors based on the element's `type` (`text` / `shape` / `icon` /
 Export with the visualizations rendered in
 * The header's Export menu offers, besides the configuration JSON, a PNG snapshot of the current frame and a video of a chosen time range with the visualizations rendered in. MP4 (H.264) is encoded in the browser with WebCodecs where available (Chrome, Edge, Safari 16.4+), otherwise a WebM is recorded in real time. Resolution and frame rate are selectable; the overlay is rendered exactly as in the editor, with the badge font embedded. No audio.
 
-* The export dialog reminds you to keep the tab in the foreground, since browsers throttle timers in background tabs.
+* The export dialog shows the number of frames and an estimated duration, explains that smaller sizes and lower frame rates are faster, notes that the start time defaults to the race start from the data, and reminds you to keep the tab in the foreground since browsers throttle timers in background tabs.
 
 ### 1.5.0
 
