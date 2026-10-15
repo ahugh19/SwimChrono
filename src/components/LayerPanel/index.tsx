@@ -233,9 +233,13 @@ const LayerPanel = forwardRef((props: LayerPanelProps, ref) => {
   // Zoom so the race (race start to the end of the video) fills the timeline.
   const fitRace = useCallback(() => {
     if (!(videoDuration > 0)) return
-    const startPct = Math.max(0, Math.min(95, (raceStart / videoDuration) * 100))
-    applyZoom(startPct, 100)
-  }, [videoDuration, raceStart, applyZoom])
+    const racePct = Math.max(0, Math.min(95, (raceStart / videoDuration) * 100))
+    // Leave about 12px before the race start so the first bar's left edge
+    // and its handle are not clipped by the canvas edge.
+    const gapPx = 12
+    const gapPct = ganttAreaWidth > 0 ? (gapPx / ganttAreaWidth) * (100 - racePct) : 0
+    applyZoom(Math.max(0, racePct - gapPct), 100)
+  }, [videoDuration, raceStart, ganttAreaWidth, applyZoom])
 
   // Assigned during render so the auto-fit effect above sees it on the first commit.
   fitRaceRef.current = fitRace

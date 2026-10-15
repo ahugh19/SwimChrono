@@ -178,7 +178,8 @@ Export with the visualizations rendered in
 * Import and Export buttons explain themselves in a tooltip; Export carries a menu chevron.
 * The default global blur of the embedded visualizations is 0.2 (was 0.5).
 * Timeline: loading a video zooms the ruler so the race start sits at the left edge; the zoom survives resizing the panels; clicking the tick row of the ruler seeks like the label row; the right edge of a bar reaching the end of the video is no longer clipped; a "Legend" popover explains the bar colors (green initiation trigger, purple conclusion trigger from race data, gray conclusion trigger from a fixed duration), hand-edited bars, handles and the pre-start shading.
-* A "Fit race" button next to the zoom slider fits the race to the timeline; the header's Import/Export group is labeled "File" and the Export menu has a fixed width.
+* A "Fit race" button next to the zoom slider fits the race to the timeline (with a small gap before the race start); the header's Import/Export group is labeled "File" and the Export menu has a fixed width.
+* Import is a menu too: upload a configuration, or open "About the JSON format", a dialog with a highlighted example and a field reference of the configuration file. Exported JSON is pretty-printed.
 
 ### 1.5.0
 

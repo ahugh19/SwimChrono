@@ -1,6 +1,6 @@
 import { useRef, useImperativeHandle, forwardRef } from 'react';
 import { Button, Select, Tooltip } from 'antd';
-import { BulbFilled, BulbOutlined, UploadOutlined } from '@ant-design/icons';
+import { BulbFilled, BulbOutlined } from '@ant-design/icons';
 import { inject, observer } from "mobx-react"
 import { IComponentPropsWithStore } from "../../store"
 import styles from "./index.module.less"
@@ -9,6 +9,7 @@ import { useTheme } from '../../utils/theme'
 import Brand from '../Brand'
 import HeaderActions from '../HeaderActions'
 import ExportMenu from './ExportMenu'
+import ImportMenu from './ImportMenu'
 
 interface HeaderProps extends IComponentPropsWithStore {
   fileInputRef: React.RefObject<HTMLInputElement | null>
@@ -96,9 +97,7 @@ const Header = forwardRef((props: HeaderProps, ref) => {
 
         <div className={styles.group} ref={refImportExport}>
           <span className={styles.label}>File</span>
-          <Tooltip title="Import a configuration (JSON) exported from SwimChrono. Its layers replace the current ones." mouseEnterDelay={0.6}>
-            <Button icon={<UploadOutlined />} onClick={handleImportClick}>Import</Button>
-          </Tooltip>
+          <ImportMenu onUpload={handleImportClick} />
           <ExportMenu store={store} onExportConfig={handleExportClick} />
         </div>
 
