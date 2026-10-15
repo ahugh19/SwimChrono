@@ -147,6 +147,12 @@ function ExportMenu({ store, onExportConfig }: ExportMenuProps) {
         <Text type="secondary">
           Output: {format === "mp4" ? "MP4 (H.264)" : format === "webm" ? "WebM" : "–"} · the visualizations are rendered exactly as shown in the editor · no audio.
         </Text>
+        <Alert
+          type="info"
+          showIcon
+          style={{ marginTop: 10 }}
+          message="Keep this tab in the foreground while exporting. Browsers slow down timers in background tabs, which stalls the export."
+        />
         {progress && (
           <div style={{ marginTop: 12 }}>
             <Progress percent={percent} status={running ? "active" : "normal"} />
