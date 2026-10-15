@@ -1,7 +1,7 @@
 # SwimChrono
 
 This is a repository for original codes of an authoring tool, *SwimChrono*, provided in the paper ["Diving Deep into Time: Temporal Arrangements for Embedded Visualization in Swimming Videos"](https://doi.org/10.1109/TVCG.2026.3689361) ([preprint on HAL](https://hal.science/hal-05612503)), published at [IEEE Transactions on Visualization and Computer Graphics](https://www.computer.org/csdl/journal/tg).
-*SwimChrono* lets users author embedded visualizations on top of swimming-race videos — pick a race, select data fields, attach visualizations to lanes or screen corners, edit each element's style, and define triggers (manually or via the built-in AI assistant) that decide when each layer appears. An online interactive version can be accessed at https://aviz.gitlabpages.inria.fr/swimchrono/ or https://ahugh19.github.io/SwimChrono/.
+*SwimChrono* lets users author embedded visualizations on top of swimming-race videos: pick a race, select data fields, attach visualizations to lanes or screen corners, edit each element's style, and define triggers (by hand, from the review-based recommendations, or via the optional AI assistant) that decide when each layer appears. Designs can be saved as JSON and exported as a PNG snapshot or as a video with the visualizations rendered in. The repository also hosts the labeling tools and the result charts of the systematic review behind the paper. An online interactive version can be accessed at https://aviz.gitlabpages.inria.fr/swimchrono/ or https://ahugh19.github.io/SwimChrono/.
 
 See also [*SwimFlow*](https://aviz.gitlabpages.inria.fr/vis-in-motion-swimflow/), our related tool for embedded visualizations in swimming videos.
 
@@ -119,39 +119,67 @@ yarn test         # run once
 yarn test:watch   # watch mode
 ```
 
-The test setup lives in `vitest.config.ts` and `src/test/`. Tests sit
-next to the components they cover, named `index.test.tsx`.
+The test setup lives in `vitest.config.ts` and `src/test/`. Component tests
+sit next to the components they cover (`index.test.tsx`); the pure modules
+in `src/utils/` and the layout / tokenizer helpers have `*.test.ts` files
+beside them (trigger intervals, CSV parsing, configuration import, race
+info, timecodes, recommendations, gantt layout, svg serialization).
 
 ## Project Layout
 
 ```
 public/
-├── configuration/   # exportable layer-config JSON examples (olympic, pacman, acc, …)
+├── configuration/   # exportable layer-config JSON examples (olympic, pacman, acc, climb)
 ├── csv/             # per-race frame data (one row per swimmer per frame)
-├── video/           # compressed mp4s referenced from videoMetaDataList
+├── video/           # compressed, faststart mp4s referenced from videoMetaDataList
 ├── img/             # icons used by the visualization picker
-├── font/            # OlympicStyle font for badge text
-└── labelTool/       # backing data for the label tool's existing-data fetch
+├── font/            # OlympicStyle font for badge text (also embedded in exports)
+└── labelTool/       # review annotations (result-vis25.json) and the derived
+                     # trigger-recommendations.json (yarn build:recommendations)
+
+scripts/
+└── buildTriggerRecommendations.mjs   # aggregates the review annotations
 
 src/
-├── pages/           # route entries (Home, LabelTool, Visualization)
+├── pages/           # route entries (Home = authoring tool, LabelTool, Visualization)
 ├── components/
-│   ├── Header/                 # video selection, import/export, examples
-│   ├── VideoPanel/VisHolder/   # SVG layers driven by frame data:
-│   │   ├── visRegistry.ts      # visName -> component map (add new vis here)
-│   │   ├── VisAlongLane/       # per-lane visualizations
-│   │   └── VisGlobal/          # screen-corner / global visualizations
-│   ├── LayerPanel/             # Konva timeline, layer list, TriggerDrawer + AIChat
-│   ├── ControllerPanel/        # data / vis / position / element editors
-│   ├── VideoLabel/             # labeling tool (vis / event / camera shot)
-│   └── ResultVisualization/    # cross-race statistics gantt
-├── store/           # MobX root store
+│   ├── Header/                 # authoring header: video / example pickers,
+│   │   ├── ImportMenu/         #   upload + JSON-format dialog
+│   │   ├── ExportMenu/         #   configuration / snapshot / video export dialog
+│   │   └── AboutModal/         #   paper reference and page links
+│   ├── PageHeader/             # slim header of the label tools and result charts
+│   ├── HeaderActions/          # Pages menu, GitHub, About, help tour (every header)
+│   ├── AppNav/, Brand/         # page list + navigation, logo and version badge
+│   ├── ResizeHandle/           # draggable gutters between panels
+│   ├── CodeEditor/             # highlighted svg editor, json viewer, xml/json tokenizers
+│   ├── VideoPanel/             # player, loading overlay, click-to-select overlay
+│   │   └── VisHolder/          # SVG layers driven by frame data:
+│   │       ├── visRegistry.ts  #   visName -> component map (add new vis here)
+│   │       ├── builtInGlyphs.ts#   default svg of glyphs that can be replaced
+│   │       ├── CustomGlyph.tsx #   renders a user svg in place of a glyph
+│   │       ├── OverlaySvg.tsx  #   pure overlay used by the exports
+│   │       ├── VisAlongLane/   #   per-lane visualizations
+│   │       └── VisGlobal/      #   screen-corner / global visualizations
+│   ├── LayerPanel/             # Konva timeline (ruler, bars, handles, legend),
+│   │                           # layer list, TriggerDrawer + AIChat
+│   ├── ControllerPanel/        # data / vis / position / element / svg-icon editors
+│   ├── VideoLabel/             # labeling tools (vis / event / camera shot)
+│   └── ResultVisualization/    # review results: player, annotations, gantt chart
+│       └── ganttLayout.ts      #   pure layout of the gantt rows
+├── store/           # MobX root store (layers, frame data, intervals)
 ├── tool/            # CanvasSelect (rect / polygon / point / line / circle annotator)
 ├── types/           # shared types + zod schema for imported configurations
-├── utils/           # values, prompts, flag SVGs, helpers
-│   ├── assets.ts        # VITE_ASSET_BASE_URL resolution
-│   ├── frameData.ts     # CSV download with progress + parsing
-│   └── feedback.ts      # theme-aware antd message wrapper
+├── utils/
+│   ├── values.tsx            # constants, visualization catalog, editable elements
+│   ├── index.tsx             # trigger interval computation, helpers
+│   ├── raceInfo.ts           # race name / record label / event label from metadata
+│   ├── triggerRecommendation.ts # recommendations from the review summary
+│   ├── timecode.ts           # mm:ss:ff parsing and formatting
+│   ├── assets.ts             # VITE_ASSET_BASE_URL resolution
+│   ├── frameData.ts          # CSV download with progress + parsing
+│   ├── feedback.ts           # theme-aware antd message wrapper
+│   ├── theme.tsx             # dark / light palettes and antd tokens
+│   └── export/               # overlay compositing, png snapshot, mp4 / webm video
 └── test/            # vitest setup + shared fixtures
 ```
 
@@ -165,6 +193,13 @@ exposes editors based on the element's `type` (`text` / `shape` / `icon` /
 `fontFillColor` / `shapeFillColor` / `shapeStrokeColor` / `shapeStrokeWidth`
 / `iconSize` to its rendered SVG. Regression tests in
 `src/components/.../*.test.tsx` pin this contract.
+
+To add a visualization: create its component under `VisHolder/VisAlongLane/`
+or `VisHolder/VisGlobal/`, register it in `VisHolder/visRegistry.ts`, add a
+`VALUE_…` name, a catalog entry and its editable elements in
+`utils/values.tsx`. If it draws a glyph that users may replace, add its
+default svg to `VisHolder/builtInGlyphs.ts` and render `CustomGlyph` when
+`customizedIcon.svgContent` is set.
 
 ## Changelog
 
