@@ -7,7 +7,16 @@
   </head>
   <body>
     <script>
-      window.location.replace("/SwimChrono/");
+      // GitHub Pages serves this file for deep links such as /SwimChrono/label-vis.
+      // Keep the requested path so the app can restore it after the redirect.
+      (function () {
+        var base = "/SwimChrono/";
+        var path = window.location.pathname + window.location.search + window.location.hash;
+        if (path.indexOf(base) === 0 && path.length > base.length) {
+          try { sessionStorage.setItem("swimchrono.redirectPath", path); } catch (e) {}
+        }
+        window.location.replace(base);
+      })();
     </script>
   </body>
 </html>

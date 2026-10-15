@@ -7,6 +7,16 @@ See also [*SwimFlow*](https://aviz.gitlabpages.inria.fr/vis-in-motion-swimflow/)
 
 ![SwimChrono authoring interface with the Olympic Style example loaded](./docs/img/tool-screenshot.jpg)
 
+## Pages
+
+* [Authoring tool](https://ahugh19.github.io/SwimChrono/) — compose embedded visualizations on a race video, set their triggers on the timeline, and export the design, a snapshot or a video.
+* [Visualization labeling](https://ahugh19.github.io/SwimChrono/label-vis) — the tool used in the systematic review to mark the embedded visualizations of broadcast videos: bounding box, data, placement, movement and animation.
+* [Event labeling](https://ahugh19.github.io/SwimChrono/label-event) — marks race events (start, turns, finish) as intervals or points.
+* [Camera-shot labeling](https://ahugh19.github.io/SwimChrono/label-camera) — marks camera shots and how they connect.
+* [Labeling results](https://ahugh19.github.io/SwimChrono/visualization) — the 1544 review annotations as gantt charts, one video at a time or all at once, linked to the player and a filterable table.
+
+All pages are reachable from the Pages menu in every header. The label tools run without a backend, so edits last only for the session.
+
 ## Paper version
 
 The code used for the paper is tagged [`v1.0.0`](https://github.com/ahugh19/SwimChrono/releases/tag/v1.0.0)
