@@ -863,6 +863,7 @@ export const videoMetaDataList = [
     "videoName": "climbing",
     "video": "video/climbing.mp4",
     "note": "climbing",
+    "description": "As a first test we applied the tool to a speed climbing video. Rowing, running and cycling have the same kind of data.",
     "swimmersInfo": [
       {
         "name": "MADE RITA D.M.",

@@ -3,7 +3,11 @@
 *SwimChrono* is built for swimming races, but the temporal-arrangement
 approach generalizes to other racing sports. This repository ships a
 speed-climbing case as an **experimental demonstration** — it is a proof
-of concept, not a fully supported sport.
+of concept, not a fully supported sport. As a first test we applied the
+tool to a speed climbing video; rowing, running and cycling have the same
+kind of data. In the tool, picking the climbing video grays out the
+swimming examples and the swimming data, and a note under the video says
+what the case is for.
 
 ![The speed-climbing case in SwimChrono](./img/climbing-case.jpg)
 

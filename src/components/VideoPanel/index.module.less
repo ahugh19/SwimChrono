@@ -50,6 +50,26 @@
       color: var(--text-color-faint);
       white-space: nowrap;
     }
+
+    .videoNote {
+      position: absolute;
+      left: 0;
+      top: 100%;
+      margin-top: 8px;
+      // stay clear of the centered play button
+      max-width: calc(50% - 36px);
+      display: inline-flex;
+      align-items: flex-start;
+      gap: 5px;
+      font-size: 11px;
+      line-height: 1.4;
+      color: var(--text-color-faint);
+
+      .anticon {
+        margin-top: 2px;
+        flex: none;
+      }
+    }
   }
 
   .loadingOverlay {

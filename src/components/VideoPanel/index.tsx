@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect, forwardRef, useImperativeHandle } from "react";
 import { Button, Spin, Progress } from "antd"
 import { message } from "../../utils/feedback"
-import { PlayCircleOutlined, PauseCircleOutlined, VideoCameraFilled } from '@ant-design/icons';
+import { PlayCircleOutlined, PauseCircleOutlined, VideoCameraFilled, InfoCircleOutlined } from '@ant-design/icons';
 import DataPanel from "./DataPanel"
 import PreferencePanel from "./PreferencePanel"
 import VisHolder from "./VisHolder"
@@ -213,6 +213,14 @@ const VideoPanel = forwardRef((props: VideoPanelProps, ref) => {
             onClick={playPauseVideo}
           />
         </div>
+        {/* what this video is for, under the video's bottom-left corner */}
+        {
+          store?.currentVideoMetaData?.description &&
+          <div className={styles.videoNote}>
+            <InfoCircleOutlined />
+            <span>{store.currentVideoMetaData.description}</span>
+          </div>
+        }
         {/* source file, tucked under the video's bottom-right corner */}
         <div className={styles.videoCaption} title={store?.currentVideoMetaData ? store.currentVideoMetaData.video : undefined}>
           <VideoCameraFilled />

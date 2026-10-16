@@ -376,6 +376,7 @@ export type VideoMetaDataType = {
   video: string, // video url
   videoName: string,
   note: string,
+  description?: string, // shown under the video; what this video is for
   swimmersInfo: SwimmerInfoType[],
 }
 
