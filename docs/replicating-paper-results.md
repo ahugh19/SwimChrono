@@ -37,7 +37,7 @@ These two examples together correspond to **Figure 5** in the paper.
 ## 4. Figure 6 — The speed-climbing case
 
 1. In the *Video* dropdown, select **Climbing**.
-2. In the *Example* dropdown, select **Climbing**. After the configuration loads, its four layers appear in the timeline; play the video to see the result.
+2. The **Climbing** example loads by itself once the video's data is in (it is the only enabled entry of the *Example* dropdown). Its four layers appear in the timeline; play the video to see the result.
 
 This corresponds to **Figure 6** in the paper. Note that Figure 6 is composed of several video frames, each rotated 90° clockwise relative to the video as seen in the system (the wall appears horizontal in the tool and vertical in the paper). See [climbing-case.md](./climbing-case.md) for more about this case.
 

@@ -103,3 +103,21 @@ html, body {
   width: 100% !important;
   height: 100% !important;
 }
+
+/* Toast messages wrap instead of running on in one long line; the icon
+   stays at the start of the first line. */
+.ant-message-notice-content {
+  max-width: min(560px, calc(100vw - 32px));
+  text-align: left;
+}
+.ant-message-custom-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+.ant-message-custom-content > .anticon {
+  margin-top: 3px;
+  flex: none;
+}

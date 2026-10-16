@@ -5,9 +5,9 @@ approach generalizes to other racing sports. This repository ships a
 speed-climbing case as an **experimental demonstration** — it is a proof
 of concept, not a fully supported sport. As a first test we applied the
 tool to a speed climbing video; rowing, running and cycling have the same
-kind of data. In the tool, picking the climbing video grays out the
-swimming examples and the swimming data, and a note under the video says
-what the case is for.
+kind of data. In the tool, picking the climbing video loads the climbing example,
+grays out the swimming examples and the swimming data, and a note under
+the video says what the case is for.
 
 ![The speed-climbing case in SwimChrono](./img/climbing-case.jpg)
 
@@ -15,9 +15,11 @@ what the case is for.
 
 1. Run the tool (`yarn run dev`, or use the online version).
 2. In the Header, pick **Climbing** in the *Video* dropdown.
-3. Load the **Climbing** entry from the *Example* dropdown.
+3. The **Climbing** example loads by itself once the video's data is in
+   (it is also the only enabled entry of the *Example* dropdown).
 4. Play the video: four layers (*up*, *down*, *count*, *trial*) appear,
-   with triggers based on acceleration thresholds.
+   with triggers based on acceleration thresholds. Switching back to a
+   swimming video returns to the default single layer.
 
 ## What is included
 

@@ -347,6 +347,13 @@ export class Store {
     this.setSelectedLayerIndex(0)
   }
 
+  // Back to the single default layer, as on a fresh start.
+  resetToDefaultLayer = () => {
+    this.layerList = []
+    this.selectedLayerIndex = null
+    this.addDefaultLayer()
+  }
+
   addNewInitLayer = () => {
     console.log(this.selectedLayerIndex)
     if (this.selectedLayerIndex !== null || (this.selectedLayerIndex === 0 && this.layerList.length === 1)) {

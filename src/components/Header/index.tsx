@@ -55,15 +55,50 @@ const Header = forwardRef((props: HeaderProps, ref) => {
     }
   }
 
+  // The example made for a given video, if there is exactly one.
+  function ownExampleOf(videoName: string) {
+    const own = exampleList.filter((e) => e.videoName.toLowerCase() === videoName.toLowerCase())
+    return own.length === 1 ? own[0] : undefined
+  }
+
   // After a video switch, an example of the other sport no longer applies.
   useEffect(() => {
     if (exampleValue === "none" || !store?.currentVideoMetaData) return
     const videoSport = sportOf(store.currentVideoMetaData)
-    if (sportOfExample(exampleValue) !== videoSport) {
-      message.warning(`The "${exampleValue}" example was made for ${sportOfExample(exampleValue)} and does not fit a ${videoSport} video. Load a matching example or switch the video back.`)
-      setExampleValue("none")
+    const exampleSport = sportOfExample(exampleValue)
+    if (exampleSport === videoSport) return
+    setExampleValue("none")
+    if (videoSport === "climbing") {
+      // The climbing video loads its own example once its data is in (below).
+      if (ownExampleOf(store.currentVideoMetaData.name)) return
+      message.warning(`The "${exampleValue}" example was made for ${exampleSport} and does not fit a ${videoSport} video. Load a matching example or switch the video back.`)
+      return
     }
+    // Back on a swimming video the climbing layers mean nothing: start from
+    // the default setup, as on a fresh start.
+    store.resetToDefaultLayer()
   }, [store?.currentVideoMetaData?.name])
+
+  // The climbing video has one example made for it: load it as soon as the
+  // video's data is in (the intervals are computed from that data), unless a
+  // climbing example is already loaded.
+  const autoLoadedFor = useRef<string | null>(null)
+  useEffect(() => {
+    const meta = store?.currentVideoMetaData
+    if (!meta || !store?.currentSwimmerVideo) return
+    if (sportOf(meta) !== "climbing") {
+      autoLoadedFor.current = null
+      return
+    }
+    if (autoLoadedFor.current === meta.name) return
+    const own = ownExampleOf(meta.name)
+    if (!own) return
+    autoLoadedFor.current = meta.name
+    if (exampleValue !== "none" && sportOfExample(exampleValue) === "climbing") return
+    setExampleValue(own.exampleName)
+    store.importExample(own.configuration)
+    message.info(`Loaded the "${own.exampleName}" example, the one made for this video.`)
+  }, [store?.currentVideoMetaData?.name, store?.currentSwimmerVideo])
 
   function handleImportClick() {
     if (fileInputRef.current === null) return;
