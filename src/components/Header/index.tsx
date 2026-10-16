@@ -46,6 +46,8 @@ const Header = forwardRef((props: HeaderProps, ref) => {
     return sportOf(meta)
   }
 
+  const videoSport = sportOf(store?.currentVideoMetaData)
+
   function handleVideoChange(value: string) {
     const selectedVideoMetaData = videoMetaDataList.filter(vmd => vmd.name === value)
     if (selectedVideoMetaData.length > 0) {
@@ -123,8 +125,17 @@ const Header = forwardRef((props: HeaderProps, ref) => {
             value={exampleValue}
             onChange={handleExampleClick}
             options={exampleList
-              .map((e) => ({ value: e.exampleName, label: e.exampleName }))
-              .concat({ value: "none", label: "none" })}
+              .map((e) => {
+                const fits = sportOfExample(e.exampleName) === videoSport
+                return {
+                  value: e.exampleName,
+                  label: e.exampleName,
+                  // Examples of the other sport stay visible but grayed out.
+                  disabled: !fits,
+                  title: fits ? e.exampleName : `${e.exampleName} is a ${sportOfExample(e.exampleName)} example; select the "${e.videoName}" video to load it`,
+                }
+              })
+              .concat({ value: "none", label: "none", disabled: false, title: "none" })}
           />
         </div>
 
