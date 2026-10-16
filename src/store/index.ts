@@ -11,6 +11,21 @@ import { MANUAL_TRIGGER_NAME, MIN_INTERVAL_SECONDS } from "../utils/values";
 import { APP_VERSION } from "../utils/version";
 import { normalizeConfiguration, CONFIG_FORMAT_VERSION } from "../types/validation";
 
+// Layers must have distinct uuids: the timeline keys its rows by uuid and
+// React drops rows that share a key. Older files hold copies of one layer.
+function withUniqueUuids(layers: LayerType[]): LayerType[] {
+  const seen = new Set<string>()
+  return layers.map((layer) => {
+    if (layer.uuid && !seen.has(layer.uuid)) {
+      seen.add(layer.uuid)
+      return layer
+    }
+    const uuid = generateUUID()
+    seen.add(uuid)
+    return { ...layer, uuid }
+  })
+}
+
 export class Store {
   constructor() {
     makeAutoObservable(this, {
@@ -354,7 +369,7 @@ export class Store {
     fetch(assetUrl(`configuration/${exampleFileName}`))
       .then((response) => response.json())
       .then((json) => {
-        const newLayerList = json
+        const newLayerList = withUniqueUuids(json)
         const _this = this
         runInAction(() => {
           newLayerList.forEach((newLayer: LayerType) => {
@@ -397,7 +412,7 @@ export class Store {
     if (normalized.video && this.currentVideoMetaData && normalized.video !== this.currentVideoMetaData.name) {
       message.warning(`This configuration was exported for "${normalized.video}", but "${this.currentVideoMetaData.name}" is loaded.`)
     }
-    const newLayerList = normalized.layers
+    const newLayerList = withUniqueUuids(normalized.layers)
 
     const _this = this
     runInAction(() => {

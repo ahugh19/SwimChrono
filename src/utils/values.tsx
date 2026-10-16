@@ -890,7 +890,7 @@ export const exampleList = [
     configuration: "acc.json"
   },
   {
-    videoName: "climbing",
+    videoName: "Climbing",
     exampleName: "Climbing",
     configuration: "climb.json"
   },

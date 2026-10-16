@@ -40,6 +40,12 @@ export function raceNameParts(meta: VideoMetaDataType | null | undefined) {
   }
 }
 
+// Sport of a video: the climbing case has its own data and visualizations.
+export type Sport = "swimming" | "climbing"
+export function sportOf(meta: VideoMetaDataType | null | undefined): Sport {
+  return meta && /climb/i.test(meta.style ?? "") ? "climbing" : "swimming"
+}
+
 // Label of the competition record: "OR" at the Olympics, "CR" elsewhere.
 export function recordLabel(meta: VideoMetaDataType | null | undefined) {
   return isOlympic(meta) ? "OR" : "CR"

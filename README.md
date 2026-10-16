@@ -225,6 +225,7 @@ Export with the visualizations rendered in
 * Timeline: loading a video zooms the ruler so the race start sits at the left edge; the zoom survives resizing the panels; clicking the tick row of the ruler seeks like the label row; the right edge of a bar reaching the end of the video is no longer clipped; a "Legend" popover explains the bar colors (green initiation trigger, purple conclusion trigger from race data, gray conclusion trigger from a fixed duration), hand-edited bars, handles and the pre-start shading.
 * A "Fit race" button next to the zoom slider fits the race to the timeline (with a small gap before the race start); the header's Import/Export group is labeled "File".
 * Import is a menu too: upload a configuration, or open "About the JSON format", a dialog with a highlighted example and a field reference of the configuration file. Exported JSON is pretty-printed. Importing keeps hand-edited intervals instead of recomputing them.
+* Switching the video mid-session refits the timeline to the new race. An example can only be loaded on a video of its sport: a swimming example is refused on the climbing video and vice versa, with a notice naming the matching video; if the video is switched to the other sport while an example is loaded, a warning is shown and the example selection is cleared. The climbing line visualization no longer crashes the page on a swimming video. Layers that share a uuid (older example files did) get fresh ids on import, and the shipped examples were fixed.
 
 ### 1.5.0
 

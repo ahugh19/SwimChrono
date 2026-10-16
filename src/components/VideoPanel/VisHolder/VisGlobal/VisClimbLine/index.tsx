@@ -16,6 +16,16 @@ interface VisClimbLineProps {
   svgHeight: number | undefined,
 }
 
+function parseJsonList(value: unknown): any[] {
+  if (typeof value !== "string") return []
+  try {
+    const parsed = JSON.parse(value)
+    return Array.isArray(parsed) ? parsed : []
+  } catch {
+    return []
+  }
+}
+
 function VisClimbLine(props: VisClimbLineProps) {
 
   const { currentSwimmerVideo, currentFrameIndex, x, y, r, s, editableElementList, visibility, svgHeight, svgWidth } = props;
@@ -42,10 +52,12 @@ function VisClimbLine(props: VisClimbLineProps) {
       // console.log(leaderFrameData.x_world)
 
       // setWorldRecordPos(Math.round(leaderFrameData.x_world / 50 * (svgWidth ? svgWidth * 100 / s : 1920)))
+      // Only climbing data carries these fields; on a swimming video the
+      // layer renders nothing instead of throwing.
       //@ts-ignore
-      setMilestones(JSON.parse(leaderFrameData.milestones_before_ori))
+      setMilestones(parseJsonList(leaderFrameData.milestones_before_ori))
       //@ts-ignore
-      setTrials(JSON.parse(leaderFrameData.trail_ori))
+      setTrials(parseJsonList(leaderFrameData.trail_ori))
       // console.log(leaderFrameData.milestones_before_ori, JSON.parse(leaderFrameData.milestones_before_ori))
 
     } else {

@@ -77,8 +77,12 @@ const LayerPanel = forwardRef((props: LayerPanelProps, ref) => {
   const fitRaceRef = useRef<() => void>(() => undefined)
   const zoomedForVideo = useRef<string | null>(null)
   useEffect(() => {
-    const key = store?.currentVideoMetaData?.name ?? null
-    if (!key || !(videoDuration > 0) || !(ganttAreaWidth > 0) || zoomedForVideo.current === key) return
+    // Duration and race start arrive after the video name when switching
+    // videos, so the key includes them: the fit is redone once they are in.
+    const name = store?.currentVideoMetaData?.name
+    if (!name || !(videoDuration > 0) || !(ganttAreaWidth > 0)) return
+    const key = `${name}|${videoDuration.toFixed(3)}|${raceStart}`
+    if (zoomedForVideo.current === key) return
     zoomedForVideo.current = key
     fitRaceRef.current()
   }, [store?.currentVideoMetaData?.name, videoDuration, ganttAreaWidth, raceStart])
@@ -149,8 +153,9 @@ const LayerPanel = forwardRef((props: LayerPanelProps, ref) => {
   // Keep the zoom window when the available width changes (window resize,
   // layer column or controller panel dragged): recompute the stage width
   // and scroll offset from the current range instead of resetting them.
+  // The ref is written synchronously in applyZoom (not from a state effect)
+  // so a fit requested in the same commit as a width change is not undone.
   const zoomRangeRef = useRef<[number, number]>([0, 100])
-  useEffect(() => { zoomRangeRef.current = zoomRange }, [zoomRange])
   useEffect(() => {
     setSliderWidth(ganttAreaWidth + canvasContentPadding * 2)
     if (ganttAreaWidth <= 0) return
@@ -212,6 +217,7 @@ const LayerPanel = forwardRef((props: LayerPanelProps, ref) => {
   const applyZoom = useCallback((startPct: number, endPct: number) => {
     const range = Math.max(2, Math.min(100, endPct - startPct))
     const start = Math.max(0, Math.min(100 - range, startPct))
+    zoomRangeRef.current = [start, start + range]
     setZoomRange((prev) => (prev[0] === start && prev[1] === start + range ? prev : [start, start + range]))
     const width = ganttAreaWidth / (range / 100)
     pendingScrollLeft.current = width * (start / 100)
